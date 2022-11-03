@@ -8,15 +8,6 @@ module Chess
       @symbol = symbol
     end
 
-    def transpile_algebraic_notation_to_coordinates(algebraic_notation)
-      algebraic_notation = algebraic_notation.split('')
-
-      column = COLUMNS.index(algebraic_notation[0])
-      row = algebraic_notation[1].to_i - 1
-
-      [row, column]
-    end
-
     def possible_positions(position_deltas)
       position_deltas.map { |delta| possible_move(@position.coordinates, delta) }.compact
     end
@@ -28,6 +19,15 @@ module Chess
     end
 
     private
+
+    def transpile_algebraic_notation_to_coordinates(algebraic_notation)
+      algebraic_notation = algebraic_notation.split('')
+
+      column = COLUMNS.index(algebraic_notation[0])
+      row = algebraic_notation[1].to_i - 1
+
+      [row, column]
+    end
 
     def possible_move(position, delta)
       move_to = [position[0] + delta[0], position[1] + delta[1]]

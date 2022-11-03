@@ -21,6 +21,14 @@ module Chess
       position_deltas.map { |delta| possible_move(@position.coordinates, delta) }.compact
     end
 
+    def move_to(position)
+      new_position_coordinates = transpile_algebraic_notation_to_coordinates(position)
+
+      @position = Node.new(new_position_coordinates, @position) if possible_positions.include?(new_position_coordinates)
+    end
+
+    private
+
     def possible_move(position, delta)
       move_to = [position[0] + delta[0], position[1] + delta[1]]
 

@@ -22,7 +22,24 @@ module Chess
       @position = Node.new(new_position_coordinates, @position)
     end
 
+    def capture_piece(piece_to_be_captured)
+      piece_to_be_captured.change_capture_status
+
+      captured_symbol = piece_to_be_captured.symbol
+      captured_team = piece_to_be_captured.team
+      captured_position = piece_to_be_captured.position.coordinates
+
+      message_part1 = "Captured #{captured_symbol}-#{captured_team}! at #{captured_position}"
+      message_part2 = "by #{symbol}-#{team}"
+
+      "#{message_part1} #{message_part2}"
+    end
+
     private
+
+    def change_capture_status
+      @captured = true
+    end
 
     def possible_positions(position_deltas)
       position_deltas.map { |delta| possible_move(@position.coordinates, delta) }.compact

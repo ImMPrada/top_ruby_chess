@@ -3,7 +3,7 @@ require './spec/spec_helper'
 RSpec.describe Chess::Piece do
   let(:piece_symbol) { :K }
   let(:piece_coordinates) { [0, 0] }
-  let(:piece_team) { Chess::TEAM_WHITE }
+  let(:piece_team) { Chess::WHITE_TEAM }
   let(:piece) { described_class.new(piece_coordinates, piece_symbol, piece_team) }
 
   describe '#initialize' do

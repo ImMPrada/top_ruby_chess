@@ -12,8 +12,8 @@ module Chess
       super(coordinates, :K)
     end
 
-    def possible_positions
-      super(POSITION_DELTAS)
+    def move_to(position)
+      super(position, POSITION_DELTAS)
     end
   end
 end

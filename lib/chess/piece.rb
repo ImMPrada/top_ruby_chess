@@ -1,3 +1,7 @@
+require_relative 'chess'
+require_relative 'node'
+require 'byebug'
+
 module Chess
   class Piece
     CAPTURE_REGEX = 'x'.freeze
@@ -8,17 +12,17 @@ module Chess
       @symbol = symbol
     end
 
-    def possible_positions(position_deltas)
-      position_deltas.map { |delta| possible_move(@position.coordinates, delta) }.compact
-    end
-
-    def move_to(position)
+    def move_to(position, position_deltas)
       new_position_coordinates = transpile_algebraic_notation_to_coordinates(position)
 
-      @position = Node.new(new_position_coordinates, @position) if possible_positions.include?(new_position_coordinates)
+      @position = Node.new(new_position_coordinates, @position) if possible_positions(position_deltas).include?(new_position_coordinates)
     end
 
     private
+
+    def possible_positions(position_deltas)
+      position_deltas.map { |delta| possible_move(@position.coordinates, delta) }.compact
+    end
 
     def transpile_algebraic_notation_to_coordinates(algebraic_notation)
       algebraic_notation = algebraic_notation.split('')

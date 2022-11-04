@@ -3,7 +3,8 @@ require './spec/spec_helper'
 RSpec.describe Chess::Piece do
   let(:piece_symbol) { :K }
   let(:piece_coordinates) { [0, 0] }
-  let(:piece) { described_class.new(piece_coordinates, piece_symbol) }
+  let(:piece_team) { Chess::TEAM_WHITE }
+  let(:piece) { described_class.new(piece_coordinates, piece_symbol, piece_team) }
 
   describe '#initialize' do
     it 'initializes a piece with a position' do
@@ -16,6 +17,14 @@ RSpec.describe Chess::Piece do
 
     it 'piece\'s position is a node type' do
       expect(piece.instance_variable_get(:@position)).to be_a(Chess::Node)
+    end
+
+    it 'initializes a piece with a team' do
+      expect(piece.instance_variable_get(:@team)).to be(piece_team)
+    end
+
+    it 'initializes a piece with a captured status false' do
+      expect(piece.instance_variable_get(:@captured)).to be(false)
     end
   end
 

@@ -7,9 +7,11 @@ module Chess
     CAPTURE_REGEX = 'x'.freeze
     COLUMNS = %w[a b c d e f g h].freeze
 
-    def initialize(coordinates, symbol)
+    def initialize(coordinates, symbol, team, captured = false)
       @position = Node.new(coordinates)
       @symbol = symbol
+      @captured = captured
+      @team = team
     end
 
     def move_to(position, position_deltas)

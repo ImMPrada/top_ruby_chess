@@ -15,7 +15,9 @@ module Chess
     def move_to(position, position_deltas)
       new_position_coordinates = transpile_algebraic_notation_to_coordinates(position)
 
-      @position = Node.new(new_position_coordinates, @position) if possible_positions(position_deltas).include?(new_position_coordinates)
+      return unless possible_positions(position_deltas).include?(new_position_coordinates)
+
+      @position = Node.new(new_position_coordinates, @position)
     end
 
     private

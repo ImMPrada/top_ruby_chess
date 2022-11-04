@@ -1,5 +1,5 @@
-require_relative 'chess'
-require_relative 'node'
+require_relative '../chess'
+require_relative '../node'
 require 'byebug'
 
 module Chess

@@ -1,4 +1,4 @@
-require './spec/spec_helper'
+require '../spec/spec_helper'
 
 RSpec.describe Chess::Piece do
   let(:piece_symbol) { :K }

@@ -1,10 +1,10 @@
-require_relative 'chess'
+require_relative '../chess'
 require_relative 'piece'
 require 'byebug'
 
 module Chess
-  class Queen < Piece
-    SYMBOL = :Q
+  class Bishop < Piece
+    SYMBOL = :B
 
     def initialize(coordinates, team)
       super(coordinates, SYMBOL, team)
@@ -20,13 +20,9 @@ module Chess
       deltas = []
 
       (1..7).each do |i|
-        deltas << [0, i]
         deltas << [i, i]
-        deltas << [i, 0]
         deltas << [i, -i]
-        deltas << [0, -i]
         deltas << [-i, -i]
-        deltas << [-i, 0]
         deltas << [-i, i]
       end
 

@@ -1,5 +1,5 @@
 module Chess
-  class Node
+  class Step
     attr_reader :coordinates, :parent
 
     def initialize(coordinates, parent = nil)

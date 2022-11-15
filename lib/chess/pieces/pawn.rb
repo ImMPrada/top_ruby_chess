@@ -8,19 +8,18 @@ module Chess
     CAPTURE_MOVEMENTS = [[1, 1], [-1, 1]].freeze
     SYMBOL = :P
 
-    def initialize(coordinates, team)
-      super(coordinates, SYMBOL, team)
+    def initialize(position_algebraic, team)
+      super(position_algebraic, SYMBOL, team)
       @first_move = true
     end
 
-    def move_to(position)
+    def move_to(position_algebraic, capturing = false)
       if @first_move
-        super(position, POSITION_DELTAS + [[0, 2]])
-      else
-        super(position, POSITION_DELTAS)
+        @first_move = false
+        return super(position_algebraic, capturing ? CAPTURE_MOVEMENTS : POSITION_DELTAS + [[0, 2]])
       end
 
-      @first_move = false
+      super(position_algebraic, capturing ? CAPTURE_MOVEMENTS : POSITION_DELTAS)
     end
   end
 end

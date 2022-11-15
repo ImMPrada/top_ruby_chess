@@ -1,4 +1,4 @@
-require './spec/spec_helper'
+require 'spec_helper'
 
 RSpec.describe Chess::Piece do
   subject(:piece) { described_class.new(position_algebraic, symbol, team) }

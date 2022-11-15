@@ -3,10 +3,10 @@ require_relative 'chess'
 module Chess
   class Board
     attr_reader :cells, :pieces
-  
+
     Cell = Struct.new(:name, :occuped, :team, :row, :column)
     Pieces = Struct.new(:team, :king, :queens, :bishops, :knights, :rooks, :pawns)
-    
+
     def initialize
       @cells = {}
 

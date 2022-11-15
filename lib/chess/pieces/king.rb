@@ -4,16 +4,16 @@ require 'byebug'
 
 module Chess
   class King < Piece
-    POSITION_DELTAS = [[0, 1], [1, 1], [1, 0] [1, -1], [0, -1], [-1, -1], [-1, 0], [-1, 1]].freeze
+    POSITION_DELTAS = [[0, 1], [1, 1], [1, 0], [1, -1], [0, -1], [-1, -1], [-1, 0], [-1, 1]].freeze
     CAPTURE_MOVEMENTS = POSITION_DELTAS
     SYMBOL = :K
 
-    def initialize(coordinates, team)
-      super(coordinates, SYMBOL, team)
+    def initialize(position_algebraic, team)
+      super(position_algebraic, SYMBOL, team)
     end
 
-    def move_to(position)
-      super(position, POSITION_DELTAS)
+    def move_to(position_algebraic, capturing = false)
+      super(position_algebraic, capturing ? CAPTURE_MOVEMENTS : POSITION_DELTAS)
     end
   end
 end

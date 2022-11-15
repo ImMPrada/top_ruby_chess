@@ -2,7 +2,10 @@ require 'simplecov'
 require 'simplecov-lcov'
 
 require 'byebug'
-require '../lib/chess/piece'
+require './lib/chess/chess'
+require './lib/chess/pieces/piece'
+require './lib/chess/position'
+require './lib/chess/board'
 
 SimpleCov::Formatter::LcovFormatter.config.report_with_single_file = true
 SimpleCov::Formatter::LcovFormatter.config do |c|

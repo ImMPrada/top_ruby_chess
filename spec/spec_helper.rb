@@ -8,6 +8,7 @@ require './lib/chess/pieces/king'
 require './lib/chess/pieces/queen'
 require './lib/chess/pieces/bishop'
 require './lib/chess/pieces/knight'
+require './lib/chess/pieces/rook'
 require './lib/chess/position'
 require './lib/chess/board'
 

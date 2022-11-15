@@ -12,8 +12,8 @@ module Chess
       @capture_movements = @generated_deltas
     end
 
-    def move_to(position)
-      super(position, @generated_deltas)
+    def move_to(position_algebraic, capturing = false)
+      super(position_algebraic, capturing ? @capture_movements : @generated_deltas)
     end
 
     def generate_deltas

@@ -1,12 +1,12 @@
-require_relative 'coordinates'
+require_relative 'position'
 
 module Chess
   class Step
-    attr_reader :coordinates, :prev_step
+    attr_reader :position, :prev_step
 
-    def initialize(coordinates, prev_step = nil)
+    def initialize(position_algebraic, prev_step = nil)
       @prev_step = prev_step
-      @coordinates = Coordinates.new(coordinates)
+      @position = Position.new(position_algebraic)
     end
   end
 end

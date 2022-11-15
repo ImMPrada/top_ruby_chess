@@ -25,7 +25,7 @@ RSpec.describe Chess::Position do
     end
 
     it 'updates coordinates notation' do
-      expect(position.coordinates.to_a).to eq([3, 2])
+      expect(position.coordinates.to_a).to eq([2, 3])
     end
   end
 end

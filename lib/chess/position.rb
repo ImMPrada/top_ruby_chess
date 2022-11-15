@@ -1,18 +1,18 @@
+require_relative 'chess'
+
 module Chess
   class Position
-    attr_reader :row, :column, :algebraic, :coordinates
+    attr_reader :algebraic, :coordinates
 
-    COLUMNS = %w[a b c d e f g h].freeze
-
-    Algebraic = Struct.new(:row, :column) do
+    Algebraic = Struct.new(:column, :row) do
       def to_s
         "#{column}#{row}"
       end
     end
 
-    Coordinates = Struct.new(:row, :column) do
+    Coordinates = Struct.new(:column, :row) do
       def to_a
-        [row, column]
+        [column, row]
       end
     end
 
@@ -29,8 +29,8 @@ module Chess
     private
 
     def set_value
-      @algebraic = Algebraic.new(@splitted_input[1].to_i, @splitted_input[0])
-      @coordinates = Coordinates.new(@algebraic.row - 1, COLUMNS.index(@algebraic.column))
+      @algebraic = Algebraic.new(@splitted_input[0], @splitted_input[1].to_i)
+      @coordinates = Coordinates.new(COLUMNS.index(@algebraic.column), @algebraic.row - 1)
     end
   end
 end

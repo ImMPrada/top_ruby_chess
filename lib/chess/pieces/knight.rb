@@ -13,7 +13,7 @@ module Chess
     end
 
     def move_to(position_algebraic, capturing = false)
-      super(position_algebraic, capturing ? POSITION_DELTAS : CAPTURE_MOVEMENTS)
+      super(position_algebraic, capturing ? CAPTURE_MOVEMENTS : POSITION_DELTAS)
     end
   end
 end

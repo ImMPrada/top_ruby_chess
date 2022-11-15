@@ -4,7 +4,7 @@ RSpec.describe Chess::Board do
   subject(:board) { described_class.new }
 
   describe 'when is created' do
-    let(:array_of_columns) { Chess::COLUMNS.map {|column| column.to_sym} }
+    let(:array_of_columns) { Chess::COLUMNS.map(&:to_sym) }
     let(:array_of_rows) { (1..8).to_a }
 
     it 'stores a hash in @cells property' do

@@ -9,7 +9,7 @@ RSpec.describe Chess::Piece do
 
   describe '#move_to' do
     let(:position_deltas) { [[0, 1], [0, 2]] }
-    
+
     describe 'when target position is possible' do
       let(:right_targe_position) { 'a3' }
 
@@ -28,7 +28,7 @@ RSpec.describe Chess::Piece do
       it 'keeps initial step position' do
         piece.move_to(wrong_target_position, position_deltas)
         expect(piece.instance_variable_get(:@current_step).position.algebraic.to_s).to eq(position_algebraic)
-      end  
+      end
     end
   end
 end

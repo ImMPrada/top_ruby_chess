@@ -8,12 +8,12 @@ module Chess
     CAPTURE_MOVEMENTS = POSITION_DELTAS
     SYMBOL = :N
 
-    def initialize(coordinates, team)
-      super(coordinates, SYMBOL, team)
+    def initialize(position_algebraic, team)
+      super(position_algebraic, SYMBOL, team)
     end
 
-    def move_to(position)
-      super(position, POSITION_DELTAS)
+    def move_to(position_algebraic, capturing = false)
+      super(position_algebraic, capturing ? POSITION_DELTAS : CAPTURE_MOVEMENTS)
     end
   end
 end

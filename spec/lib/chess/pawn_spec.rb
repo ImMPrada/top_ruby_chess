@@ -3,7 +3,7 @@ require 'spec_helper'
 RSpec.describe Chess::Pawn do
   subject(:pawn) { described_class.new('e2', Chess::WHITE_TEAM) }
 
-  describe 'whit a pawn on e2' do
+  describe 'with a pawn on e2' do
     it 'can move to e4 at first move' do
       expect(pawn.move_to('e4')).not_to be_nil
     end

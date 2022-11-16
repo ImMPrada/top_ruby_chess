@@ -3,7 +3,7 @@ require 'spec_helper'
 RSpec.describe Chess::Rook do
   subject(:rook) { described_class.new('d5', Chess::WHITE_TEAM) }
 
-  describe 'whit a rook on d5' do
+  describe 'with a rook on d5' do
     it 'can move to d8' do
       expect(rook.move_to('d8')).not_to be_nil
     end

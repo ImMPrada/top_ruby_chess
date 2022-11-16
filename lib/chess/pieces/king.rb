@@ -3,10 +3,10 @@ require_relative 'piece'
 require 'byebug'
 
 module Chess
-  class Knight < Piece
-    POSITION_DELTAS = [[-1, 2], [1, 2], [2, 1], [2, -1], [1, -2], [-1, -2], [-2, -1], [-2, 1]].freeze
+  class King < Piece
+    POSITION_DELTAS = [[0, 1], [1, 1], [1, 0], [1, -1], [0, -1], [-1, -1], [-1, 0], [-1, 1]].freeze
     CAPTURE_MOVEMENTS = POSITION_DELTAS
-    SYMBOL = :N
+    SYMBOL = :K
 
     def initialize(position_algebraic, team)
       super(position_algebraic, SYMBOL, team)

@@ -8,6 +8,8 @@ module Chess
 
     attr_reader :symbol, :team
 
+    Vector = Struct.new(:enable, :deltas)
+
     def initialize(position_algebraic, symbol, team, captured = false)
       @current_step = Step.new(position_algebraic)
       @symbol = symbol

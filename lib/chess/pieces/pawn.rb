@@ -4,22 +4,33 @@ require 'byebug'
 
 module Chess
   class Pawn < Piece
-    POSITION_DELTAS = [[0, 1]].freeze
-    CAPTURE_MOVEMENTS = [[1, 1], [-1, 1]].freeze
     SYMBOL = :P
 
-    def initialize(position_algebraic, team)
-      super(position_algebraic, SYMBOL, team)
+    def initialize(coordinates, team)
+      super(coordinates, SYMBOL, team)
+      @generated_deltas = { v1: Vector.new(true, []) }
+      @capture_movements = { v1: Vector.new(true, []) }
       @first_move = true
     end
 
-    def move_to(position_algebraic, capturing = false)
-      if @first_move
-        @first_move = false
-        return super(position_algebraic, capturing ? CAPTURE_MOVEMENTS : POSITION_DELTAS + [[0, 2]])
-      end
+    def move_to(position_algebraic, occuped_cells, capturing = false)
+      generate_deltas
+      @first_move = false if @first_move
 
-      super(position_algebraic, capturing ? CAPTURE_MOVEMENTS : POSITION_DELTAS)
+      super(position_algebraic, capturing ? @capture_movements : @generated_deltas, occuped_cells)
+    end
+
+    private
+
+    def generate_deltas
+      @generated_deltas[:v1].deltas << [0, 1]
+      @capture_movements[:v1].deltas << [1, 1]
+      @capture_movements[:v1].deltas << [-1, 1]
+
+      return unless @first_move
+
+      @generated_deltas[:v1].deltas << [0, 2]
+      @generated_deltas[:v1].deltas << [0, 2]
     end
   end
 end

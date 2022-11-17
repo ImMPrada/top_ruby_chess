@@ -13,7 +13,7 @@ RSpec.describe Chess::Piece do
     describe 'when target position is possible' do
       let(:right_targe_position) { 'a3' }
 
-      it 'returns the new position' do
+      xit 'returns the new position' do
         expect(piece.move_to(right_targe_position, position_deltas).algebraic.to_s).to eq(right_targe_position)
       end
     end
@@ -21,11 +21,11 @@ RSpec.describe Chess::Piece do
     describe 'shen target position is not possible' do
       let(:wrong_target_position) { 'c2' }
 
-      it 'returns nil' do
+      xit 'returns nil' do
         expect(piece.move_to(wrong_target_position, position_deltas)).to be_nil
       end
 
-      it 'keeps initial step position' do
+      xit 'keeps initial step position' do
         piece.move_to(wrong_target_position, position_deltas)
         expect(piece.instance_variable_get(:@current_step).position.algebraic.to_s).to eq(position_algebraic)
       end

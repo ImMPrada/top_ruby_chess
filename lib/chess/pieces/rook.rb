@@ -23,6 +23,8 @@ module Chess
       super(position_algebraic, capturing ? @capture_movements : @generated_deltas, occuped_cells)
     end
 
+    private
+
     def generate_deltas
       (MIN_INDEX..MAX_INDEX).each do |i|
         next if i == MIN_INDEX

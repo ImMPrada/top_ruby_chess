@@ -15,9 +15,11 @@ module Chess
 
     def move_to(position_algebraic, occuped_cells, capturing = false)
       generate_deltas
-      @first_move = false if @first_move
+      super_response = super(position_algebraic, capturing ? @capture_movements : @generated_deltas, occuped_cells)
+      return unless super_response
 
-      super(position_algebraic, capturing ? @capture_movements : @generated_deltas, occuped_cells)
+      @first_move = false
+      super_response
     end
 
     private

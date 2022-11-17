@@ -19,12 +19,17 @@ module Chess
         v8: Vector.new(true, [])
       }
       @capture_movements = nil
+      @first_move = true
 
       generate_deltas
     end
 
     def move_to(position_algebraic, occuped_cells, capturing = false)
-      super(position_algebraic, capturing ? @capture_movements : @generated_deltas, occuped_cells)
+      super_response = super(position_algebraic, capturing ? @capture_movements : @generated_deltas, occuped_cells)
+      return unless super_response
+
+      @first_move = false
+      super_response
     end
 
     private

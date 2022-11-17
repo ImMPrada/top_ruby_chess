@@ -28,6 +28,10 @@ module Chess
       super_response
     end
 
+    def can_make_castling?
+      @first_move
+    end
+
     private
 
     def generate_deltas

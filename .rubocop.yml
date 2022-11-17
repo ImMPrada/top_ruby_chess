@@ -1,53 +1,21 @@
 require:
   - rubocop-rspec
 
-Lint/ScriptPermission:
-  Enabled: false
-
 AllCops:
   TargetRubyVersion: 3.1.2
 
 Style/FrozenStringLiteralComment:
   Enabled: false
 
-Style/Documentation:
+convention:Style/Documentation:
   Enabled: false
 
-Style/ClassVars:
+Style/OptionalBooleanParameter:
   Enabled: false
-
-RSpec/ExampleLength:
-  Max: 10
 
 Metrics/MethodLength:
-  Max: 40
-
-Metrics/ClassLength:
-  Max: 400
-
-Metrics/CyclomaticComplexity:
-  Max: 20
-
-Metrics/PerceivedComplexity:
-  Max: 20
-
-Metrics/AbcSize:
-  Max: 40
-
-Metrics/BlockNesting:
-  Max: 5
-
-OptionalBooleanParameter:
-  Enabled: false
+  Max: 15
 
 RSpec/BlockLength:
-  Max: 20
-
-RSpec/DescribeClass:
   Enabled: false
 
-RSpec/NestedGroups:
-  Max: 5
-
-RSpec/MultipleMemoizedHelpers:
-  Max: 10

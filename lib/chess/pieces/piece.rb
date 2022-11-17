@@ -69,7 +69,7 @@ module Chess
       return nil unless position_deltas_vectors.enable
 
       check_enemies_constraints(move_to, occuped_cells[@enemies_team], position_deltas_vectors)
-      check_amies_constraints(move_to, occuped_cells[@team], position_deltas_vectors)
+      check_friends_constraints(move_to, occuped_cells[@team], position_deltas_vectors)
     end
 
     def check_enemies_constraints(move_to, occuped_cells_by_enemies, position_deltas_vectors)
@@ -78,8 +78,8 @@ module Chess
       move_to
     end
 
-    def check_amies_constraints(move_to, occuped_cells_by_amies, position_deltas_vectors)
-      if occuped_cells_by_amies.include?(move_to)
+    def check_friends_constraints(move_to, occuped_cells_by_friends, position_deltas_vectors)
+      if occuped_cells_by_friends.include?(move_to)
         position_deltas_vectors.enable = false
         return nil
       end

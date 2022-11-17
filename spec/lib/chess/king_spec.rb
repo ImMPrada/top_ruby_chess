@@ -1,43 +1,42 @@
 require 'spec_helper'
 
 RSpec.describe Chess::King do
-  subject(:king) { described_class.new('d5', Chess::WHITE_TEAM) }
+  subject(:king) { described_class.new('e5', Chess::WHITE_TEAM) }
 
-  describe 'with a king on d5' do
-    it 'can move to d6' do
-      expect(king.move_to('d6')).not_to be_nil
-    end
+  let(:occuped_cells) do
+    {
+      Chess::WHITE_TEAM => [[3, 5], [4, 5]],
+      Chess::BLACK_TEAM => [[3, 4], [5, 4]]
+    }
+  end
 
-    it 'can move to e6' do
-      expect(king.move_to('e6')).not_to be_nil
-    end
-
-    it 'can move to e5' do
-      expect(king.move_to('e5')).not_to be_nil
-    end
-
-    it 'can move to e4' do
-      expect(king.move_to('e4')).not_to be_nil
+  describe 'with a king on e5' do
+    it 'can move to f6' do
+      expect(king.move_to('f6', occuped_cells)).not_to be_nil
     end
 
     it 'can move to d4' do
-      expect(king.move_to('d4')).not_to be_nil
+      expect(king.move_to('d4', occuped_cells)).not_to be_nil
     end
 
-    it 'can move to c4' do
-      expect(king.move_to('c4')).not_to be_nil
+    it 'can move to f4' do
+      expect(king.move_to('f4', occuped_cells)).not_to be_nil
     end
 
-    it 'can move to c5' do
-      expect(king.move_to('c5')).not_to be_nil
+    it 'can move to f5' do
+      expect(king.move_to('f5', occuped_cells)).not_to be_nil
     end
 
-    it 'can move to c6' do
-      expect(king.move_to('c6')).not_to be_nil
+    it "can't move to e6" do
+      expect(king.move_to('e6', occuped_cells)).to be_nil
     end
 
-    it "can't move to d7" do
-      expect(king.move_to('d7')).to be_nil
+    it "can't move to d6" do
+      expect(king.move_to('d6', occuped_cells)).to be_nil
+    end
+
+    it "can't move to g7" do
+      expect(king.move_to('g7', occuped_cells)).to be_nil
     end
   end
 end

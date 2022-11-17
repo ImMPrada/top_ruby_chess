@@ -6,8 +6,6 @@ module Chess
   class Bishop < Piece
     SYMBOL = :B
 
-    Vector = Struct.new(:enable, :deltas)
-
     def initialize(coordinates, team)
       super(coordinates, SYMBOL, team)
       @generated_deltas = {

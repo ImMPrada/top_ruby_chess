@@ -32,11 +32,57 @@ module Chess
       super_response
     end
 
+    def castle_with(piece, occuped_cells, casting_side)
+      return unless can_make_castling? && piece.can_make_castling?
+
+      return unless can_castle_at?(casting_side, occuped_cells)
+
+      original_generated_deltas = @generated_deltas
+      @generated_deltas = {
+        v1: Vector.new(true, [[2, 0], [-2, 0]])
+      }
+
+      castle_at(casting_side, occuped_cells)
+      @generated_deltas = original_generated_deltas
+    end
+
     def can_make_castling?
-      @first_move
+      return @first_move unless @first_move
     end
 
     private
+
+    def castle_at(casting_side, occuped_cells)
+      algebraic_row = poition.algebraic.row
+
+      case casting_side
+      when QUEEN_SIDE
+        target_poition = "c#{algebraic_row}"
+      when KING_SIDE
+        target_poition = "g#{algebraic_row}"
+      end
+
+      move_to(target_poition, occuped_cells)
+    end
+
+    def can_castle_at?(casting_side, occuped_cells)
+      case casting_side
+      when QUEEN_SIDE
+        queen_side_cells.any? { |cell| occuped_cells.include?(cell) }
+      when KING_SIDE
+        king_side_cells.any? { |cell| occuped_cells.include?(cell) }
+      end
+    end
+
+    def queen_side_cells
+      row = poition.coordinates.row
+      [[1, row], [2, row], [3, row]]
+    end
+
+    def king_side_cells
+      row = poition.coordinates.row
+      [[5, row], [6, row]]
+    end
 
     # rubocop:disable Metrics/AbcSize
     def generate_deltas

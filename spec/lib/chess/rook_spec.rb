@@ -1,16 +1,16 @@
 require 'spec_helper'
 
 RSpec.describe Chess::Rook do
-  subject(:rook) { described_class.new('e5', Chess::WHITE_TEAM) }
-
-  let(:occuped_cells) do
-    {
-      Chess::WHITE_TEAM => [[4, 3], [4, 6], [7, 7]],
-      Chess::BLACK_TEAM => [[0, 4], [2, 6], [5, 4]]
-    }
-  end
-
   describe 'with a rook on e5' do
+    subject(:rook) { described_class.new('e5', Chess::WHITE_TEAM) }
+
+    let(:occuped_cells) do
+      {
+        Chess::WHITE_TEAM => [[4, 3], [4, 6], [7, 7]],
+        Chess::BLACK_TEAM => [[0, 4], [2, 6], [5, 4]]
+      }
+    end
+
     it 'can move to e6' do
       expect(rook.move_to('e6', occuped_cells)).not_to be_nil
     end
@@ -81,6 +81,31 @@ RSpec.describe Chess::Rook do
 
     it "can't move to g7" do
       expect(rook.move_to('g7', occuped_cells)).to be_nil
+    end
+  end
+
+  describe '#can_make_castling' do
+    subject(:rook) { described_class.new('a1', Chess::WHITE_TEAM) }
+
+    let(:occuped_cells) do
+      {
+        Chess::WHITE_TEAM => [],
+        Chess::BLACK_TEAM => []
+      }
+    end
+
+    describe 'when is first move' do
+      it 'returns true' do
+        expect(rook.can_make_castling?).to be(true)
+      end
+    end
+
+    describe "when isn't first move" do
+      it 'returns false' do
+        rook.move_to('a2', occuped_cells)
+        rook.move_to('a1', occuped_cells)
+        expect(rook.can_make_castling?).to be(false)
+      end
     end
   end
 end

@@ -24,7 +24,6 @@ module Chess
 
     private
 
-    # rubocop:disable Metrics/AbcSize
     def generate_deltas
       @generated_deltas[:v1].deltas = []
       @capture_movements[:v1].deltas = []
@@ -36,8 +35,6 @@ module Chess
       return unless @first_move
 
       @generated_deltas[:v1].deltas << [0, 2]
-      @capture_movements[:v1].deltas << [0, 2]
     end
-    # rubocop:enable Metrics/AbcSize
   end
 end

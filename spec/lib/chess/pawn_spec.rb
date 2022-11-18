@@ -34,10 +34,6 @@ RSpec.describe Chess::Pawn do
         }
       end
 
-      it 'can capture enemy at e4, at first move' do
-        expect(pawn.move_to('e4', occuped_cells, true)).not_to be_nil
-      end
-
       it "can't capture enemy at e4, if isn't first move" do
         pawn.move_to('e3', occuped_cells)
         expect(pawn.move_to('e4', occuped_cells, true)).to be_nil

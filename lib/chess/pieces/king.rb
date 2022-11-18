@@ -42,12 +42,12 @@ module Chess
         v1: Vector.new(true, [[2, 0], [-2, 0]])
       }
 
-      castle_at(casting_side, occuped_cells)
       @generated_deltas = original_generated_deltas
+      castle_at(casting_side, occuped_cells)
     end
 
     def can_make_castling?
-      return @first_move unless @first_move
+      @first_move
     end
 
     private

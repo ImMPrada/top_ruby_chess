@@ -64,4 +64,62 @@ RSpec.describe Chess::King do
       end
     end
   end
+
+  describe '#castle_with' do
+    subject(:king) { described_class.new('e1', Chess::WHITE_TEAM) }
+
+    let(:rook_queen) { Chess::Rook.new('a1', Chess::WHITE_TEAM) }
+    let(:rook_king) { Chess::Rook.new('h1', Chess::WHITE_TEAM) }
+    let(:side_to_castling) { [Chess::KING_SIDE, Chess::QUEEN_SIDE].sample }
+    let(:rook_for_castling) do
+      case side_to_castling
+      when Chess::KING_SIDE
+        rook_king
+      when Chess::QUEEN_SIDE
+        rook_queen
+      end
+    end
+
+    describe 'when row between rook and king, is empty' do
+      let(:occuped_cells) do
+        {
+          Chess::WHITE_TEAM => [[0, 0], [4, 0], [7, 0]],
+          Chess::BLACK_TEAM => []
+        }
+      end
+
+      it 'can castle' do
+        expect(king.castle_with(rook_for_castling, occuped_cells, side_to_castling)).not_to be_nil
+      end
+
+      it "updates king's step position" do
+        initial_position = king.position.algebraic.to_s
+        king.castle_with(rook_for_castling, occuped_cells, side_to_castling)
+        ending_position = king.position.algebraic.to_s
+
+        expect(initial_position).not_to eq(ending_position)
+      end
+
+      it "updates rooks's step position" do
+        initial_position = rook_for_castling.position.algebraic.to_s
+        king.castle_with(rook_for_castling, occuped_cells, side_to_castling)
+        ending_position = rook_for_castling.position.algebraic.to_s
+
+        expect(initial_position).not_to eq(ending_position)
+      end
+    end
+
+    describe 'when row between rook and king, is not empty' do
+      let(:occuped_cells) do
+        {
+          Chess::WHITE_TEAM => [[0, 0], [3, 0], [4, 0], [6, 0], [7, 0]],
+          Chess::BLACK_TEAM => []
+        }
+      end
+
+      it "can't castle" do
+        expect(king.castle_with(rook_for_castling, occuped_cells, side_to_castling)).to be_nil
+      end
+    end
+  end
 end

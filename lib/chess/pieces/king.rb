@@ -35,15 +35,19 @@ module Chess
     def castle_with(piece, occuped_cells, casting_side)
       return unless can_make_castling? && piece.can_make_castling?
 
-      return unless can_castle_at?(casting_side, occuped_cells)
+      return unless can_castle_at?(casting_side, occuped_cells[BLACK_TEAM] + occuped_cells[WHITE_TEAM])
 
       original_generated_deltas = @generated_deltas
       @generated_deltas = {
         v1: Vector.new(true, [[2, 0], [-2, 0]])
       }
 
+      castle_final_position = move_to(target_castling_positio_king(casting_side), occuped_cells)
       @generated_deltas = original_generated_deltas
-      castle_at(casting_side, occuped_cells)
+      return unless castle_final_position
+
+      piece.move_to(target_castling_positio_rook(casting_side), occuped_cells)
+      castle_final_position
     end
 
     def can_make_castling?
@@ -52,35 +56,44 @@ module Chess
 
     private
 
-    def castle_at(casting_side, occuped_cells)
-      algebraic_row = poition.algebraic.row
+    def target_castling_positio_rook(casting_side)
+      algebraic_row = position.algebraic.row
 
       case casting_side
       when QUEEN_SIDE
-        target_poition = "c#{algebraic_row}"
+        "d#{algebraic_row}"
       when KING_SIDE
-        target_poition = "g#{algebraic_row}"
+        "f#{algebraic_row}"
       end
+    end
 
-      move_to(target_poition, occuped_cells)
+    def target_castling_positio_king(casting_side)
+      algebraic_row = position.algebraic.row
+
+      case casting_side
+      when QUEEN_SIDE
+        "c#{algebraic_row}"
+      when KING_SIDE
+        "g#{algebraic_row}"
+      end
     end
 
     def can_castle_at?(casting_side, occuped_cells)
       case casting_side
       when QUEEN_SIDE
-        queen_side_cells.any? { |cell| occuped_cells.include?(cell) }
+        queen_side_cells.none? { |cell| occuped_cells.include?(cell) }
       when KING_SIDE
-        king_side_cells.any? { |cell| occuped_cells.include?(cell) }
+        king_side_cells.none? { |cell| occuped_cells.include?(cell) }
       end
     end
 
     def queen_side_cells
-      row = poition.coordinates.row
+      row = position.coordinates.row
       [[1, row], [2, row], [3, row]]
     end
 
     def king_side_cells
-      row = poition.coordinates.row
+      row = position.coordinates.row
       [[5, row], [6, row]]
     end
 

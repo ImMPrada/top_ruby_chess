@@ -33,7 +33,7 @@ module Chess
     end
 
     def castle_with(piece, occuped_cells, casting_side)
-      return unless can_make_castling? && piece.can_make_castling?
+      return unless can_castling? && piece.can_castling?
 
       return unless can_castle_at?(casting_side, occuped_cells[BLACK_TEAM] + occuped_cells[WHITE_TEAM])
 
@@ -42,15 +42,12 @@ module Chess
         v1: Vector.new(true, [[2, 0], [-2, 0]])
       }
 
-      castle_final_position = move_to(target_castling_positio_king(casting_side), occuped_cells)
+      move_to(target_castling_positio_king(casting_side), occuped_cells)
       @generated_deltas = original_generated_deltas
-      return unless castle_final_position
-
       piece.move_to(target_castling_positio_rook(casting_side), occuped_cells)
-      castle_final_position
     end
 
-    def can_make_castling?
+    def can_castling?
       @first_move
     end
 

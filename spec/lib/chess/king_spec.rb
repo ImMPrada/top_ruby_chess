@@ -40,7 +40,7 @@ RSpec.describe Chess::King do
     end
   end
 
-  describe '#can_make_castling' do
+  describe '#can_castling' do
     subject(:king) { described_class.new('e1', Chess::WHITE_TEAM) }
 
     let(:occuped_cells) do
@@ -52,7 +52,7 @@ RSpec.describe Chess::King do
 
     describe 'when is first move' do
       it 'returns true' do
-        expect(king.can_make_castling?).to be(true)
+        expect(king.can_castling?).to be(true)
       end
     end
 
@@ -60,7 +60,7 @@ RSpec.describe Chess::King do
       it 'returns false' do
         king.move_to('e2', occuped_cells)
         king.move_to('e1', occuped_cells)
-        expect(king.can_make_castling?).to be(false)
+        expect(king.can_castling?).to be(false)
       end
     end
   end

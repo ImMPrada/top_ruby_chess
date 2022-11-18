@@ -30,6 +30,13 @@ module Chess
       @current_step.position
     end
 
+    def can_move_to?(target_position_algebraic, position_deltas_vectors, occuped_cells = nil)
+      possible_step = Step.new(target_position_algebraic)
+
+      possible_positions = possible_positions(position_deltas_vectors, occuped_cells)
+      possible_positions.include?(possible_step.position.coordinates.to_a)
+    end
+
     def position
       @current_step.position
     end

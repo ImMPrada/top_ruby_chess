@@ -51,6 +51,10 @@ module Chess
       @first_move
     end
 
+    def can_attack_to?(target_position_algebraic, occuped_cells)
+      can_move_to?(target_position_algebraic, @capture_movements, occuped_cells)
+    end
+
     private
 
     def target_castling_positio_rook(casting_side)

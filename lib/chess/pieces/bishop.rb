@@ -23,6 +23,10 @@ module Chess
       super(position_algebraic, capturing ? @capture_movements : @generated_deltas, occuped_cells)
     end
 
+    def can_attack_to?(target_position_algebraic, occuped_cells)
+      can_move_to?(target_position_algebraic, @capture_movements, occuped_cells)
+    end
+
     private
 
     # rubocop:disable Metrics/AbcSize

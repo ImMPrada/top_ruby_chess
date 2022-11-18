@@ -22,6 +22,11 @@ module Chess
       super_response
     end
 
+    def can_attack_to?(target_position_algebraic, occuped_cells)
+      generate_deltas
+      can_move_to?(target_position_algebraic, @capture_movements, occuped_cells)
+    end
+
     private
 
     def generate_deltas

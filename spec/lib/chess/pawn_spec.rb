@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 RSpec.describe Chess::Pawn do
-  subject(:pawn) { described_class.new('e2', Chess::WHITE_TEAM) }
-
   describe 'with a pawn on e2' do
+    subject(:pawn) { described_class.new('e2', Chess::WHITE_TEAM) }
+
     describe 'when is first move' do
       let(:occuped_cells) do
         {
@@ -41,6 +41,27 @@ RSpec.describe Chess::Pawn do
 
       it 'can capture enemy at f3, at first move' do
         expect(pawn.move_to('f3', occuped_cells, true)).not_to be_nil
+      end
+    end
+  end
+
+  describe '#can_attack_to?' do
+    subject(:pawn) { described_class.new('e2', Chess::WHITE_TEAM) }
+
+    let(:occuped_cells) do
+      {
+        Chess::WHITE_TEAM => [[5, 0]],
+        Chess::BLACK_TEAM => []
+      }
+    end
+
+    describe 'whit a pawn at e2' do
+      it 'can attack on f3' do
+        expect(pawn.can_attack_to?('f3', occuped_cells)).to be(true)
+      end
+
+      it "can't attack on e3" do
+        expect(pawn.can_attack_to?('e3', occuped_cells)).to be(false)
       end
     end
   end

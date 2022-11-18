@@ -1,16 +1,16 @@
 require 'spec_helper'
 
 RSpec.describe Chess::Queen do
-  subject(:queen) { described_class.new('e5', Chess::WHITE_TEAM) }
-
-  let(:occuped_cells) do
-    {
-      Chess::WHITE_TEAM => [[4, 3], [4, 6], [7, 7]],
-      Chess::BLACK_TEAM => [[0, 4], [2, 6], [5, 4]]
-    }
-  end
-
   describe 'with a queen on e5, and some occuped cells' do
+    subject(:queen) { described_class.new('e5', Chess::WHITE_TEAM) }
+
+    let(:occuped_cells) do
+      {
+        Chess::WHITE_TEAM => [[4, 3], [4, 6], [7, 7]],
+        Chess::BLACK_TEAM => [[0, 4], [2, 6], [5, 4]]
+      }
+    end
+
     it 'can move to e6' do
       expect(queen.move_to('e6', occuped_cells)).not_to be_nil
     end
@@ -81,6 +81,31 @@ RSpec.describe Chess::Queen do
 
     it "can't move to h8" do
       expect(queen.move_to('h8', occuped_cells)).to be_nil
+    end
+  end
+
+  describe '#can_attack_to?' do
+    subject(:queen) { described_class.new('e1', Chess::WHITE_TEAM) }
+
+    let(:occuped_cells) do
+      {
+        Chess::WHITE_TEAM => [[5, 0]],
+        Chess::BLACK_TEAM => []
+      }
+    end
+
+    describe 'whit a queen at e1' do
+      it 'can attack on f2' do
+        expect(queen.can_attack_to?('f2', occuped_cells)).to be(true)
+      end
+
+      it 'can attack on e3' do
+        expect(queen.can_attack_to?('e3', occuped_cells)).to be(true)
+      end
+
+      it "can't attack on f4" do
+        expect(queen.can_attack_to?('f4', occuped_cells)).to be(false)
+      end
     end
   end
 end

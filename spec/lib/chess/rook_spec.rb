@@ -108,4 +108,25 @@ RSpec.describe Chess::Rook do
       end
     end
   end
+
+  describe '#can_attack_to?' do
+    subject(:rook) { described_class.new('e1', Chess::WHITE_TEAM) }
+
+    let(:occuped_cells) do
+      {
+        Chess::WHITE_TEAM => [[5, 0]],
+        Chess::BLACK_TEAM => []
+      }
+    end
+
+    describe 'whit a rook at e1' do
+      it 'can attack on e4' do
+        expect(rook.can_attack_to?('e4', occuped_cells)).to be(true)
+      end
+
+      it "can't attack on f4" do
+        expect(rook.can_attack_to?('f4', occuped_cells)).to be(false)
+      end
+    end
+  end
 end

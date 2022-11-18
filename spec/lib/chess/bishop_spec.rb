@@ -83,4 +83,25 @@ RSpec.describe Chess::Bishop do
       expect(bishop.move_to('h8', occuped_cells)).to be_nil
     end
   end
+
+  describe '#can_attack_to?' do
+    subject(:bishop) { described_class.new('e1', Chess::WHITE_TEAM) }
+
+    let(:occuped_cells) do
+      {
+        Chess::WHITE_TEAM => [[5, 0]],
+        Chess::BLACK_TEAM => []
+      }
+    end
+
+    describe 'whit a bishop at e1' do
+      it 'can attack on f2' do
+        expect(bishop.can_attack_to?('f2', occuped_cells)).to be(true)
+      end
+
+      it "can't attack on e3" do
+        expect(bishop.can_attack_to?('e3', occuped_cells)).to be(false)
+      end
+    end
+  end
 end

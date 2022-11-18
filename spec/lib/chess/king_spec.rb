@@ -122,4 +122,25 @@ RSpec.describe Chess::King do
       end
     end
   end
+
+  describe '#can_attack_to?' do
+    subject(:king) { described_class.new('e1', Chess::WHITE_TEAM) }
+
+    let(:occuped_cells) do
+      {
+        Chess::WHITE_TEAM => [[5, 0]],
+        Chess::BLACK_TEAM => []
+      }
+    end
+
+    describe 'whit a king at e1' do
+      it 'can attack on f2' do
+        expect(king.can_attack_to?('f2', occuped_cells)).to be(true)
+      end
+
+      it "can't attack on e3" do
+        expect(king.can_attack_to?('e3', occuped_cells)).to be(false)
+      end
+    end
+  end
 end

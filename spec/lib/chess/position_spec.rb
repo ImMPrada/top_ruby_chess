@@ -14,18 +14,4 @@ RSpec.describe Chess::Position do
       expect(position.coordinates.to_a).to eq([0, 0])
     end
   end
-
-  describe '#change' do
-    before do
-      position.change('c4')
-    end
-
-    it 'updates algebraic notation' do
-      expect(position.algebraic.to_s).to eq('c4')
-    end
-
-    it 'updates coordinates notation' do
-      expect(position.coordinates.to_a).to eq([2, 3])
-    end
-  end
 end

@@ -21,11 +21,6 @@ module Chess
       set_value
     end
 
-    def change(algebraic_notation)
-      @splitted_input = algebraic_notation.split('')
-      set_value
-    end
-
     private
 
     def set_value

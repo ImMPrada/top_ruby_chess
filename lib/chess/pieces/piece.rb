@@ -4,8 +4,6 @@ require 'byebug'
 
 module Chess
   class Piece
-    CAPTURE_REGEX = 'x'.freeze
-
     attr_reader :symbol, :team
 
     Vector = Struct.new(:enabled, :deltas)

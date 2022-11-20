@@ -1,4 +1,5 @@
 require_relative 'chess'
+require_relative 'cell'
 require_relative 'pieces/king'
 require_relative 'pieces/queen'
 require_relative 'pieces/bishop'
@@ -10,8 +11,6 @@ module Chess
   class Board
     attr_reader :cells, :pieces
 
-    Cell = Struct.new(:algebraic_notation, :occuped, :occuped_by, :team, :coordinates_notation)
-
     Pieces = Struct.new(:team, :king, :queens, :bishops, :knights, :rooks, :pawns)
 
     def initialize
@@ -22,7 +21,7 @@ module Chess
       put_pieces
     end
 
-    def occuped_cells
+    def occuped_cells_coordinates_by_teams
       occuped_cells = {
         WHITE_TEAM => [],
         BLACK_TEAM => []
@@ -30,13 +29,12 @@ module Chess
 
       COLUMNS.each do |column|
         (MIN_INDEX..MAX_INDEX).each do |row_index|
-          row = row_index + 1
           @cells[column.to_sym]
 
-          cell = @cells[column.to_sym][row]
-          next unless cell.occuped
+          cell = @cells[column.to_sym][row_index]
+          next unless cell.occuped?
 
-          occuped_cells[cell.team] << cell.coordinates_notation
+          occuped_cells[cell.team] << cell.coordinates.to_a
         end
       end
 
@@ -67,10 +65,13 @@ module Chess
 
     def generate_cells
       COLUMNS.each do |column|
-        @cells[column.to_sym] = {}
+        @cells[column.to_sym] = []
+        cell_color = BLACK_TEAM
         (MIN_INDEX..MAX_INDEX).each do |row_index|
           row = row_index + 1
-          @cells[column.to_sym][row] = Cell.new("#{column}#{row}", false, nil, nil, [COLUMNS.index(column), row_index])
+          @cells[column.to_sym] << Cell.new("#{column}#{row}", cell_color)
+
+          cell_color = cell_color == BLACK_TEAM ? WHITE_TEAM : BLACK_TEAM
         end
       end
     end
@@ -121,12 +122,9 @@ module Chess
     # rubocop:enable Metrics/AbcSize
 
     def take_cell_by(piece)
-      algebraic_notation = piece.position.algebraic
-      cell = @cells[algebraic_notation.column.to_sym][algebraic_notation.row]
+      cell = @cells[piece.position.algebraic.column.to_sym][piece.position.coordinates.row]
 
-      cell.team = piece.team
-      cell.occuped = true
-      cell.occuped_by = piece
+      cell.occup_by(piece)
     end
   end
 end

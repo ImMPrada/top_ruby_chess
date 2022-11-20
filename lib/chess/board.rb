@@ -41,6 +41,20 @@ module Chess
       occuped_cells
     end
 
+    def to_s
+      response = "\n"
+
+      (MIN_INDEX..MAX_INDEX).each do |row_index|
+        COLUMNS.each do |column|
+          response += @cells[column.to_sym][row_index].to_s
+        end
+
+        response += "\n"
+      end
+
+      response
+    end
+
     # rubocop:disable Metrics/AbcSize
     def can_any_enemy_attack_to?(evaluated_cell_algebraic, enemy_team)
       return true if check_atack_hability_for([@pieces[enemy_team].king], evaluated_cell_algebraic, occuped_cells)
@@ -64,9 +78,10 @@ module Chess
     end
 
     def generate_cells
+      cell_color = WHITE_TEAM
       COLUMNS.each do |column|
         @cells[column.to_sym] = []
-        cell_color = BLACK_TEAM
+        cell_color = cell_color == BLACK_TEAM ? WHITE_TEAM : BLACK_TEAM
         (MIN_INDEX..MAX_INDEX).each do |row_index|
           row = row_index + 1
           @cells[column.to_sym] << Cell.new("#{column}#{row}", cell_color)

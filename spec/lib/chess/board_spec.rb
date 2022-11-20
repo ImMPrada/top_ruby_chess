@@ -12,7 +12,7 @@ RSpec.describe Chess::Board do
     end
 
     it 'returns a hash of to kewys: each team, in eache key, a has of two keys: algebraic and coordinates' do
-      expect(board.occuped_cells[[Chess::WHITE_TEAM,
+      expect(board.occuped_cells_coordinates_by_teams[[Chess::WHITE_TEAM,
                                   Chess::BLACK_TEAM].sample].class).to be(Array)
     end
 
@@ -59,11 +59,11 @@ RSpec.describe Chess::Board do
       end
 
       it 'returns algebraic notation of occuped cells for white team' do
-        expect(board.occuped_cells[Chess::WHITE_TEAM]).to match_array(white_initial_occuped_cells)
+        expect(board.occuped_cells_coordinates_by_teams[Chess::WHITE_TEAM]).to match_array(white_initial_occuped_cells)
       end
 
       it 'returns algebraic notation of occuped cells for black team' do
-        expect(board.occuped_cells[Chess::BLACK_TEAM]).to match_array(black_initial_occuped_cells)
+        expect(board.occuped_cells_coordinates_by_teams[Chess::BLACK_TEAM]).to match_array(black_initial_occuped_cells)
       end
     end
   end

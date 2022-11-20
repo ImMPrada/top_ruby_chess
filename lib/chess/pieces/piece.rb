@@ -1,5 +1,7 @@
 require_relative '../chess'
 require_relative '../step'
+require 'colorize'
+require 'colorized_string'
 require 'byebug'
 
 module Chess
@@ -41,6 +43,12 @@ module Chess
 
     def captured?
       @captured
+    end
+
+    def to_s
+      return " #{@symbol} ".light_white if @team == WHITE_TEAM
+
+      " #{@symbol} ".black if @team == BLACK_TEAM
     end
 
     private

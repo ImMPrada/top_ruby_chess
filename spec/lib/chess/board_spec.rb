@@ -67,4 +67,68 @@ RSpec.describe Chess::Board do
       end
     end
   end
+
+  describe '#submit_movement' do
+    describe 'when origin cell of the movement is empty' do
+      it 'returns an error symbol' do
+        expect(board.submit_movement(:P, 'a5', 'a6')).to be(Chess::ERR_EMPTY_ORIGIN_CELL)
+      end
+    end
+
+    describe 'when origin cell is occuped for a cell of other class' do
+      it 'returns an error symbol' do
+        expect(board.submit_movement(:B, 'a2', 'b3')).to be(Chess::ERR_WRONG_PIECE_AT_CELL)
+      end
+    end
+
+    describe "when origin cell is occuped by the peace, but can't move to target_cell" do
+      it 'returns an error symbol' do
+        expect(board.submit_movement(:P, 'a2', 'a5')).to be(Chess::ERR_CAN_REACH_TARGET_CELL)
+      end
+    end
+
+    describe 'when submiting is succesful' do
+      it 'returns the piece moved' do
+        expect(board.submit_movement(:P, 'a2', 'a4')).to be_a(Chess::Pawn)
+      end
+
+      it 'returns piece moved, whit position updated' do
+        pawn_updated = board.submit_movement(:P, 'a2', 'a4')
+        expect(pawn_updated.position.algebraic.to_s).to eq('a4')
+      end
+    end
+  end
+
+  describe '#commit_movement' do
+    describe 'when movement is succesfuly commited' do
+      let(:piece_moved) { board.submit_movement(:P, 'a2', 'a4') }
+
+      it 'returns succes symbol' do
+        expect(board.commit_movement(piece_moved)).to be(Chess::COMMIT_SUCCESS)
+      end
+    end
+
+    describe "when the movement can't be performed, because the king could die" do
+      before do
+        puts board
+        piece_moved = board.submit_movement(:P, 'a2', 'a3')
+        board.commit_movement(piece_moved)
+        puts board
+        piece_moved = board.submit_movement(:P, 'e7', 'e6')
+        board.commit_movement(piece_moved)
+        puts board
+        piece_moved = board.submit_movement(:P, 'h2', 'h4')
+        board.commit_movement(piece_moved)
+        puts board
+        piece_moved = board.submit_movement(:B, 'f8', 'b4')
+        board.commit_movement(piece_moved)
+        puts board
+      end
+
+      it 'returns an error symbol' do
+        piece_moved = board.submit_movement(:P, 'd2', 'd3')
+        expect(board.commit_movement(piece_moved)).to be(Chess::ERR_KING_WILL_DIE)
+      end
+    end
+  end
 end

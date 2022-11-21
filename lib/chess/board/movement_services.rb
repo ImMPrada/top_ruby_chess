@@ -10,20 +10,24 @@ module Chess
       return ERR_WRONG_PIECE_AT_CELL unless piece_at_origin_cell.symbol == piece_symbol.to_sym
 
       piece_moved = piece_at_origin_cell.move_to(target_cell, occuped_cells_coordinates_by_teams)
-      return unless piece_moved
+      return ERR_CAN_REACH_TARGET_CELL unless piece_moved
 
       piece_at_origin_cell
     end
 
     def commit_movement(piece_moved)
       temporary_commit(piece_moved)
-      return COMMIT_SUCCESS unless can_enemies_take_the_king_right_now?(piece_moved.team)
+      return check_for_check_or_checkmate unless can_enemies_take_the_king_right_now?(piece_moved.team)
 
       roll_back_commitment(piece_moved)
       ERR_KING_WILL_DIE
     end
 
     private
+
+    def check_for_check_or_checkmate
+      COMMIT_SUCCESS
+    end
 
     def roll_back_commitment(piece_moved)
       current_position_algebraic = piece_moved.position.algebraic

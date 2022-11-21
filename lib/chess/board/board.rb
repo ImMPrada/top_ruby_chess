@@ -79,8 +79,8 @@ module Chess
 
       Pieces.new(
         team,
-        King.new("d#{main_row}", team),
-        [Queen.new("e#{main_row}", team)],
+        King.new("e#{main_row}", team),
+        [Queen.new("d#{main_row}", team)],
         [Bishop.new("c#{main_row}", team), Bishop.new("f#{main_row}", team)],
         [Knight.new("b#{main_row}", team), Knight.new("g#{main_row}", team)],
         [Rook.new("a#{main_row}", team), Rook.new("h#{main_row}", team)],

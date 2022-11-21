@@ -13,7 +13,7 @@ RSpec.describe Chess::Board do
 
     it 'returns a hash of to kewys: each team, in eache key, a has of two keys: algebraic and coordinates' do
       expect(board.occuped_cells_coordinates_by_teams[[Chess::WHITE_TEAM,
-                                  Chess::BLACK_TEAM].sample].class).to be(Array)
+                                                       Chess::BLACK_TEAM].sample].class).to be(Array)
     end
 
     describe 'when board is created, occuped cells, are initial occuped cells' do

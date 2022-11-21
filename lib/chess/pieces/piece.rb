@@ -6,7 +6,7 @@ require 'byebug'
 
 module Chess
   class Piece
-    attr_reader :symbol, :team
+    attr_reader :symbol, :team, :current_step
 
     Vector = Struct.new(:enabled, :deltas)
 
@@ -35,6 +35,10 @@ module Chess
 
       possible_positions = possible_positions(position_deltas_vectors, occuped_cells)
       possible_positions.include?(possible_step.position.coordinates.to_a)
+    end
+
+    def roll_back_step
+      @current_step = @current_step.prev_step
     end
 
     def position

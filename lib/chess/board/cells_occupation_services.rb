@@ -1,5 +1,5 @@
 module Chess
-  module CellsFillingServices
+  module CellsOccupationServices
     def occup_cells_by(team)
       @pieces[team].to_a.each { |pieces| occup_by(pieces) }
     end

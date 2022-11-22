@@ -68,8 +68,8 @@ RSpec.describe Chess::King do
   describe '#castle_with' do
     subject(:king) { described_class.new('e1', Chess::WHITE_TEAM) }
 
-    let(:rook_queen) { Chess::Rook.new('a1', Chess::WHITE_TEAM) }
-    let(:rook_king) { Chess::Rook.new('h1', Chess::WHITE_TEAM) }
+    let(:rook_queen) { Chess::Rook.new('a1', Chess::WHITE_TEAM, Chess::QUEEN_SIDE) }
+    let(:rook_king) { Chess::Rook.new('h1', Chess::WHITE_TEAM, Chess::KING_SIDE) }
     let(:side_to_castling) { [Chess::KING_SIDE, Chess::QUEEN_SIDE].sample }
     let(:rook_for_castling) do
       case side_to_castling

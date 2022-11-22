@@ -2,7 +2,7 @@ require 'spec_helper'
 
 RSpec.describe Chess::Rook do
   describe 'with a rook on e5' do
-    subject(:rook) { described_class.new('e5', Chess::WHITE_TEAM) }
+    subject(:rook) { described_class.new('e5', Chess::WHITE_TEAM, Chess::QUEEN_SIDE) }
 
     let(:occuped_cells) do
       {
@@ -85,7 +85,7 @@ RSpec.describe Chess::Rook do
   end
 
   describe '#can_castling' do
-    subject(:rook) { described_class.new('a1', Chess::WHITE_TEAM) }
+    subject(:rook) { described_class.new('a1', Chess::WHITE_TEAM, Chess::QUEEN_SIDE) }
 
     let(:occuped_cells) do
       {
@@ -110,7 +110,7 @@ RSpec.describe Chess::Rook do
   end
 
   describe '#can_attack_to?' do
-    subject(:rook) { described_class.new('e1', Chess::WHITE_TEAM) }
+    subject(:rook) { described_class.new('e1', Chess::WHITE_TEAM, Chess::QUEEN_SIDE) }
 
     let(:occuped_cells) do
       {

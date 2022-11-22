@@ -6,7 +6,7 @@ module Chess
   class Rook < Piece
     SYMBOL = :R
 
-    def initialize(coordinates, team)
+    def initialize(coordinates, team, side)
       super(coordinates, SYMBOL, team)
       @generated_deltas = {
         v1: Vector.new(true, []),
@@ -16,6 +16,7 @@ module Chess
       }
       @capture_movements = nil
       @first_move = true
+      @side = side
 
       generate_deltas
     end
@@ -30,6 +31,14 @@ module Chess
 
     def can_castling?
       @first_move
+    end
+
+    def queen_side?
+      @side == QUEEN_SIDE
+    end
+
+    def king_side?
+      @side == KING_SIDE
     end
 
     def can_attack_to?(target_position_algebraic, occuped_cells)

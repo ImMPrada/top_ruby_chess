@@ -1,8 +1,9 @@
 require_relative '../chess'
+require_relative '../movement'
 require_relative 'cell'
 require_relative 'check_attacks_services'
 require_relative 'string_transform_services'
-require_relative 'movement_services'
+require_relative 'cells_occupation_services'
 
 require_relative '../pieces/king'
 require_relative '../pieces/queen'
@@ -14,12 +15,16 @@ require_relative '../pieces/pawn'
 module Chess
   class Board
     include CheckAttacksService
+    include CellsOccupationServices
     include StringTransformServices
-    include MovementServices
 
     attr_reader :cells, :pieces
 
-    Pieces = Struct.new(:team, :king, :queens, :bishops, :knights, :rooks, :pawns)
+    Pieces = Struct.new(:team, :king, :queens, :bishops, :knights, :rooks, :pawns) do
+      def to_a
+        [[king], queens, bishops, knights, rooks, pawns]
+      end
+    end
 
     def initialize
       @cells = {}
@@ -27,26 +32,6 @@ module Chess
 
       generate_cells
       put_pieces
-    end
-
-    def occuped_cells_coordinates_by_teams
-      occuped_cells = {
-        WHITE_TEAM => [],
-        BLACK_TEAM => []
-      }
-
-      COLUMNS.each do |column|
-        (MIN_INDEX..MAX_INDEX).each do |row_index|
-          @cells[column.to_sym]
-
-          cell = @cells[column.to_sym][row_index]
-          next unless cell.occuped?
-
-          occuped_cells[cell.team] << cell.coordinates.to_a
-        end
-      end
-
-      occuped_cells
     end
 
     private
@@ -71,7 +56,7 @@ module Chess
         BLACK_TEAM => generate_pieces(BLACK_TEAM, 7)
       }
 
-      take_cells
+      occup_cells
     end
 
     def generate_pieces(team, row_of_pawns)
@@ -94,9 +79,9 @@ module Chess
       row_of_pawns - 1
     end
 
-    def take_cells
-      take_cells_by_team(WHITE_TEAM)
-      take_cells_by_team(BLACK_TEAM)
+    def occup_cells
+      occup_cells_by(WHITE_TEAM)
+      occup_cells_by(BLACK_TEAM)
     end
   end
 end

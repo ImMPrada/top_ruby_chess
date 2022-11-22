@@ -55,6 +55,10 @@ module Chess
       can_move_to?(target_position_algebraic, @capture_movements, occuped_cells)
     end
 
+    def to_s
+      super("\u265a")
+    end
+
     private
 
     def target_castling_positio_rook(casting_side)

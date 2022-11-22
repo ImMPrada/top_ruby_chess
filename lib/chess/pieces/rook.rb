@@ -36,6 +36,10 @@ module Chess
       can_move_to?(target_position_algebraic, @capture_movements, occuped_cells)
     end
 
+    def to_s
+      super("\u265c")
+    end
+
     private
 
     def generate_deltas

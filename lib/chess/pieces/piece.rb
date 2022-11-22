@@ -49,10 +49,10 @@ module Chess
       @captured
     end
 
-    def to_s
-      return " #{@symbol} ".light_white if @team == WHITE_TEAM
+    def to_s(piece_string)
+      return " #{piece_string} ".light_white if @team == WHITE_TEAM
 
-      " #{@symbol} ".black if @team == BLACK_TEAM
+      " #{piece_string} ".black if @team == BLACK_TEAM
     end
 
     private

@@ -1,9 +1,10 @@
 require_relative '../chess'
-require_relative '../movement'
+require_relative '../movement/movement'
 require_relative 'cell'
 require_relative 'check_attacks_services'
 require_relative 'string_transform_services'
 require_relative 'cells_occupation_services'
+require_relative 'movement_services'
 
 require_relative '../pieces/king'
 require_relative '../pieces/queen'
@@ -17,6 +18,7 @@ module Chess
     include CheckAttacksService
     include CellsOccupationServices
     include StringTransformServices
+    include MovementServices
 
     attr_reader :cells, :pieces
 
@@ -68,7 +70,7 @@ module Chess
         [Queen.new("d#{main_row}", team)],
         [Bishop.new("c#{main_row}", team), Bishop.new("f#{main_row}", team)],
         [Knight.new("b#{main_row}", team), Knight.new("g#{main_row}", team)],
-        [Rook.new("a#{main_row}", team), Rook.new("h#{main_row}", team)],
+        [Rook.new("a#{main_row}", team, QUEEN_SIDE), Rook.new("h#{main_row}", team, KING_SIDE)],
         (0..7).to_a.map { |column_index| Pawn.new("#{COLUMNS[column_index]}#{row_of_pawns}", team) }
       )
     end

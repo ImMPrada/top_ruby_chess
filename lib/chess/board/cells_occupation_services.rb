@@ -33,5 +33,30 @@ module Chess
 
       occuped_cells
     end
+
+    private
+
+    def find_cell(cell_algebraic_string)
+      splitted_cell_string = cell_algebraic_string.split('')
+      @cells[splitted_cell_string[0].to_sym][splitted_cell_string[1].to_i - 1]
+    end
+
+    def path_empty?(road_columns, row)
+      road = road_columns.map do |road_column|
+        cell = find_cell("#{road_column}#{row}")
+        cell.occuped?
+      end
+      road.all?(false)
+    end
+
+    def king_side_castling_cells_free?(team)
+      return path_empty?(%w[f g], MIN_INDEX + 1) if team == WHITE_TEAM
+      return path_empty?(%w[f g], MAX_INDEX + 1) if team == BLACK_TEAM
+    end
+
+    def queen_side_castling_cells_free?(team)
+      return path_empty?(%w[b c d], MIN_INDEX + 1) if team == WHITE_TEAM
+      return path_empty?(%w[b c d], MAX_INDEX + 1) if team == BLACK_TEAM
+    end
   end
 end

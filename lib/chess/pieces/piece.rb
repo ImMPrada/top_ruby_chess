@@ -39,6 +39,11 @@ module Chess
 
     def roll_back_step
       @current_step = @current_step.prev_step
+      @captured = false
+
+      return unless @first_move == false
+
+      @first_move = true
     end
 
     def position

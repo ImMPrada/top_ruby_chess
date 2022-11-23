@@ -48,6 +48,8 @@ module Chess
                                                 occuped_cells_coordinates_by_teams)
       end
       return commit_result unless king_in_risk
+
+      king_movement.roll_back_castling
     end
 
     def setup_king_movement_instance(king, rook, current_cells_occupation)

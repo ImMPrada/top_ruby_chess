@@ -25,20 +25,6 @@ module Chess
       set_origin_target_and_teams
     end
 
-    def roll_back
-      find_cell(@piece_moved.position.algebraic).free
-
-      @piece_moved.roll_back_step
-      find_cell(@piece_moved.position.algebraic).occup_by(@piece_moved)
-
-      return ROLLBACK_SUCCES unless @piece_captured
-
-      find_cell(@piece_captured.position.algebraic).occup_by(@piece_captured)
-      add_captured_to_pieces
-      @piece_captured = nil
-      ROLLBACK_SUCCES
-    end
-
     def update_occuped_cells(occuped_cells_coordinates_by_teams)
       @occuped_cells_coordinates_by_teams = occuped_cells_coordinates_by_teams
     end

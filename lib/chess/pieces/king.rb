@@ -32,19 +32,20 @@ module Chess
       super_response
     end
 
-    def castle_with(piece, occuped_cells, casting_side)
+    def castle_with(piece, occuped_cells, castling_side)
       return unless can_castling? && piece.can_castling?
 
-      return unless can_castle_at?(casting_side, occuped_cells[BLACK_TEAM] + occuped_cells[WHITE_TEAM])
+      return unless can_castle_at?(castling_side, occuped_cells[BLACK_TEAM] + occuped_cells[WHITE_TEAM])
 
       original_generated_deltas = @generated_deltas
       @generated_deltas = {
-        v1: Vector.new(true, [[2, 0], [-2, 0]])
+        v1: Vector.new(true, [[2, 0]]),
+        v2: Vector.new(true, [[-2, 0]])
       }
 
-      move_to(target_castling_positio_king(casting_side), occuped_cells)
+      move_to(target_castling_position_king(castling_side), occuped_cells)
       @generated_deltas = original_generated_deltas
-      piece.move_to(target_castling_positio_rook(casting_side), occuped_cells)
+      piece.move_to(target_castling_position_rook(castling_side), occuped_cells)
     end
 
     def can_castling?
@@ -61,10 +62,10 @@ module Chess
 
     private
 
-    def target_castling_positio_rook(casting_side)
+    def target_castling_position_rook(castling_side)
       algebraic_row = position.algebraic.row
 
-      case casting_side
+      case castling_side
       when QUEEN_SIDE
         "d#{algebraic_row}"
       when KING_SIDE
@@ -72,10 +73,10 @@ module Chess
       end
     end
 
-    def target_castling_positio_king(casting_side)
+    def target_castling_position_king(castling_side)
       algebraic_row = position.algebraic.row
 
-      case casting_side
+      case castling_side
       when QUEEN_SIDE
         "c#{algebraic_row}"
       when KING_SIDE
@@ -83,8 +84,8 @@ module Chess
       end
     end
 
-    def can_castle_at?(casting_side, occuped_cells)
-      case casting_side
+    def can_castle_at?(castling_side, occuped_cells)
+      case castling_side
       when QUEEN_SIDE
         queen_side_cells.none? { |cell| occuped_cells.include?(cell) }
       when KING_SIDE

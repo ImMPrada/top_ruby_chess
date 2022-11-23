@@ -10,7 +10,21 @@ module Chess
   ERR_EMPTY_ORIGIN_CELL = :empty_cell
   ERR_WRONG_PIECE_AT_CELL = :wrong_piece
   ERR_CAN_REACH_TARGET_CELL = :null_movement
-  COMMIT_SUCCESS = :success
+  ERR_CELL_OCCUPED_BY_ENEMY = :cell_of_enemy
+  COMMIT_SUCCESS = :commit_success
+  SUBMIT_SUCCESS = :submit_success
+  ROLLBACK_SUCCES = :rollback_succes
+
+  CASE_MOVEMENT = :make_movement
+
+  RUNNING = :game_running
+  ERR_WRONG_INPUT = :wrong_prompt
+
+  CASE_MOVEMENT= :move
+
+  CANT_CASTLING = :cant_castling
+
+  ERR_INTENTION_PARAMETERS = :error_intention_params
 
   MOVEMENT_RESULTS_MESSAGES = {
     king_will_die: "Cant't move to target cell, the king will die",

@@ -6,6 +6,8 @@ module Chess
   class Rook < Piece
     SYMBOL = :R
 
+    attr_reader :side
+
     def initialize(coordinates, team, side)
       super(coordinates, SYMBOL, team)
       @generated_deltas = {

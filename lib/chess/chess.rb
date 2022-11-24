@@ -20,7 +20,8 @@ module Chess
   RUNNING = :game_running
   ERR_WRONG_INPUT = :wrong_prompt
 
-  CASE_MOVEMENT = :move
+  CASE_MOVEMENT = :movement_prompt
+  CASE_CASTLE = :castle_prompt
 
   CANT_CASTLING = :cant_castling
 

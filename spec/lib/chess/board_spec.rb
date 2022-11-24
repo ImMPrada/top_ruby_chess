@@ -67,24 +67,4 @@ RSpec.describe Chess::Board do
       end
     end
   end
-
-  describe '#commit_movement_intention' do
-    describe 'when move a piece, expose the king to death' do
-      before do
-        puts board
-        board.commit_movement_intention('P', 'a2', 'a4', Chess::WHITE_TEAM)
-        puts board
-        board.commit_movement_intention('P', 'e7', 'e6', Chess::BLACK_TEAM)
-        puts board
-        board.commit_movement_intention('N', 'g1', 'h3', Chess::WHITE_TEAM)
-        puts board
-        board.commit_movement_intention('Q', 'd8', 'h4', Chess::BLACK_TEAM)
-        puts board
-      end
-
-      it 'rollbacks the commitment' do
-        expect(board.commit_movement_intention('P', 'f2', 'f4', Chess::WHITE_TEAM)).to be(Chess::ROLLBACK_SUCCES)
-      end
-    end
-  end
 end

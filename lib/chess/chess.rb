@@ -9,7 +9,7 @@ module Chess
   ERR_KING_WILL_DIE = :king_will_die
   ERR_EMPTY_ORIGIN_CELL = :empty_cell
   ERR_WRONG_PIECE_AT_CELL = :wrong_piece
-  ERR_CAN_REACH_TARGET_CELL = :null_movement
+  ERR_CANT_REACH_TARGET_CELL = :null_movement
   ERR_CELL_OCCUPED_BY_ENEMY = :cell_of_enemy
   COMMIT_SUCCESS = :commit_success
   SUBMIT_SUCCESS = :submit_success

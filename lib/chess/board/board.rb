@@ -1,10 +1,6 @@
 require_relative '../chess'
-require_relative '../movement/movement'
 require_relative 'cell'
-require_relative 'check_attacks_services'
-require_relative 'string_transform_services'
-require_relative 'cells_occupation_services'
-require_relative 'movement_services'
+require_relative 'string_transform_service'
 
 require_relative '../pieces/king'
 require_relative '../pieces/queen'
@@ -15,10 +11,7 @@ require_relative '../pieces/pawn'
 
 module Chess
   class Board
-    include CheckAttacksService
-    include CellsOccupationServices
-    include StringTransformServices
-    include MovementServices
+    include StringTransformService
 
     attr_reader :cells, :pieces
 
@@ -36,7 +29,43 @@ module Chess
       put_pieces
     end
 
+    def can_any_enemy_attack_to?(target_cell_string, enemy_team, occuped_cells)
+      evaluation = @pieces[enemy_team].to_a.map do |pieces|
+        check_atack_hability_for(pieces, target_cell_string, occuped_cells)
+      end
+
+      evaluation.any?(true)
+    end
+
+    def occuped_cells_coordinates_by_teams
+      occuped_cells = {
+        WHITE_TEAM => [],
+        BLACK_TEAM => []
+      }
+
+      COLUMNS.each do |column|
+        (MIN_INDEX..MAX_INDEX).each do |row_index|
+          @cells[column.to_sym]
+
+          cell = @cells[column.to_sym][row_index]
+          next unless cell.occuped?
+
+          occuped_cells[cell.team] << cell.coordinates.to_a
+        end
+      end
+
+      occuped_cells
+    end
+
     private
+
+    def check_atack_hability_for(pieces, target_cell_string, occuped_cells)
+      pieces_result = pieces.map do |piece|
+        return true if piece.can_attack_to?(target_cell_string, occuped_cells)
+      end
+
+      !pieces_result.compact.empty?
+    end
 
     def generate_cells
       cell_color = WHITE_TEAM
@@ -84,6 +113,17 @@ module Chess
     def occup_cells
       occup_cells_by(WHITE_TEAM)
       occup_cells_by(BLACK_TEAM)
+    end
+
+    def occup_cells_by(team)
+      @pieces[team].to_a.each do |pieces|
+        pieces.each { |piece| find_cell(piece.position.algebraic.to_s).occup_by(piece) }
+      end
+    end
+
+    def find_cell(cell_algebraic_string)
+      splitted_cell_string = cell_algebraic_string.split('')
+      @cells[splitted_cell_string[0].to_sym][splitted_cell_string[1].to_i - 1]
     end
   end
 end

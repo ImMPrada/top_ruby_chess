@@ -12,6 +12,7 @@ require './lib/chess/pieces/rook'
 require './lib/chess/pieces/pawn'
 require './lib/chess/position'
 require './lib/chess/board/board'
+require './lib/chess/book'
 
 SimpleCov::Formatter::LcovFormatter.config.report_with_single_file = true
 SimpleCov::Formatter::LcovFormatter.config do |c|

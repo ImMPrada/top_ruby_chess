@@ -1,5 +1,5 @@
 module Chess
-  module StringTransformServices
+  module StringTransformService
     def to_s
       response = "     a  b  c  d  e  f  g  h \n"
 

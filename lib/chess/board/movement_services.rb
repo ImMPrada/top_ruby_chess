@@ -2,7 +2,7 @@ require_relative '../chess'
 
 module Chess
   module MovementServices
-    def commit_movement_intention(piece_symbol, origin_cell, target_cell, team_filter)
+    def movement_intention(piece_symbol, origin_cell, target_cell, team_filter)
       intention = { symbol: piece_symbol, origin_cell:, target_cell: }
       movement = Movement.new(intention, @cells, occuped_cells_coordinates_by_teams, @pieces, team_filter)
 

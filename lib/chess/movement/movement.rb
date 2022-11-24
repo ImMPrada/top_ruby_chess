@@ -10,7 +10,7 @@ module Chess
     include CommitServices
     include RollbackServices
 
-    attr_reader :king_position_string, :enemies_team
+    attr_reader :king_position_string, :enemies_team, :piece_captured
 
     def initialize(intent, cells, occuped_cells_coordinates_by_teams, pieces, team_filter)
       @cells = cells
@@ -30,36 +30,6 @@ module Chess
     end
 
     private
-
-    def remove_captured_from_pieces
-      case @piece_captured.symbol
-      when :Q
-        @pieces[@enemies_team].queens.delete(@piece_captured)
-      when :B
-        @pieces[@enemies_team].bishops.delete(@piece_captured)
-      when :P
-        @pieces[@enemies_team].pawns.delete(@piece_captured)
-      when :N
-        @pieces[@enemies_team].knights.delete(@piece_captured)
-      when :R
-        @pieces[@enemies_team].rooks.delete(@piece_captured)
-      end
-    end
-
-    def add_captured_to_pieces
-      case @piece_captured.symbol
-      when :Q
-        @pieces[@enemies_team].queens << @piece_captured
-      when :B
-        @pieces[@enemies_team].bishops << @piece_captured
-      when :P
-        @pieces[@enemies_team].pawns << @piece_captured
-      when :N
-        @pieces[@enemies_team].knights << @piece_captured
-      when :R
-        @pieces[@enemies_team].rooks << @piece_captured
-      end
-    end
 
     def set_origin_target_and_teams
       @origin_cell = assign_cell(:origin_cell)

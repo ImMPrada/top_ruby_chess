@@ -3,10 +3,8 @@ require_relative '../chess'
 module Chess
   module RollbackServices
     def roll_back
-      find_cell(@piece_moved.position.algebraic).free
-
-      @piece_moved.roll_back_step
-      find_cell(@piece_moved.position.algebraic).occup_by(@piece_moved)
+      roll_back_piece_moved
+      @king_position_string = @pieces[@friends_team].king.position.algebraic.to_s
 
       return ROLLBACK_SUCCES unless @piece_captured
 
@@ -18,15 +16,35 @@ module Chess
     end
 
     def roll_back_castling
+      roll_back_piece_moved
+      @king_position_string = @pieces[@friends_team].king.position.algebraic.to_s
+
+      ROLLBACK_SUCCES
+    end
+
+    private
+
+    def roll_back_piece_moved
       @piece_moved.each do |piece|
         find_cell(piece.current_step.prev_step.position.algebraic).occup_by(piece)
         find_cell(piece.position.algebraic).free
         piece.roll_back_step
       end
+    end
 
-      @king_position_string = @piece_moved.first.position.algebraic.to_s
-
-      ROLLBACK_SUCCES
+    def add_captured_to_pieces
+      case @piece_captured.symbol
+      when :Q
+        @pieces[@enemies_team].queens << @piece_captured
+      when :B
+        @pieces[@enemies_team].bishops << @piece_captured
+      when :P
+        @pieces[@enemies_team].pawns << @piece_captured
+      when :N
+        @pieces[@enemies_team].knights << @piece_captured
+      when :R
+        @pieces[@enemies_team].rooks << @piece_captured
+      end
     end
   end
 end

@@ -17,11 +17,11 @@ RSpec.describe Chess::Prompt do
       end
     end
 
-    describe 'when input is a movement' do
+    describe 'when input is a move' do
       let(:right_input) { 'pg2g3' }
 
-      it 'returns movement case' do
-        expect(prompt.input(right_input)).to be(Chess::CASE_MOVEMENT)
+      it 'returns move case' do
+        expect(prompt.input(right_input)).to be(Chess::CASE_MOVE)
       end
 
       it 'updates parameters resulting' do
@@ -33,7 +33,7 @@ RSpec.describe Chess::Prompt do
     describe 'when input is kingside castling' do
       let(:right_input) { 'o-o' }
 
-      it 'returns movement case' do
+      it 'returns move case' do
         expect(prompt.input(right_input)).to be(Chess::CASE_CASTLE)
       end
 
@@ -46,7 +46,7 @@ RSpec.describe Chess::Prompt do
     describe 'when input is queenside castling' do
       let(:right_input) { 'o-o-o' }
 
-      it 'returns movement case' do
+      it 'returns move case' do
         expect(prompt.input(right_input)).to be(Chess::CASE_CASTLE)
       end
 

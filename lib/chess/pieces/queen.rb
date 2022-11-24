@@ -18,17 +18,17 @@ module Chess
         v7: Vector.new(true, []),
         v8: Vector.new(true, [])
       }
-      @capture_movements = nil
+      @capture_moves = nil
 
       generate_deltas
     end
 
     def move_to(position_algebraic, occuped_cells, capturing = false)
-      super(position_algebraic, capturing ? @capture_movements : @generated_deltas, occuped_cells)
+      super(position_algebraic, capturing ? @capture_moves : @generated_deltas, occuped_cells)
     end
 
     def can_attack_to?(target_position_algebraic, occuped_cells)
-      can_move_to?(target_position_algebraic, @capture_movements, occuped_cells)
+      can_move_to?(target_position_algebraic, @capture_moves, occuped_cells)
     end
 
     def to_s
@@ -52,7 +52,7 @@ module Chess
         @generated_deltas[:v8].deltas << [-i, i]
       end
 
-      @capture_movements = @generated_deltas
+      @capture_moves = @generated_deltas
     end
     # rubocop:enable Metrics/AbcSize
   end

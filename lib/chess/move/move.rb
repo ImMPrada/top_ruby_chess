@@ -5,7 +5,7 @@ require_relative 'rollback_services'
 require 'byebug'
 
 module Chess
-  class Movement
+  class Move
     include SubmitServices
     include CommitServices
     include RollbackServices

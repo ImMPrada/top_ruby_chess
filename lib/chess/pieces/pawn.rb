@@ -9,13 +9,13 @@ module Chess
     def initialize(coordinates, team)
       super(coordinates, SYMBOL, team)
       @generated_deltas = { v1: Vector.new(true, []) }
-      @capture_movements = { v1: Vector.new(true, []) }
+      @capture_moves = { v1: Vector.new(true, []) }
       @first_move = true
     end
 
     def move_to(position_algebraic, occuped_cells, capturing = false)
       generate_deltas
-      super_response = super(position_algebraic, capturing ? @capture_movements : @generated_deltas, occuped_cells)
+      super_response = super(position_algebraic, capturing ? @capture_moves : @generated_deltas, occuped_cells)
       return unless super_response
 
       @first_move = false
@@ -24,7 +24,7 @@ module Chess
 
     def can_attack_to?(target_position_algebraic, occuped_cells)
       generate_deltas
-      can_move_to?(target_position_algebraic, @capture_movements, occuped_cells)
+      can_move_to?(target_position_algebraic, @capture_moves, occuped_cells)
     end
 
     def to_s
@@ -40,11 +40,11 @@ module Chess
 
     def generate_white_deltas
       @generated_deltas[:v1].deltas = []
-      @capture_movements[:v1].deltas = []
+      @capture_moves[:v1].deltas = []
 
       @generated_deltas[:v1].deltas << [0, 1]
-      @capture_movements[:v1].deltas << [1, 1]
-      @capture_movements[:v1].deltas << [-1, 1]
+      @capture_moves[:v1].deltas << [1, 1]
+      @capture_moves[:v1].deltas << [-1, 1]
 
       return unless @first_move
 
@@ -53,11 +53,11 @@ module Chess
 
     def generate_black_deltas
       @generated_deltas[:v1].deltas = []
-      @capture_movements[:v1].deltas = []
+      @capture_moves[:v1].deltas = []
 
       @generated_deltas[:v1].deltas << [0, -1]
-      @capture_movements[:v1].deltas << [1, -1]
-      @capture_movements[:v1].deltas << [-1, -1]
+      @capture_moves[:v1].deltas << [1, -1]
+      @capture_moves[:v1].deltas << [-1, -1]
 
       return unless @first_move
 

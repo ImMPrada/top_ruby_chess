@@ -31,7 +31,7 @@ module Chess
       case @input_string
       when PIECE_MOVE_REGEX
         @parameters = @input_string.scan(PIECE_MOVE_SCAN_REGEX)
-        @case = CASE_MOVEMENT
+        @case = CASE_MOVE
       when QUEEN_SIDE_CASTLE_INPUT
         @parameters = QUEEN_SIDE
         @case = CASE_CASTLE

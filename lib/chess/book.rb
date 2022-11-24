@@ -1,6 +1,6 @@
 require_relative 'chess'
 require_relative './board/board'
-require_relative './movement/movement'
+require_relative './move/move'
 
 module Chess
   class Book
@@ -10,24 +10,24 @@ module Chess
       @pieces = board.pieces
     end
 
-    def movement_intention(piece_symbol, origin_cell, target_cell, team_filter)
+    def move_intention(piece_symbol, origin_cell, target_cell, team_filter)
       intention = { symbol: piece_symbol, origin_cell:, target_cell: }
-      movement = Movement.new(intention, @cells, @board.occuped_cells_coordinates_by_teams, @pieces, team_filter)
+      move = Move.new(intention, @cells, @board.occuped_cells_coordinates_by_teams, @pieces, team_filter)
 
-      submit_result = movement.submit
+      submit_result = move.submit
       return submit_result unless submit_result == SUBMIT_SUCCESS
 
-      commit_result = movement.commit
-      movement.update_occuped_cells(@board.occuped_cells_coordinates_by_teams)
+      commit_result = move.commit
+      move.update_occuped_cells(@board.occuped_cells_coordinates_by_teams)
 
       if commit_result == COMMIT_SUCCESS
-        king_in_risk = @board.can_any_enemy_attack_to?(movement.king_position_string,
-                                                       movement.enemies_team,
+        king_in_risk = @board.can_any_enemy_attack_to?(move.king_position_string,
+                                                       move.enemies_team,
                                                        @board.occuped_cells_coordinates_by_teams)
       end
       return commit_result unless king_in_risk
 
-      movement.roll_back
+      move.roll_back
     end
 
     def castle_intention_on(side, team)
@@ -44,25 +44,25 @@ module Chess
     def commit_castle_intention(king, rook)
       current_cells_occupation = @board.occuped_cells_coordinates_by_teams
 
-      king_movement = setup_king_movement_instance(king, rook, current_cells_occupation)
+      king_move = setup_king_move_instance(king, rook, current_cells_occupation)
 
-      king_submit_result = king_movement.castle_submit(rook)
+      king_submit_result = king_move.castle_submit(rook)
       return king_submit_result unless king_submit_result == SUBMIT_SUCCESS
 
-      commit_result = king_movement.castle_commit
-      king_movement.update_occuped_cells(@board.occuped_cells_coordinates_by_teams)
+      commit_result = king_move.castle_commit
+      king_move.update_occuped_cells(@board.occuped_cells_coordinates_by_teams)
 
       if commit_result == COMMIT_SUCCESS
-        king_in_risk = @board.can_any_enemy_attack_to?(king_movement.king_position_string,
-                                                       king_movement.enemies_team,
+        king_in_risk = @board.can_any_enemy_attack_to?(king_move.king_position_string,
+                                                       king_move.enemies_team,
                                                        @board.occuped_cells_coordinates_by_teams)
       end
       return commit_result unless king_in_risk
 
-      king_movement.roll_back_castling
+      king_move.roll_back_castling
     end
 
-    def setup_king_movement_instance(king, rook, current_cells_occupation)
+    def setup_king_move_instance(king, rook, current_cells_occupation)
       row = king.position.algebraic.row
 
       target_cell = "c#{row}" if rook.queen_side?
@@ -74,7 +74,7 @@ module Chess
         target_cell:
       }
 
-      Movement.new(intention, @cells, current_cells_occupation, @pieces, king.team)
+      Move.new(intention, @cells, current_cells_occupation, @pieces, king.team)
     end
 
     def king_side_castling_intention(team)
@@ -83,7 +83,7 @@ module Chess
       empty_road = king_side_castling_cells_free?(team)
       rook = @pieces[team].rooks.select(&:king_side?).last
 
-      return CANT_CASTLING unless empty_road && king.can_castling? && rook.can_castling?
+      return ERR_CANT_CASTLING unless empty_road && king.can_castling? && rook.can_castling?
 
       commit_castle_intention(king, rook)
     end
@@ -94,7 +94,7 @@ module Chess
       empty_road = queen_side_castling_cells_free?(team)
       rook = @pieces[team].rooks.select(&:queen_side?).last
 
-      return CANT_CASTLING unless empty_road && king.can_castling? && rook.can_castling?
+      return ERR_CANT_CASTLING unless empty_road && king.can_castling? && rook.can_castling?
 
       commit_castle_intention(king, rook)
     end

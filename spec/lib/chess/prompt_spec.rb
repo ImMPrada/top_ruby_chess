@@ -26,7 +26,7 @@ RSpec.describe Chess::Prompt do
 
       it 'updates parameters resulting' do
         prompt.input(right_input)
-        expect(prompt.parameters).to eq('pg2g3'.scan(Chess::Prompt::PIECE_MOVE_SCAN_REGEX))
+        expect(prompt.parameters).to eq(%w[p g2 g3])
       end
     end
 

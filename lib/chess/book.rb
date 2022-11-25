@@ -4,7 +4,6 @@ require_relative './board/board'
 require_relative './move/move'
 
 module Chess
-  # rubocop:disable Metrics/ClassLength
   class Book
     attr_reader :record
 
@@ -126,6 +125,5 @@ module Chess
       splitted_cell_string = cell_algebraic_string.split('')
       @cells[splitted_cell_string[0].to_sym][splitted_cell_string[1].to_i - 1]
     end
-    # rubocop:enable Metrics/ClassLength
   end
 end

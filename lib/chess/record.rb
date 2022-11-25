@@ -30,10 +30,9 @@ module Chess
       @current_record_team = move.team_filter
       empty_record = current_record
       move_intention = move.intention
-      
+
       piece_symbol = move_intention[:symbol_filter].upcase
-      
-      byebug
+
       empty_record[@current_record_team] = CommitRecord.new(piece_symbol,
                                                             move_intention[:origin_cell],
                                                             move_intention[:target_cell],
@@ -47,7 +46,7 @@ module Chess
     end
 
     def add_castling(rook)
-      @current_record_team = rok.team
+      @current_record_team = rook.team
       empty_record = current_record
       castling_side = rook.side
 
@@ -62,7 +61,6 @@ module Chess
       return @history.last if last_record_available?
 
       @history << RoundRecord.new(nil, nil, nil)
-      byebug
       @history.last
     end
 

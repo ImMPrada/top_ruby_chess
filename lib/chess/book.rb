@@ -10,8 +10,8 @@ module Chess
       @pieces = board.pieces
     end
 
-    def move_intention(piece_symbol, origin_cell, target_cell, team_filter)
-      intention = { symbol: piece_symbol, origin_cell:, target_cell: }
+    def move_intention(symbol_filter, origin_cell, target_cell, team_filter)
+      intention = { symbol_filter:, origin_cell:, target_cell: }
       move = Move.new(intention, @cells, @board.occuped_cells_coordinates_by_teams, @pieces, team_filter)
 
       submit_result = move.submit
@@ -69,7 +69,7 @@ module Chess
       target_cell = "g#{row}" if rook.king_side?
 
       intention = {
-        symbol: king.symbol,
+        symbol_filter: king.symbol,
         origin_cell: king.position.algebraic.to_s,
         target_cell:
       }

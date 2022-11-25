@@ -19,11 +19,19 @@ module Chess
   ROLLBACK_SUCCES = :rollback_succes
 
   ERR_WRONG_INPUT = :wrong_prompt
-  CASE_MOVE = :make_move
   CASE_MOVE = :move_prompt
   CASE_CASTLE = :castle_prompt
 
-  RUNNING = :game_running
+  CASTLE_COMMITMENT = :commit_is_castle
 
+  RUNNING = :game_running
+  STOP = :game_stop
+
+  SHOW_RECORD_COMMAD = :show_record
+  EXIT_COMMAD = :exit_game
+  COMMAND_SUCCES = :ok
+
+  KING_SIDE_CASTLING_CODE = 'O-O'.freeze
+  QUEEN_SIDE_CASTLING_CODE = 'O-O-O'.freeze
   COLUMNS = %w[a b c d e f g h].freeze
 end

@@ -10,12 +10,12 @@ module Chess
     include CommitServices
     include RollbackServices
 
-    attr_reader :king_position_string, :enemies_team, :piece_captured
+    attr_reader :king_position_string, :enemies_team, :piece_captured, :intention, :team_filter
 
-    def initialize(intent, cells, occuped_cells_coordinates_by_teams, pieces, team_filter)
+    def initialize(intention, cells, occuped_cells_coordinates_by_teams, pieces, team_filter)
       @cells = cells
-      @intent = intent
-      @symbol_filter = @intent[:symbol].to_sym
+      @intention = intention
+      @symbol_filter = @intention[:symbol_filter].to_sym
       @pieces = pieces
       @occuped_cells_coordinates_by_teams = occuped_cells_coordinates_by_teams
       @team_filter = team_filter
@@ -39,7 +39,7 @@ module Chess
     end
 
     def assign_cell(cell_type)
-      splitted_cell_string = @intent[cell_type].split('')
+      splitted_cell_string = @intention[cell_type].split('')
       @cells[splitted_cell_string[0].to_sym][splitted_cell_string[1].to_i - 1]
     end
 

@@ -1,13 +1,18 @@
 require_relative 'chess'
+require_relative 'record'
 require_relative './board/board'
 require_relative './move/move'
 
 module Chess
+  # rubocop:disable Metrics/ClassLength
   class Book
+    attr_reader :record
+
     def initialize(board)
       @board = board
       @cells = board.cells
       @pieces = board.pieces
+      @record = Record.new
     end
 
     def move_intention(symbol_filter, origin_cell, target_cell, team_filter)
@@ -25,7 +30,7 @@ module Chess
                                                        move.enemies_team,
                                                        @board.occuped_cells_coordinates_by_teams)
       end
-      return commit_result unless king_in_risk
+      return @record.add_move(move) unless king_in_risk
 
       move.roll_back
     end
@@ -57,7 +62,7 @@ module Chess
                                                        king_move.enemies_team,
                                                        @board.occuped_cells_coordinates_by_teams)
       end
-      return commit_result unless king_in_risk
+      return @record.add_castling(rook) unless king_in_risk
 
       king_move.roll_back_castling
     end
@@ -121,5 +126,6 @@ module Chess
       splitted_cell_string = cell_algebraic_string.split('')
       @cells[splitted_cell_string[0].to_sym][splitted_cell_string[1].to_i - 1]
     end
+    # rubocop:enable Metrics/ClassLength
   end
 end

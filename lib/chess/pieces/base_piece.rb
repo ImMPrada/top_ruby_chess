@@ -5,7 +5,7 @@ require 'colorized_string'
 require 'byebug'
 
 module Chess
-  class Piece
+  class BasePiece
     attr_reader :symbol, :team, :current_step
 
     Vector = Struct.new(:enabled, :deltas)
@@ -15,17 +15,16 @@ module Chess
       @symbol = symbol
       @captured = captured
       @team = team
-      @enemies_team = ([WHITE_TEAM, BLACK_TEAM] - [@team]).first
     end
 
-    def move_to(target_position_algebraic, position_deltas_vectors, occuped_cells = nil)
-      possible_step = Step.new(target_position_algebraic)
+    def move_to(position, position_deltas_vectors, occuped_cells = nil)
+      coordinates = position.coordinates.to_a
 
       possible_positions = possible_positions(position_deltas_vectors, occuped_cells)
-      return unless possible_positions.include?(possible_step.position.coordinates.to_a)
+      return unless possible_positions.include?(coordinates)
 
-      possible_step.add_previous_step(@current_step)
-      @current_step = possible_step
+      position.add_previous(@current_position)
+      @current_position = position
 
       @current_step.position
     end
@@ -61,6 +60,10 @@ module Chess
     end
 
     private
+
+    def enemies_team
+      ([WHITE_TEAM, BLACK_TEAM] - [@team]).first
+    end
 
     def change_captured_status
       @captured = true
@@ -111,6 +114,12 @@ module Chess
 
     def out_of_board?(move_to)
       move_to[0] < MIN_INDEX || move_to[0] > MAX_INDEX || move_to[1] < MIN_INDEX || move_to[1] > MAX_INDEX
+    end
+
+    def enemies_team
+      return WHITE_TEAM if @team == BLACK_TEAM
+
+      BLACK_TEAM
     end
   end
 end

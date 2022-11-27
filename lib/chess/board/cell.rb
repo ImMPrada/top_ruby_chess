@@ -45,5 +45,13 @@ module Chess
 
       in_cell.on_red if @fill_color == BLACK_TEAM
     end
+
+    def self.all
+      ObjectSpace.each_object(self).to_a
+    end
+
+    def self.all_occupied
+      all.select(&:occupied?)
+    end
   end
 end

@@ -59,4 +59,29 @@ RSpec.describe Chess::Core::Pieces::BasePiece do
       expect(piece.instance_variable_get(:@cells_history)).to include(cell)
     end
   end
+
+  describe '#roll_back_cell' do
+    let(:new_cell) do
+      generated_cell = cell
+      while generated_cell == cell
+        cells_row = cells[(Chess::MIN_INDEX..Chess::MAX_INDEX).to_a.sample]
+        generated_cell = cells_row[(Chess::MIN_INDEX..Chess::MAX_INDEX).to_a.sample]
+      end
+
+      generated_cell
+    end
+
+    before do
+      piece.update_current_cell_to(new_cell)
+      piece.roll_back_cell
+    end
+
+    it 'updates the current_cell to the old cell' do
+      expect(piece.current_cell).to eq(cell)
+    end
+
+    it 'free the new cell' do
+      expect(new_cell.occupant).to be_nil
+    end
+  end
 end

@@ -45,7 +45,7 @@ module Chess
           @current_cell = target_cell
         end
 
-        def roll_back_step
+        def roll_back_cell
           return if @cells_history.empty?
 
           back_cell = @cells_history.pop

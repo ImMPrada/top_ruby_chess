@@ -7,8 +7,8 @@ module Chess
         SYMBOL = :B
         TEXT = "\u265d".freeze
 
-        def initialize(team, cell, cells)
-          super(SYMBOL, team, cell, cells)
+        def initialize(team, cell)
+          super(SYMBOL, team, cell)
           @generated_deltas = []
 
           generate_deltas
@@ -21,10 +21,10 @@ module Chess
         end
 
         def generate_deltas
-          @generated_deltas[0] << [1, 1]
-          @generated_deltas[1] << [1, -1]
-          @generated_deltas[2] << [-1, -1]
-          @generated_deltas[3] << [-1, 1]
+          @generated_deltas << [1, 1]
+          @generated_deltas << [-1, 1]
+          @generated_deltas << [-1, -1]
+          @generated_deltas << [1, -1]
         end
       end
     end

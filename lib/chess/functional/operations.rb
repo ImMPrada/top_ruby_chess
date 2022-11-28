@@ -8,5 +8,11 @@ module Chess
 
       result
     end
+
+    def array_get_by_row_and_column(array, row, column)
+      return unless array[row]
+
+      array[row][column]
+    end
   end
 end

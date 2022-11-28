@@ -71,31 +71,34 @@ module Chess
         end
 
         def evaluate_with_one_move(target_cell, cells)
+          reached = false
+
           @generated_deltas.each do |delta|
             base_cell_coordinates = @current_cell.coordinates.to_a
 
             base_cell_coordinates = sum_arrays(base_cell_coordinates, delta)
-            checked_cell = cells[base_cell_coordinates[0]][base_cell_coordinates[1]]
+            checked_cell = array_get_by_row_and_column(cells, base_cell_coordinates[0], base_cell_coordinates[1])
 
             reached = checked_cell == target_cell
-            break if reached
+            break if reached || checked_cell.nil? || checked_cell.occupied?
           end
 
           reached
         end
 
         def evaluate_with_path(target_cell, cells)
+          reached = false
+
           @generated_deltas.each do |delta|
             base_cell_coordinates = @current_cell.coordinates.to_a
             keep_tracking = true
 
             while keep_tracking
-
               base_cell_coordinates = sum_arrays(base_cell_coordinates, delta)
-              checked_cell = cells[base_cell_coordinates[0]][base_cell_coordinates[1]]
+              checked_cell = array_get_by_row_and_column(cells, base_cell_coordinates[0], base_cell_coordinates[1])
 
               reached = checked_cell == target_cell
-              break if reached || checked_cell.occupied?
+              break if reached || checked_cell.nil? || checked_cell.occupied?
             end
 
             break if reached

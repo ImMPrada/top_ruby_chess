@@ -10,7 +10,7 @@ RSpec.describe Chess::Core::Pieces::BasePiece do
       cells << []
       8.times do |column_index|
         name = "#{%w[a b c d e f g h][column_index]}#{row_index + 1}"
-        cells[row_index] << Chess::Core::Cell.new(name, :white)
+        cells[row_index] << Chess::Core::Cell.new(name, Chess::WHITE_TEAM)
       end
     end
 

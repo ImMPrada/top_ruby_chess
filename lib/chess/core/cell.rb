@@ -1,8 +1,7 @@
 require 'colorize'
 require 'colorized_string'
 
-require_relative '../chess'
-require_relative '../position'
+require_relative './chess'
 
 module Chess
   module Core

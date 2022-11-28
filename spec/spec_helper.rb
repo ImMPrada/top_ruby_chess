@@ -8,6 +8,7 @@ require "#{core_root}cell"
 require "#{core_root}pieces/base_piece"
 require "#{core_root}pieces/bishop"
 require "#{core_root}pieces/knight"
+require "#{core_root}pieces/queen"
 
 SimpleCov::Formatter::LcovFormatter.config.report_with_single_file = true
 SimpleCov::Formatter::LcovFormatter.config do |c|

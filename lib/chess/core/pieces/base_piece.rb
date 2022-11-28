@@ -9,31 +9,32 @@ module Chess
         include Operation
         include ToString
 
-        attr_reader :symbol, :team, :current_step
+        attr_reader :symbol, :team, :current_cell
 
         Vector = Struct.new(:enabled, :deltas)
 
-        def initialize(symbol, team, cell, cells, captured = false)
+        def initialize(symbol, team, cell, captured = false)
           @current_cell = cell
           @cells_history = []
-          @cells = cells
           @symbol = symbol
           @captured = captured
           @team = team
           @graph = nil
+
+          @current_cell.occupy_with(self)
         end
 
-        def move_to(target_cell)
-          return unless can_move_to?(target_cell)
+        def move_to(target_cell, cells)
+          return unless can_move_to?(target_cell, cells)
 
           update_current_cell_to(target_cell)
         end
 
-        def can_move_to?(target_cell)
+        def can_move_to?(target_cell, cells)
           return false if target_cell.team == @team
-          return evaluate_with_one_move(target_cell) if can_move_once_at_tyme?
+          return evaluate_with_one_move(target_cell, cells) if can_move_once_at_tyme?
 
-          evaluate_with_path(target_cell)
+          evaluate_with_path(target_cell, cells)
         end
 
         def update_current_cell_to(target_cell)
@@ -69,7 +70,7 @@ module Chess
           %i[P N K].include?(@symbol)
         end
 
-        def evaluate_with_one_move(target_cell)
+        def evaluate_with_one_move(target_cell, cells)
           @generated_deltas.each do |delta|
             base_cell_coordinates = @current_cell.coordinates.to_a
 
@@ -83,7 +84,7 @@ module Chess
           reached
         end
 
-        def evaluate_with_path(target_cell)
+        def evaluate_with_path(target_cell, cells)
           @generated_deltas.each do |delta|
             base_cell_coordinates = @current_cell.coordinates.to_a
             keep_tracking = true

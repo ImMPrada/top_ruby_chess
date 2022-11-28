@@ -78,9 +78,8 @@ module Chess
 
             base_cell_coordinates = sum_arrays(base_cell_coordinates, delta)
             checked_cell = array_get_by_row_and_column(cells, base_cell_coordinates[0], base_cell_coordinates[1])
-
             reached = checked_cell == target_cell
-            break if reached || checked_cell.nil? || checked_cell.occupied?
+            break if reached || checked_cell.nil?
           end
 
           reached

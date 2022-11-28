@@ -1,4 +1,3 @@
-require_relative '../chess'
 require_relative 'base_piece'
 require 'byebug'
 
@@ -6,48 +5,31 @@ module Chess
   module Pieces
     class Bishop < BasePiece
       SYMBOL = :B
-      TEXT = "\u265d".freeze
+      TEXT_SYMBOL = "\u265d".freeze
 
-      def initialize(coordinates, team)
-        super(coordinates, SYMBOL, team)
-        @generated_deltas = [
-          v1: Vector.new(true, []),
-          v2: Vector.new(true, []),
-          v3: Vector.new(true, []),
-          v4: Vector.new(true, [])
-        ]
+      def initialize(team, cell=nil, cells=nil)
+        super(SYMBOL, team, cell, cells)
+        @generated_deltas = []
 
-        generate_deltas
-      end
-
-      def move_to(position_algebraic, occuped_cells)
-        super(position_algebraic, @generated_deltas, occuped_cells)
+        # generate_deltas
       end
 
       def can_attack_to?(target_position_algebraic, occuped_cells)
         can_move_to?(target_position_algebraic, @capture_moves, occuped_cells)
       end
 
-      def to_s
-        super(TEXT)
-      end
-
       private
 
-      # rubocop:disable Metrics/AbcSize
-      def generate_deltas
-        (MIN_INDEX..MAX_INDEX).each do |i|
-          next if i == MIN_INDEX
-
-          @generated_deltas[0].deltas << [i, i]
-          @generated_deltas[1].deltas << [i, -i]
-          @generated_deltas[2].deltas << [-i, -i]
-          @generated_deltas[3].deltas << [-i, i]
-        end
-
-        @capture_moves = @generated_deltas
+      def text_symbol
+        TEXT_SYMBOL
       end
-      # rubocop:enable Metrics/AbcSize
+
+      def generate_deltas
+        @generated_deltas[0] << [1, 1]
+        @generated_deltas[1] << [1, -1]
+        @generated_deltas[2] << [-1, -1]
+        @generated_deltas[3] << [-1, 1]
+      end
     end
   end
 end

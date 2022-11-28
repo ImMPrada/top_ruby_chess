@@ -29,4 +29,34 @@ RSpec.describe Chess::Core::Pieces::BasePiece do
       expect(piece.current_cell.occupant).to be(piece)
     end
   end
+
+  describe '#update_current_cell_to' do
+    let(:new_cell) do
+      generated_cell = cell
+      while generated_cell == cell
+        cells_row = cells[(Chess::MIN_INDEX..Chess::MAX_INDEX).to_a.sample]
+        generated_cell = cells_row[(Chess::MIN_INDEX..Chess::MAX_INDEX).to_a.sample]
+      end
+
+      generated_cell
+    end
+
+    before { piece.update_current_cell_to(new_cell) }
+
+    it 'updates the current_cell to the new_cell' do
+      expect(piece.current_cell).to eq(new_cell)
+    end
+
+    it 'occupies the new_cell' do
+      expect(piece.current_cell.occupant).to be(piece)
+    end
+
+    it 'free the old cell' do
+      expect(cell.occupant).to be_nil
+    end
+
+    it 'populates the cells_history with the old cell' do
+      expect(piece.instance_variable_get(:@cells_history)).to include(cell)
+    end
+  end
 end

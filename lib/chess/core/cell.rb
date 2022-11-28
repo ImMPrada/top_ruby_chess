@@ -36,7 +36,7 @@ module Chess
 
       def free
         @occupied = false
-        @occup_by = nil
+        @occupied_by = nil
       end
 
       def occupant

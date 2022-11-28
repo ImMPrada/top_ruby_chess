@@ -5,53 +5,79 @@ require_relative '../chess'
 require_relative '../position'
 
 module Chess
-  class Cell < Position
-    attr_reader :team
+  module Core
+    class Cell
+      attr_reader :algebraic, :coordinates
 
-    def initialize(algebraic_notation, fill_color, occuped = false, occuped_by = nil, team = nil)
-      @occuped = occuped
-      @occuped_by = occuped_by
-      @team = team
-      @fill_color = fill_color
+      Algebraic = Struct.new(:column, :row) do
+        def to_s
+          "#{column}#{row}"
+        end
+      end
 
-      super(algebraic_notation)
-    end
+      Coordinates = Struct.new(:column, :row) do
+        def to_a
+          [row, column]
+        end
+      end
 
-    def occup_by(piece)
-      @occuped = true
-      @team = piece.team
-      @occuped_by = piece
-    end
+      def initialize(name, fill_color, occupied = false, occupied_by = nil)
+        @occupied = occupied
+        @occupied_by = occupied_by
+        @fill_color = fill_color
+        @name = name
 
-    def free
-      @occuped = false
-      @team = nil
-      @occup_by = nil
-    end
+        set_nomenclature_values
+      end
 
-    def occupant
-      @occuped_by
-    end
+      def occupy_with(piece)
+        @occupied = true
+        @occupied_by = piece
+      end
 
-    def occuped?
-      @occuped
-    end
+      def free
+        @occupied = false
+        @occup_by = nil
+      end
 
-    def to_s
-      in_cell = '   '
-      in_cell = @occuped_by.to_s if occuped?
+      def occupant
+        @occupied_by
+      end
 
-      return in_cell.on_light_red if @fill_color == WHITE_TEAM
+      def occupied?
+        @occupied
+      end
 
-      in_cell.on_red if @fill_color == BLACK_TEAM
-    end
+      def team
+        return unless occupied?
 
-    def self.all
-      ObjectSpace.each_object(self).to_a
-    end
+        @occupied_by.team
+      end
 
-    def self.all_occupied
-      all.select(&:occupied?)
+      def to_s
+        in_cell = '   '
+        in_cell = @occupied_by.to_s if occupied?
+
+        return in_cell.on_light_red if @fill_color == WHITE_TEAM
+
+        in_cell.on_red if @fill_color == BLACK_TEAM
+      end
+
+      def self.all
+        ObjectSpace.each_object(self).to_a
+      end
+
+      def self.all_occupied
+        all.select(&:occupied?)
+      end
+
+      private
+
+      def set_nomenclature_values
+        splitted_name = @name.split('')
+        @algebraic = Algebraic.new(splitted_name[0], splitted_name[1].to_i)
+        @coordinates = Coordinates.new(COLUMNS.index(@algebraic.column), @algebraic.row - 1)
+      end
     end
   end
 end

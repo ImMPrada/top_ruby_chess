@@ -13,15 +13,20 @@ module Chess
 
         Vector = Struct.new(:enabled, :deltas)
 
-        def initialize(symbol, team, cell, captured = false)
-          @current_cell = cell
+        def self.create_and_occupy(symbol, team, current_cell)
+          piece = new(symbol, team, current_cell)
+          piece.current_cell.occupy_with(piece)
+
+          piece
+        end
+
+        def initialize(symbol, team, current_cell)
+          @current_cell = current_cell
           @cells_history = []
           @symbol = symbol
-          @captured = captured
+          @captured = false
           @team = team
           @graph = nil
-
-          @current_cell.occupy_with(self)
         end
 
         def move_to(target_cell, cells)
@@ -32,14 +37,14 @@ module Chess
 
         def can_move_to?(target_cell, cells)
           return false if target_cell.team == @team
-          return evaluate_with_one_move(target_cell, cells) if can_move_once_at_tyme?
+          return evaluate_with_one_move(target_cell, cells) if can_move_only_once_at_time?
 
           evaluate_with_path(target_cell, cells)
         end
 
         def update_current_cell_to(target_cell)
           @cells_history << @current_cell
-          @current_cell.free
+          @current_cell.release
           target_cell.occupy_with(self)
 
           @current_cell = target_cell
@@ -49,7 +54,7 @@ module Chess
           return if @cells_history.empty?
 
           back_cell = @cells_history.pop
-          @current_cell.free
+          @current_cell.release
           back_cell.occupy_with(self)
 
           @current_cell = back_cell
@@ -66,41 +71,33 @@ module Chess
           return BLACK_TEAM if @team == WHITE_TEAM
         end
 
-        def can_move_once_at_tyme?
-          %i[P N K].include?(@symbol)
-        end
-
         def evaluate_with_one_move(target_cell, cells)
-          reached = false
+          move_deltas.any? do |delta|
+            base_cell_cartesian = @current_cell.cartesian
 
-          @generated_deltas.each do |delta|
-            base_cell_coordinates = @current_cell.coordinates.to_a
+            base_cell_cartesian = sum_arrays(base_cell_cartesian, delta)
+            checked_cell = cells.dig(base_cell_cartesian[0], base_cell_cartesian[1])
+            next if checked_cell.nil?
 
-            base_cell_coordinates = sum_arrays(base_cell_coordinates, delta)
-            checked_cell = array_get_by_row_and_column(cells, base_cell_coordinates[0], base_cell_coordinates[1])
-            reached = checked_cell == target_cell
-            break if reached || checked_cell.nil?
+            checked_cell == target_cell
           end
-
-          reached
         end
 
         def evaluate_with_path(target_cell, cells)
+          move_deltas.any? do |delta|
+            reached_in_path?(@current_cell.cartesian, delta, cells, target_cell)
+          end
+        end
+
+        def reached_in_path?(base_cell_cartesian, delta, cells, target_cell)
           reached = false
 
-          @generated_deltas.each do |delta|
-            base_cell_coordinates = @current_cell.coordinates.to_a
-            keep_tracking = true
+          until reached
+            base_cell_cartesian = sum_arrays(base_cell_cartesian, delta)
+            checked_cell = cells.dig(base_cell_cartesian[0], base_cell_cartesian[1])
+            reached = checked_cell == target_cell
 
-            while keep_tracking
-              base_cell_coordinates = sum_arrays(base_cell_coordinates, delta)
-              checked_cell = array_get_by_row_and_column(cells, base_cell_coordinates[0], base_cell_coordinates[1])
-
-              reached = checked_cell == target_cell
-              break if reached || checked_cell.nil? || checked_cell.occupied?
-            end
-
-            break if reached
+            break if checked_cell.nil? || checked_cell.occupied?
           end
 
           reached

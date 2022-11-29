@@ -1,7 +1,9 @@
 require 'spec_helper'
 
 RSpec.describe Chess::Core::Pieces::BasePiece do
-  subject(:piece) { described_class.new(%i[R N B Q K P], [Chess::WHITE_TEAM, Chess::BLACK_TEAM].sample, cell) }
+  subject(:piece) do
+    described_class.create_and_occupy(%i[R N B Q K P], [Chess::WHITE_TEAM, Chess::BLACK_TEAM].sample, cell)
+  end
 
   let(:cells) do
     cells = []
@@ -20,7 +22,7 @@ RSpec.describe Chess::Core::Pieces::BasePiece do
     cells[(Chess::MIN_INDEX..Chess::MAX_INDEX).to_a.sample][(Chess::MIN_INDEX..Chess::MAX_INDEX).to_a.sample]
   end
 
-  describe '#initialize' do
+  describe '.create_and_occupy' do
     it 'initializes with a cell' do
       expect(piece.current_cell).to be_a Chess::Core::Cell
     end

@@ -7,28 +7,18 @@ module Chess
         SYMBOL = :N
         TEXT = "\u265d".freeze
 
-        def initialize(team, cell)
-          super(SYMBOL, team, cell)
-          @generated_deltas = []
-
-          generate_deltas
+        def self.create_and_occupy(team, current_cell)
+          super(SYMBOL, team, current_cell)
         end
 
         private
 
-        def text
-          TEXT
+        def move_deltas
+          [[2, 1], [1, 2], [-1, 2], [-2, 1], [-2, -1], [-1, -2], [1, -2], [2, -1]]
         end
 
-        def generate_deltas
-          @generated_deltas << [2, 1]
-          @generated_deltas << [1, 2]
-          @generated_deltas << [-1, 2]
-          @generated_deltas << [-2, 1]
-          @generated_deltas << [-2, -1]
-          @generated_deltas << [-1, -2]
-          @generated_deltas << [1, -2]
-          @generated_deltas << [2, -1]
+        def can_move_only_once_at_time?
+          true
         end
       end
     end

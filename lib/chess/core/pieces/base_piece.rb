@@ -1,13 +1,11 @@
 require_relative '../chess'
 require_relative '../../functional/operations'
-require_relative '../../functional/to_string'
 
 module Chess
   module Core
     module Pieces
       class BasePiece
         include Operation
-        include ToString
 
         attr_reader :symbol, :team, :current_cell
 

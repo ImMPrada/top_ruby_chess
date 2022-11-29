@@ -1,4 +1,6 @@
 require 'spec_helper'
+require 'chess/core/pieces/knight'
+require 'chess/core/cell'
 
 RSpec.describe Chess::Core::Pieces::Knight do
   subject(:knight) { described_class.create_and_occupy(Chess::WHITE_TEAM, cell_e5) }

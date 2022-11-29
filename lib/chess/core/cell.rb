@@ -15,24 +15,21 @@ module Chess
       end
 
       def initialize(name, fill_color)
-        @occupied = false
         @occupant = nil
         @fill_color = fill_color
         @name = name
       end
 
       def occupy_with(piece)
-        @occupied = true
         @occupant = piece
       end
 
       def release
-        @occupied = false
         @occupant = nil
       end
 
       def occupied?
-        @occupied
+        !!@occupant
       end
 
       def team

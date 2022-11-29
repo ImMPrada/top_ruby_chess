@@ -1,8 +1,10 @@
 require 'spec_helper'
+require 'chess/core/pieces/base_piece'
+require 'chess/core/cell'
 
 RSpec.describe Chess::Core::Pieces::BasePiece do
   subject(:piece) do
-    described_class.create_and_occupy(%i[R N B Q K P], [Chess::WHITE_TEAM, Chess::BLACK_TEAM].sample, cell)
+    described_class.create_and_occupy(%i[R N B Q K P].sample, [Chess::WHITE_TEAM, Chess::BLACK_TEAM].sample, cell)
   end
 
   let(:cells) do
@@ -18,9 +20,7 @@ RSpec.describe Chess::Core::Pieces::BasePiece do
 
     cells
   end
-  let(:cell) do
-    cells[(Chess::MIN_INDEX..Chess::MAX_INDEX).to_a.sample][(Chess::MIN_INDEX..Chess::MAX_INDEX).to_a.sample]
-  end
+  let(:cell) { cells.sample.sample }
 
   describe '.create_and_occupy' do
     it 'initializes with a cell' do
@@ -34,13 +34,10 @@ RSpec.describe Chess::Core::Pieces::BasePiece do
 
   describe '#update_current_cell_to' do
     let(:new_cell) do
-      generated_cell = cell
-      while generated_cell == cell
-        cells_row = cells[(Chess::MIN_INDEX..Chess::MAX_INDEX).to_a.sample]
-        generated_cell = cells_row[(Chess::MIN_INDEX..Chess::MAX_INDEX).to_a.sample]
-      end
+      random_cell = cell
+      random_cell = cells.sample.sample while random_cell == cell
 
-      generated_cell
+      random_cell
     end
 
     before { piece.update_current_cell_to(new_cell) }

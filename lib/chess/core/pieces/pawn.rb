@@ -8,10 +8,7 @@ module Chess
         TEXT = "\u265f".freeze
 
         def self.create_and_occupy(team, current_cell)
-          self_pawn = super(SYMBOL, team, current_cell)
-          @first_move = true
-
-          self_pawn
+          super(SYMBOL, team, current_cell)
         end
 
         def can_move_to?(target_cell, cells)

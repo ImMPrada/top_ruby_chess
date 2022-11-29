@@ -1,4 +1,6 @@
 require 'spec_helper'
+require 'chess/core/pieces/bishop'
+require 'chess/core/cell'
 
 RSpec.describe Chess::Core::Pieces::Bishop do
   subject(:bishop) { described_class.create_and_occupy(Chess::WHITE_TEAM, cell_d4) }

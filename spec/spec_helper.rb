@@ -1,19 +1,9 @@
 require 'simplecov'
 require 'simplecov-lcov'
 
+core_root = './lib/chess/core/'
 require 'byebug'
-require './lib/chess/chess'
-require './lib/chess/pieces/piece'
-require './lib/chess/pieces/king'
-require './lib/chess/pieces/queen'
-require './lib/chess/pieces/bishop'
-require './lib/chess/pieces/knight'
-require './lib/chess/pieces/rook'
-require './lib/chess/pieces/pawn'
-require './lib/chess/position'
-require './lib/chess/board/board'
-require './lib/chess/book'
-require './lib/chess/prompt'
+require "#{core_root}chess"
 
 SimpleCov::Formatter::LcovFormatter.config.report_with_single_file = true
 SimpleCov::Formatter::LcovFormatter.config do |c|

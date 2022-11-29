@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 RSpec.describe Chess::Core::Pieces::Queen do
-  subject(:queen) { described_class.new(Chess::WHITE_TEAM, cell_e5) }
+  subject(:queen) { described_class.create_and_occupy(Chess::WHITE_TEAM, cell_e5) }
 
   let(:cells) do
     cells = []
@@ -18,11 +18,9 @@ RSpec.describe Chess::Core::Pieces::Queen do
   end
   let(:cell_e5) { cells[4][4] }
 
-  describe '#initialize' do
-    before { queen }
-
+  describe '.create_and_occupy' do
     it 'occupies the cell' do
-      expect(cell_e5.occupant).to be(queen)
+      expect(queen.current_cell.occupant).to be(queen)
     end
   end
 
@@ -40,8 +38,8 @@ RSpec.describe Chess::Core::Pieces::Queen do
     let(:cell_b5) { cells[4][1] }
 
     before do
-      described_class.new(Chess::BLACK_TEAM, cell_c3)
-      described_class.new(Chess::WHITE_TEAM, cell_b5)
+      described_class.create_and_occupy(Chess::BLACK_TEAM, cell_c3)
+      described_class.create_and_occupy(Chess::WHITE_TEAM, cell_b5)
     end
 
     describe '#can_move_to?' do

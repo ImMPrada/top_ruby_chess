@@ -4,7 +4,11 @@ require 'chess/core/cell'
 
 RSpec.describe Chess::Core::Pieces::BasePiece do
   subject(:piece) do
-    described_class.create_and_occupy(%i[R N B Q K P].sample, [Chess::WHITE_TEAM, Chess::BLACK_TEAM].sample, cell)
+    described_class.create_and_occupy(
+      %i[R N B Q K P].sample,
+      [Chess::WHITE_TEAM, Chess::BLACK_TEAM].sample,
+      cell
+    )
   end
 
   let(:cells) do
@@ -61,13 +65,10 @@ RSpec.describe Chess::Core::Pieces::BasePiece do
 
   describe '#roll_back_cell' do
     let(:new_cell) do
-      generated_cell = cell
-      while generated_cell == cell
-        cells_row = cells[(Chess::MIN_INDEX..Chess::MAX_INDEX).to_a.sample]
-        generated_cell = cells_row[(Chess::MIN_INDEX..Chess::MAX_INDEX).to_a.sample]
-      end
+      random_cell = cell
+      random_cell = cells.sample.sample while random_cell == cell
 
-      generated_cell
+      random_cell
     end
 
     before do

@@ -14,6 +14,12 @@ module Chess
         end
       end
 
+      Cartesian = Struct.new(:column, :row) do
+        def to_a
+          [row, column]
+        end
+      end
+
       def initialize(name, fill_color)
         @occupant = nil
         @fill_color = fill_color
@@ -45,7 +51,7 @@ module Chess
       end
 
       def cartesian
-        [algebraic.row - 1, COLUMNS.index(algebraic.column)]
+        Cartesian.new(COLUMNS.index(algebraic.column), algebraic.row - 1)
       end
     end
   end

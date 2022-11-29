@@ -71,7 +71,7 @@ module Chess
 
         def evaluate_with_one_move(target_cell, cells, deltas)
           deltas.any? do |delta|
-            base_cell_cartesian = @current_cell.cartesian
+            base_cell_cartesian = @current_cell.cartesian.to_a
 
             base_cell_cartesian = sum_arrays(base_cell_cartesian, delta)
             checked_cell = cells.dig(base_cell_cartesian[0], base_cell_cartesian[1])
@@ -83,7 +83,7 @@ module Chess
 
         def evaluate_with_path(target_cell, cells, deltas)
           deltas.any? do |delta|
-            reached_in_path?(@current_cell.cartesian, delta, cells, target_cell)
+            reached_in_path?(@current_cell.cartesian.to_a, delta, cells, target_cell)
           end
         end
 

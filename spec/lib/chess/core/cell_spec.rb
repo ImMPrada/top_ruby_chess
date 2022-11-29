@@ -4,7 +4,8 @@ RSpec.describe Chess::Core::Cell do
   let(:free_cell) { described_class.new('a1', :white) }
   let(:occupied_cell) { described_class.new('b2', :white) }
   let(:piece) do
-    Chess::Core::Pieces::BasePiece.new(%i[R N B Q K P], [Chess::WHITE_TEAM, Chess::BLACK_TEAM].sample, occupied_cell)
+    Chess::Core::Pieces::BasePiece.create_and_occupy(%i[R N B Q K P], [Chess::WHITE_TEAM, Chess::BLACK_TEAM].sample,
+                                                     occupied_cell)
   end
 
   describe '#occupy_with' do
@@ -15,8 +16,8 @@ RSpec.describe Chess::Core::Cell do
     end
   end
 
-  describe '#free' do
-    before { occupied_cell.free }
+  describe '#release' do
+    before { occupied_cell.release }
 
     it 'free the cell' do
       expect(occupied_cell.occupied?).to be false

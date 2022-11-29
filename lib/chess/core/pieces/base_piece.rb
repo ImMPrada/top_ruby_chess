@@ -5,7 +5,7 @@ module Chess
   module Core
     module Pieces
       class BasePiece
-        include Operation
+        include Functional::Operations
 
         attr_reader :symbol, :team, :current_cell
 

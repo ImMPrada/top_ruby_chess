@@ -1,6 +1,6 @@
 module Chess
   module Functional
-    module Operation
+    module Operations
       def sum_arrays(array1, array2)
         return unless array1.size == array2.size
 

@@ -56,4 +56,3 @@ build-iPhoneSimulator/
 # .rubocop-https?--*
 
 lcov.info
-spec_backup/

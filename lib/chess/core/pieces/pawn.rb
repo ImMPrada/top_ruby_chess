@@ -7,67 +7,56 @@ module Chess
         SYMBOL = :P
         TEXT = "\u265f".freeze
 
-        def initialize(team, cell)
-          super(SYMBOL, team, cell)
+        def self.create_and_occupy(team, current_cell)
+          self_pawn = super(SYMBOL, team, current_cell)
           @first_move = true
-          @capturing = false
-        end
 
-        def move_to(target_cell, cells)
-          @capturing = true if target_cell.team == enemies_team
-          generate_deltas
-
-          super_response = super(target_cell, cells)
-          return unless super_response
-
-          @first_move = false
-          @capturing = false
-          super_response
+          self_pawn
         end
 
         def can_move_to?(target_cell, cells)
-          @capturing = true if target_cell.team == enemies_team
-          generate_deltas
+          deltas = attacking?(target_cell) ? attack_deltas : move_deltas
 
-          super(target_cell, cells)
+          return false if target_cell.team == @team
+          return evaluate_with_one_move(target_cell, cells, deltas) if can_move_only_once_at_time?
+
+          evaluate_with_path(target_cell, cells, deltas)
         end
 
         private
 
-        def text
-          TEXT
-        end
+        def move_deltas
+          case @team
+          when WHITE_TEAM
+            return [[1, 0], [2, 0]] if first_move?
 
-        def generate_deltas
-          @generated_deltas = []
-          return generate_white_deltas if @team == WHITE_TEAM
-          return generate_black_deltas if @team == BLACK_TEAM
-        end
+            [[1, 0]]
+          when BLACK_TEAM
+            return [[-1, 0], [-2, 0]] if first_move?
 
-        def generate_white_deltas
-          if @capturing
-            @generated_deltas << [1, 1]
-            @generated_deltas << [1, -1]
-          else
-            @generated_deltas << [1, 0]
+            [[-1, 0]]
           end
-
-          return unless @first_move
-
-          @generated_deltas << [2, 0] unless @capturing
         end
 
-        def generate_black_deltas
-          if @capturing
-            @generated_deltas << [-1, 1]
-            @generated_deltas << [-1, -1]
-          else
-            @generated_deltas << [-1, 0]
+        def attack_deltas
+          case @team
+          when WHITE_TEAM
+            [[1, 1], [1, -1]]
+          when BLACK_TEAM
+            [[-1, 1], [-1, -1]]
           end
+        end
 
-          return unless @first_move
+        def can_move_only_once_at_time?
+          true
+        end
 
-          @generated_deltas << [-2, 0] unless @capturing
+        def first_move?
+          @cells_history.empty?
+        end
+
+        def attacking?(target_cell)
+          target_cell.team == enemies_team
         end
       end
     end

@@ -37,9 +37,9 @@ module Chess
 
         def can_move_to?(target_cell, cells)
           return false if target_cell.team == @team
-          return evaluate_with_one_move(target_cell, cells) if can_move_only_once_at_time?
+          return evaluate_with_one_move(target_cell, cells, move_deltas) if can_move_only_once_at_time?
 
-          evaluate_with_path(target_cell, cells)
+          evaluate_with_path(target_cell, cells, move_deltas)
         end
 
         def update_current_cell_to(target_cell)
@@ -71,8 +71,8 @@ module Chess
           return BLACK_TEAM if @team == WHITE_TEAM
         end
 
-        def evaluate_with_one_move(target_cell, cells)
-          move_deltas.any? do |delta|
+        def evaluate_with_one_move(target_cell, cells, deltas)
+          deltas.any? do |delta|
             base_cell_cartesian = @current_cell.cartesian
 
             base_cell_cartesian = sum_arrays(base_cell_cartesian, delta)
@@ -83,8 +83,8 @@ module Chess
           end
         end
 
-        def evaluate_with_path(target_cell, cells)
-          move_deltas.any? do |delta|
+        def evaluate_with_path(target_cell, cells, deltas)
+          deltas.any? do |delta|
             reached_in_path?(@current_cell.cartesian, delta, cells, target_cell)
           end
         end

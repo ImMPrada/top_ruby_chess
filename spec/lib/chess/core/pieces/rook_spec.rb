@@ -24,10 +24,6 @@ RSpec.describe Chess::Core::Pieces::Rook do
     it 'occupies the cell' do
       expect(rook.current_cell.occupant).to be(rook)
     end
-
-    it 'defines the side' do
-      expect(rook.side).not_to be_nil
-    end
   end
 
   # rubocop:disable RSpec/MultipleMemoizedHelpers
@@ -104,6 +100,18 @@ RSpec.describe Chess::Core::Pieces::Rook do
           expect(rook.can_castle?(cells)).to be(false)
         end
       end
+
+      describe '#king_side?' do
+        it 'returns false' do
+          expect(rook.king_side?).to be(false)
+        end
+      end
+
+      describe '#queen_side?' do
+        it 'returns true' do
+          expect(rook.queen_side?).to be(true)
+        end
+      end
     end
     # rubocop:enable RSpec/NestedGroups
 
@@ -121,6 +129,18 @@ RSpec.describe Chess::Core::Pieces::Rook do
 
       it 'returns true if the rook has not moved' do
         expect(rook_kingside.can_castle?(cells)).to be(true)
+      end
+
+      describe '#king_side?' do
+        it 'returns true' do
+          expect(rook_kingside.king_side?).to be(true)
+        end
+      end
+
+      describe '#queen_side?' do
+        it 'returns false' do
+          expect(rook_kingside.queen_side?).to be(false)
+        end
       end
 
       describe 'when path is not free' do

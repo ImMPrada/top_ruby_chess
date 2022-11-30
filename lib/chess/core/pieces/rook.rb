@@ -7,13 +7,8 @@ module Chess
         SYMBOL = :R
         TEXT = "\u265f".freeze
 
-        attr_reader :side
-
         def self.create_and_occupy(team, current_cell)
-          this_rook = super(SYMBOL, team, current_cell)
-          this_rook.assign_side
-
-          this_rook
+          super(SYMBOL, team, current_cell)
         end
 
         def can_castle?(cells)
@@ -29,21 +24,21 @@ module Chess
         end
 
         def queen_side?
-          @side == QUEEN_SIDE
+          side == QUEEN_SIDE
         end
 
         def king_side?
-          @side == KING_SIDE
-        end
-
-        def assign_side
-          return @side = QUEEN_SIDE if @current_cell.algebraic.column == 'a'
-          return @side = KING_SIDE if @current_cell.algebraic.column == 'b'
-
-          @side = nil
+          side == KING_SIDE
         end
 
         private
+
+        def side
+          return QUEEN_SIDE if @current_cell.algebraic.column == 'a'
+          return KING_SIDE if @current_cell.algebraic.column == 'h'
+
+          nil
+        end
 
         def move_deltas
           [[1, 0], [0, 1], [-1, 0], [0, -1]]

@@ -1,6 +1,5 @@
 require_relative 'chess'
 require_relative 'cell'
-
 require_relative './pieces/king'
 require_relative './pieces/queen'
 require_relative './pieces/bishop'
@@ -19,12 +18,17 @@ module Chess
         end
       end
 
-      def initialize
-        @cells = {}
-        @pieces = nil
-
+      def self.create_and_occupy
+        this_board = new
         generate_cells
         put_pieces
+
+        this_board
+      end
+
+      def initialize
+        @cells = []
+        @pieces = nil
       end
 
       def can_any_enemy_attack_to?(target_cell_string, enemy_team, occuped_cells)
@@ -66,15 +70,17 @@ module Chess
       end
 
       def generate_cells
-        cell_color = WHITE_TEAM
-        COLUMNS.each do |column|
-          @cells[column.to_sym] = []
-          cell_color = cell_color == BLACK_TEAM ? WHITE_TEAM : BLACK_TEAM
-          (MIN_INDEX..MAX_INDEX).each do |row_index|
-            row = row_index + 1
-            @cells[column.to_sym] << Cell.new("#{column}#{row}", cell_color)
+        cell_color = BLACK_TEAM
 
-            cell_color = cell_color == BLACK_TEAM ? WHITE_TEAM : BLACK_TEAM
+        (MIN_INDEX..MAX_INDEX).to_a.each do |row_index|
+          @cells << []
+
+          (MIN_INDEX..MAX_INDEX).to_a.each do |column_index|
+            @cells[row_index] << Cell.new(
+              "#{COLUMNS[column_index]}#{row_index + 1}",
+              cell_color
+            )
+            cell_color = cell_color == WHITE_TEAM ? BLACK_TEAM : WHITE_TEAM
           end
         end
       end

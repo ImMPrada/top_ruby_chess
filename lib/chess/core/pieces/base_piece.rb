@@ -74,7 +74,7 @@ module Chess
             base_cell_cartesian = @current_cell.cartesian.to_a
 
             base_cell_cartesian = sum_arrays(base_cell_cartesian, delta)
-            break if base_cell_cartesian.any? { |i| i < MIN_INDEX || i > MAX_INDEX }
+            next if base_cell_cartesian.any? { |i| i < MIN_INDEX || i > MAX_INDEX }
 
             checked_cell = cells.dig(base_cell_cartesian[0], base_cell_cartesian[1])
             next if checked_cell.nil?

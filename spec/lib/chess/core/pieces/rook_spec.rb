@@ -154,5 +154,31 @@ RSpec.describe Chess::Core::Pieces::Rook do
       end
     end
     # rubocop:enable RSpec/NestedGroups
+
+    # rubocop:disable RSpec/NestedGroups
+    describe '#castle' do
+      before { rook.castle(cells) }
+
+      describe 'queenside' do
+        let(:rook) { described_class.create_and_occupy(Chess::WHITE_TEAM, cell_a1) }
+        let(:cell_a1) { cells[0][0] }
+        let(:target_cell) { cells[0][3] }
+
+        it 'moves the rook to the correct cell' do
+          expect(target_cell.occupant).to be(rook)
+        end
+      end
+
+      describe 'kingside' do
+        let(:rook) { described_class.create_and_occupy(Chess::WHITE_TEAM, cell_h8) }
+        let(:cell_h8) { cells[7][7] }
+        let(:target_cell) { cells[7][5] }
+
+        it 'moves the rook to the correct cell' do
+          expect(target_cell.occupant).to be(rook)
+        end
+      end
+    end
+    # rubocop:enable RSpec/NestedGroups
   end
 end

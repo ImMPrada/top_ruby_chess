@@ -23,6 +23,15 @@ module Chess
           can_move_to?(target_cell, cells)
         end
 
+        def castle(cells)
+          target_cell = cells.dig(
+            @current_cell.cartesian.row,
+            queen_side? ? 3 : 5
+          )
+
+          update_current_cell_to(target_cell)
+        end
+
         def queen_side?
           side == QUEEN_SIDE
         end

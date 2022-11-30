@@ -90,25 +90,77 @@ RSpec.describe Chess::Core::Pieces::King do
     end
   end
 
+  # rubocop:disable RSpec/MultipleMemoizedHelpers
   describe '#castle_with' do
     describe 'queenside' do
-      let(:rook) { Chess::Core::Pieces::Rook.create_and_occupy(Chess::WHITE_TEAM, cells[0][0]) }
+      let(:rook) { Chess::Core::Pieces::Rook.create_and_occupy(Chess::WHITE_TEAM, cell_a1) }
+      let(:cell_a1) { cells[0][0] }
+      let(:cell_c1) { cells[0][2] }
+      let(:cell_f1) { cells[0][5] }
+      let(:cell_d1) { cells[0][3] }
 
       it 'returns nil if rook was moved' do
-        rook.move_to(cells[0][1], cells)
-        rook.move_to(cells[0][0], cells)
+        rook.move_to(cell_c1, cells)
         expect(king.castle_with(rook, cells)).to be_nil
+      end
+
+      it 'returns nil if king was moved' do
+        king.move_to(cell_f1, cells)
+        king.move_to(cell_e1, cells)
+        expect(king.castle_with(rook, cells)).to be_nil
+      end
+
+      it 'returns nil if there is a piece between king and rook' do
+        Chess::Core::Pieces::Rook.create_and_occupy(Chess::WHITE_TEAM, cell_c1)
+
+        expect(king.castle_with(rook, cells)).to be_nil
+      end
+
+      it 'occups the right cell with the rook' do
+        king.castle_with(rook, cells)
+        expect(cell_d1.occupant).to be(rook)
+      end
+
+      it 'occups the right cell with the king' do
+        king.castle_with(rook, cells)
+        expect(cell_c1.occupant).to be(king)
       end
     end
 
     describe 'kingside' do
-      let(:rook) { Chess::Core::Pieces::Rook.create_and_occupy(Chess::WHITE_TEAM, cells[0][7]) }
+      let(:rook) { Chess::Core::Pieces::Rook.create_and_occupy(Chess::WHITE_TEAM, cell_h1) }
+      let(:cell_f1) { cells[0][5] }
+      let(:cell_h1) { cells[0][7] }
+      let(:cell_g1) { cells[0][6] }
 
       it 'returns nil if rook was moved' do
-        rook.move_to(cells[0][1], cells)
-        rook.move_to(cells[0][0], cells)
+        rook.move_to(cell_f1, cells)
+        rook.move_to(cell_h1, cells)
         expect(king.castle_with(rook, cells)).to be_nil
+      end
+
+      it 'returns nil if king was moved' do
+        king.move_to(cell_f1, cells)
+        king.move_to(cell_e1, cells)
+        expect(king.castle_with(rook, cells)).to be_nil
+      end
+
+      it 'returns nil if there is a piece between king and rook' do
+        Chess::Core::Pieces::Rook.create_and_occupy(Chess::WHITE_TEAM, cell_g1)
+
+        expect(king.castle_with(rook, cells)).to be_nil
+      end
+
+      it 'occups the right cell with the rook' do
+        king.castle_with(rook, cells)
+        expect(cell_f1.occupant).to be(rook)
+      end
+
+      it 'occups the right cell with the king' do
+        king.castle_with(rook, cells)
+        expect(cell_g1.occupant).to be(king)
       end
     end
   end
+  # rubocop:enable RSpec/MultipleMemoizedHelpers
 end

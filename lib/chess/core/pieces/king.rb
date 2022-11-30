@@ -13,10 +13,7 @@ module Chess
         def castle_with(piece, cells)
           return unless can_castle_with?(piece, cells)
 
-          target_cell = cells.dig(
-            @current_cell.cartesian.row,
-            @current_cell.cartesian.column + (piece.queen_side? ? -2 : 2)
-          )
+          target_cell = castling_target_cell(piece, cells)
           update_current_cell_to(target_cell)
           piece.castle(cells)
         end
@@ -27,13 +24,17 @@ module Chess
           return false unless piece.instance_of?(Rook)
           return false unless first_move? && piece.can_castle?(cells)
 
-          target_cell = cells.dig(
-            @current_cell.cartesian.row,
-            @current_cell.cartesian.column + (piece.queen_side? ? -2 : 2)
-          )
+          target_cell = castling_target_cell(piece, cells)
           return false if target_cell.team == @team
 
           evaluate_with_one_move(target_cell, cells, castling_deltas)
+        end
+
+        def castling_target_cell(piece, cells)
+          cells.dig(
+            @current_cell.cartesian.row,
+            @current_cell.cartesian.column + (piece.queen_side? ? -2 : 2)
+          )
         end
 
         def castling_deltas

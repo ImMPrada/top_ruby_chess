@@ -14,20 +14,14 @@ module Chess
         def can_castle?(cells)
           return false unless first_move?
 
-          target_cell = cells.dig(
-            @current_cell.cartesian.row,
-            @current_cell.cartesian.column + (queen_side? ? 3 : -2)
-          )
+          target_cell = castling_target_cell(cells)
           return false unless target_cell
 
           can_move_to?(target_cell, cells)
         end
 
         def castle(cells)
-          target_cell = cells.dig(
-            @current_cell.cartesian.row,
-            queen_side? ? 3 : 5
-          )
+          target_cell = castling_target_cell(cells)
 
           update_current_cell_to(target_cell)
         end
@@ -47,6 +41,13 @@ module Chess
           return KING_SIDE if @current_cell.algebraic.column == 'h'
 
           nil
+        end
+
+        def castling_target_cell(cells)
+          cells.dig(
+            @current_cell.cartesian.row,
+            queen_side? ? 3 : 5
+          )
         end
 
         def move_deltas

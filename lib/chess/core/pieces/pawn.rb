@@ -12,12 +12,13 @@ module Chess
         end
 
         def can_move_to?(target_cell, cells)
-          deltas = attacking?(target_cell) ? attack_deltas : move_deltas
-
           return false if target_cell.team == @team
-          return evaluate_with_one_move(target_cell, cells, deltas) if can_move_only_once_at_time?
 
-          evaluate_with_path(target_cell, cells, deltas)
+          evaluate_with_one_move(
+            target_cell,
+            cells,
+            attacking?(target_cell) ? attack_deltas : move_deltas
+          )
         end
 
         private

@@ -20,6 +20,10 @@ module Chess
         def find_pieces_of(target_symbol)
           to_a.select { |piece| piece.symbol == target_symbol }
         end
+
+        def all
+          to_a.reject(&:captured?)
+        end
       end
 
       def self.create_and_occupy

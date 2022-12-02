@@ -2,10 +2,12 @@ require_relative 'operations'
 
 module Chess
   module Functional
-    module TargetCellMove
+    module TargetCellMoves
       include Operations
 
       def can_any_piece_move_to?(cell, cells, pieces)
+        return if pieces.nil? || pieces.empty? || cells.nil? || cells.empty?
+
         pieces.any? { |piece| piece.can_move_to?(cell, cells) }
       end
 
@@ -45,5 +47,3 @@ module Chess
     end
   end
 end
-
-[cell2_row, cell2_column] - [cell1_row, cell1_column]

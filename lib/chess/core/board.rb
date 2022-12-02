@@ -6,11 +6,14 @@ require_relative './pieces/bishop'
 require_relative './pieces/knight'
 require_relative './pieces/rook'
 require_relative './pieces/pawn'
+require_relative '../functional/target_cell_moves'
 
 module Chess
   module Core
     class Board
       attr_reader :cells, :pieces
+
+      include Chess::Functional::TargetCellMoves
 
       Pieces = Struct.new(:king, :queens, :bishops, :knights, :rooks, :pawns) do
         def to_a

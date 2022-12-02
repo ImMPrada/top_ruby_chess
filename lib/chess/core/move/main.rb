@@ -13,17 +13,15 @@ module Chess
 
         attr_reader :king_position_string, :enemies_team, :piece_captured, :intention, :team_filter
 
-        def initialize(intention, cells, occuped_cells_coordinates_by_teams, pieces, team_filter)
-          @cells = cells
+        def initialize(intention, board, team_filter)
           @intention = intention
+          @cells = board.cells
+          @pieces = board.pieces
           @symbol_filter = @intention[:symbol_filter].to_sym
-          @pieces = pieces
-          @occuped_cells_coordinates_by_teams = occuped_cells_coordinates_by_teams
+
           @team_filter = team_filter
           @piece_moved = nil
           @piece_captured = nil
-          @piece_at_origin_cell = nil
-          set_origin_target_and_teams
         end
 
         def update_occuped_cells(occuped_cells_coordinates_by_teams)

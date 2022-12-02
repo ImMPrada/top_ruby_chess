@@ -19,7 +19,6 @@ RSpec.describe Chess::Core::Pieces::Rook do
     end
   end
 
-  # rubocop:disable RSpec/MultipleMemoizedHelpers
   describe 'whit other pieces occupyng cells, and starting at a1' do
     let(:cell_c3) { cells[2][2] }
     let(:cell_a4) { cells[3][0] }
@@ -69,9 +68,7 @@ RSpec.describe Chess::Core::Pieces::Rook do
       end
     end
   end
-  # rubocop:enable RSpec/MultipleMemoizedHelpers
 
-  # rubocop:disable RSpec/NestedGroups
   describe '#can_castle?' do
     describe 'queenside rook' do
       it 'returns false if the rook has moved' do
@@ -106,9 +103,7 @@ RSpec.describe Chess::Core::Pieces::Rook do
         end
       end
     end
-    # rubocop:enable RSpec/NestedGroups
 
-    # rubocop:disable RSpec/NestedGroups
     describe 'kingside rook' do
       subject(:rook_kingside) { described_class.create_and_occupy(Chess::WHITE_TEAM, cell_h8) }
 
@@ -146,9 +141,7 @@ RSpec.describe Chess::Core::Pieces::Rook do
         end
       end
     end
-    # rubocop:enable RSpec/NestedGroups
 
-    # rubocop:disable RSpec/NestedGroups
     describe '#castle' do
       before { rook.castle(cells) }
 
@@ -172,6 +165,5 @@ RSpec.describe Chess::Core::Pieces::Rook do
         end
       end
     end
-    # rubocop:enable RSpec/NestedGroups
   end
 end

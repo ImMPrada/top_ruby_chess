@@ -19,7 +19,6 @@ RSpec.describe Chess::Core::Pieces::Pawn do
     end
   end
 
-  # rubocop:disable RSpec/MultipleMemoizedHelpers
   describe 'whit other pieces occupyng cells, and starting at d2' do
     let(:cell_d3) { cells[2][3] }
     let(:cell_d4) { cells[3][3] }
@@ -54,5 +53,4 @@ RSpec.describe Chess::Core::Pieces::Pawn do
       end
     end
   end
-  # rubocop:enable RSpec/MultipleMemoizedHelpers
 end

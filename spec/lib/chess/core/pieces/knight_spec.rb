@@ -19,7 +19,6 @@ RSpec.describe Chess::Core::Pieces::Knight do
     end
   end
 
-  # rubocop:disable RSpec/MultipleMemoizedHelpers
   describe 'whit other pieces occupyng cells, and starting at e5' do
     let(:cell_f7) { cells[6][5] }
     let(:cell_f3) { cells[2][5] }
@@ -82,5 +81,4 @@ RSpec.describe Chess::Core::Pieces::Knight do
       end
     end
   end
-  # rubocop:enable RSpec/MultipleMemoizedHelpers
 end

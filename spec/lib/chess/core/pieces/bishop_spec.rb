@@ -19,7 +19,6 @@ RSpec.describe Chess::Core::Pieces::Bishop do
     end
   end
 
-  # rubocop:disable RSpec/MultipleMemoizedHelpers
   describe 'whit the bishop starting at d4' do
     let(:cell_a1) { cells[0][0] }
     let(:cell_a7) { cells[6][0] }
@@ -64,9 +63,7 @@ RSpec.describe Chess::Core::Pieces::Bishop do
       end
     end
   end
-  # rubocop:enable RSpec/MultipleMemoizedHelpers
 
-  # rubocop:disable RSpec/MultipleMemoizedHelpers
   describe 'whit other pieces occupyng cells, and starting at d4' do
     let(:cell_a1) { cells[0][0] }
     let(:cell_c3) { cells[2][2] }
@@ -118,5 +115,4 @@ RSpec.describe Chess::Core::Pieces::Bishop do
       end
     end
   end
-  # rubocop:enable RSpec/MultipleMemoizedHelpers
 end

@@ -19,9 +19,11 @@ module Chess
         ]
 
         result.map do |local_result|
-          next if local_result.zero?
-
-          local_result.positive? ? 1 : -1
+          if local_result.zero?
+            0
+          else
+            local_result.positive? ? 1 : -1
+          end
         end
       end
     end

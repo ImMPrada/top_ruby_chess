@@ -6,7 +6,7 @@ require_relative './chess'
 module Chess
   module Core
     class Cell
-      attr_reader :occupant
+      attr_reader :occupant, :name
 
       Algebraic = Struct.new(:column, :row) do
         def to_s

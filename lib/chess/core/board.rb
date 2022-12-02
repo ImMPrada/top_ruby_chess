@@ -25,7 +25,9 @@ module Chess
         end
 
         def all
-          to_a.reject(&:captured?)
+          to_a.reject do |piece|
+            piece.nil? || piece.captured? || piece.symbol == :K
+          end
         end
       end
 

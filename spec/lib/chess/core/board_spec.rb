@@ -123,4 +123,45 @@ RSpec.describe Chess::Core::Board do
       # rubocop:enable RSpec/NestedGroups
     end
   end
+
+  describe '#checkmate?' do
+    subject(:board) { described_class.new }
+
+    let(:check_pice) { board.pieces[Chess::BLACK_TEAM].rooks.first }
+    let(:king_in_check) { board.pieces[Chess::WHITE_TEAM].king }
+
+    before { board.generate_cells }
+
+    describe 'when there is a checkmate' do
+      before { hardcode_pieces_checkmate_case1(board) }
+
+      it 'returns true' do
+        expect(board.checkmate?(check_pice, king_in_check, board.pieces, board.cells)).to be(true)
+      end
+    end
+
+    describe 'when the king can escape' do
+      before { hardcode_pieces_checkmate_case2(board) }
+
+      it 'returns false' do
+        expect(board.checkmate?(check_pice, king_in_check, board.pieces, board.cells)).to be(false)
+      end
+    end
+
+    describe 'when a friend piece, can attack the enemy piece' do
+      before { hardcode_pieces_checkmate_case3(board) }
+
+      it 'returns false' do
+        expect(board.checkmate?(check_pice, king_in_check, board.pieces, board.cells)).to be(false)
+      end
+    end
+
+    describe 'when a friend piece, can intersect the enemy path' do
+      before { hardcode_pieces_checkmate_case4(board) }
+
+      it 'returns false' do
+        expect(board.checkmate?(check_pice, king_in_check, board.pieces, board.cells)).to be(false)
+      end
+    end
+  end
 end

@@ -18,6 +18,15 @@ module Chess
           piece.castle(cells)
         end
 
+        def neighbors(cells)
+          cartesian_neighbors = move_deltas.map { |delta| sum_arrays(@current_cell.cartesian.to_a, delta) }
+          cartesian_neighbors = cartesian_neighbors.select do |cartesian|
+            cartesian.all? { |coordinate| coordinate.between?(MIN_INDEX, MAX_INDEX) }
+          end
+
+          cartesian_neighbors.map { |cartesian| cells.dig(*cartesian) }
+        end
+
         private
 
         def can_castle_with?(piece, cells)

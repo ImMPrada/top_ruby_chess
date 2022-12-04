@@ -24,7 +24,37 @@ module Chess
           @pieces = board.pieces
         end
 
-        def run; end
+        def run
+          case @intention.type
+          when :move
+            run_move
+          end
+        end
+
+        private
+
+        def run_move
+          piece_captured = @intention.target_cell.occupant
+          commitment = commit(
+            @intention.origin_cell,
+            team_playing
+          )
+          return commitment unless commitment == COMMIT_SUCCESS
+
+          piece_captured&.takken
+          return roll_back(@intention.target_cell, piece_captured) if king_under_risk?
+
+          commitment
+        end
+
+        def king_under_risk?
+          king_cell = @board.pieces[@intention.target_cell.occupant.team].king.current_cell
+          @board.can_any_piece_move_to?(
+            king_cell,
+            @cells,
+            @pieces[@intention.target_cell.occupant.enemies_team]
+          )
+        end
       end
     end
   end

@@ -4,15 +4,10 @@ module Chess
   module Core
     module Move
       module RollbackServices
-        def roll_back
-          roll_back_piece_moved
-          @king_position_string = @pieces[@friends_team].king.position.algebraic.to_s
-
-          return ROLLBACK_SUCCES unless @piece_captured
-
-          find_cell(@piece_captured.position.algebraic).occup_by(@piece_captured)
-          add_captured_to_pieces
-          @piece_captured = nil
+        def roll_back(target_cell, piece_captured)
+          piece_moved = target_cell.occupant
+          piece_moved.roll_back_cell
+          piece_captured.back_to_board
 
           ROLLBACK_SUCCES
         end

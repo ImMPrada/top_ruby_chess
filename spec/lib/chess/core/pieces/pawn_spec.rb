@@ -20,7 +20,7 @@ RSpec.describe Chess::Core::Pieces::Pawn do
   end
   let(:cell_d2) { cells[1][3] }
 
-  describe '#create_and_occupy' do
+  describe '. create_and_occupy' do
     it 'occupies the cell' do
       expect(pawn.current_cell.occupant).to be(pawn)
     end

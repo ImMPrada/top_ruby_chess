@@ -1,9 +1,10 @@
 require 'spec_helper'
 require 'chess/core/board'
 require 'chess/core/cell'
+require_relative '../../../helper/board_pieces'
 
 RSpec.describe Chess::Core::Board do
-  describe '#create_and_occupy' do
+  describe '. create_and_occupy' do
     subject(:board) { described_class.create_and_occupy }
 
     it 'creates an array at @cells' do
@@ -127,7 +128,7 @@ RSpec.describe Chess::Core::Board do
   describe '#checkmate?' do
     subject(:board) { described_class.new }
 
-    let(:check_pice) { board.pieces[Chess::BLACK_TEAM].rooks.first }
+    let(:check_piece) { board.pieces[Chess::BLACK_TEAM].rooks.first }
     let(:king_in_check) { board.pieces[Chess::WHITE_TEAM].king }
 
     before { board.generate_cells }
@@ -136,7 +137,7 @@ RSpec.describe Chess::Core::Board do
       before { hardcode_pieces_checkmate_case1(board) }
 
       it 'returns true' do
-        expect(board.checkmate?(check_pice, king_in_check, board.pieces, board.cells)).to be(true)
+        expect(board.checkmate?(check_piece, king_in_check, board.pieces, board.cells)).to be(true)
       end
     end
 
@@ -144,7 +145,7 @@ RSpec.describe Chess::Core::Board do
       before { hardcode_pieces_checkmate_case2(board) }
 
       it 'returns false' do
-        expect(board.checkmate?(check_pice, king_in_check, board.pieces, board.cells)).to be(false)
+        expect(board.checkmate?(check_piece, king_in_check, board.pieces, board.cells)).to be(false)
       end
     end
 
@@ -152,7 +153,7 @@ RSpec.describe Chess::Core::Board do
       before { hardcode_pieces_checkmate_case3(board) }
 
       it 'returns false' do
-        expect(board.checkmate?(check_pice, king_in_check, board.pieces, board.cells)).to be(false)
+        expect(board.checkmate?(check_piece, king_in_check, board.pieces, board.cells)).to be(false)
       end
     end
 
@@ -160,7 +161,7 @@ RSpec.describe Chess::Core::Board do
       before { hardcode_pieces_checkmate_case4(board) }
 
       it 'returns false' do
-        expect(board.checkmate?(check_pice, king_in_check, board.pieces, board.cells)).to be(false)
+        expect(board.checkmate?(check_piece, king_in_check, board.pieces, board.cells)).to be(false)
       end
     end
   end

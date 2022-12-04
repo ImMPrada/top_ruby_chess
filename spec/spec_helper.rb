@@ -1,6 +1,5 @@
 require 'simplecov'
 require 'simplecov-lcov'
-require_relative 'helper/board_pieces'
 
 core_root = './lib/chess/core/'
 require 'byebug'

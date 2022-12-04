@@ -39,7 +39,17 @@ module Chess
           *@knights,
           *@rooks,
           *@pawns
-        ]
+        ].reject(&:captured?)
+      end
+
+      def captured
+        [
+          *@queens,
+          *@bishops,
+          *@knights,
+          *@rooks,
+          *@pawns
+        ].select(&:captured?)
       end
 
       private

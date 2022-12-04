@@ -16,21 +16,15 @@ module Chess
 
         attr_reader :king_position_string, :enemies_team, :piece_captured, :intention, :team_filter
 
-        # def initialize(intention, board, team_filter)
-        def initialize
-          # @intention = intention
-          # @cells = board.cells
-          # @pieces = board.pieces
-          # @symbol_filter = @intention[:symbol_filter].to_sym
-
-          # @team_filter = team_filter
-          # @piece_moved = nil
-          # @piece_captured = nil
+        def initialize(intention, board, team_playing)
+          @intention = intention
+          @team_playing = team_playing
+          @board = board
+          @cells = board.cells
+          @pieces = board.pieces
         end
 
-        def execute
-          byebug
-        end
+        def run; end
       end
     end
   end

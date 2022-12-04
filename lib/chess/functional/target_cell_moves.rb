@@ -53,7 +53,6 @@ module Chess
 
         until current_cell == king_in_check.current_cell
           response = can_any_piece_move_to?(current_cell, cells, all_friend_pieces)
-          puts current_cell.name
           break if response
 
           current_cell = cells.dig(*sum_arrays(current_cell.cartesian.to_a, delta))

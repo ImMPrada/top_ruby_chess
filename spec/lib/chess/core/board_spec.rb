@@ -20,56 +20,52 @@ RSpec.describe Chess::Core::Board do
       expect(check).to be(true)
     end
 
-    it 'creates a hash at @pieces' do
-      expect(board.pieces).to be_a(Hash)
-    end
-
     it 'creates a king for white team' do
-      expect(board.pieces[Chess::WHITE_TEAM].find_pieces_of(:K).size).to be(1)
+      expect(board.pieces.white.king.instance_of?(Chess::Core::Pieces::King)).to be(true)
     end
 
     it 'creates a king for black team' do
-      expect(board.pieces[Chess::BLACK_TEAM].find_pieces_of(:K).size).to be(1)
+      expect(board.pieces.black.king.instance_of?(Chess::Core::Pieces::King)).to be(true)
     end
 
     it 'creates a queen for white team' do
-      expect(board.pieces[Chess::WHITE_TEAM].find_pieces_of(:Q).size).to be(1)
+      expect(board.pieces.white.queens.first.instance_of?(Chess::Core::Pieces::Queen)).to be(true)
     end
 
     it 'creates a queen for black team' do
-      expect(board.pieces[Chess::BLACK_TEAM].find_pieces_of(:Q).size).to be(1)
+      expect(board.pieces.black.queens.first.instance_of?(Chess::Core::Pieces::Queen)).to be(true)
     end
 
     it 'creates 2 bishops for white team' do
-      expect(board.pieces[Chess::WHITE_TEAM].find_pieces_of(:B).size).to be(2)
+      expect(board.pieces.white.bishops.size).to be(2)
     end
 
     it 'creates 2 bishops for black team' do
-      expect(board.pieces[Chess::BLACK_TEAM].find_pieces_of(:B).size).to be(2)
+      expect(board.pieces.black.bishops.size).to be(2)
     end
 
     it 'creates 2 knights for white team' do
-      expect(board.pieces[Chess::WHITE_TEAM].find_pieces_of(:N).size).to be(2)
+      expect(board.pieces.white.knights.size).to be(2)
     end
 
     it 'creates 2 knights for black team' do
-      expect(board.pieces[Chess::BLACK_TEAM].find_pieces_of(:N).size).to be(2)
+      expect(board.pieces.black.knights.size).to be(2)
     end
 
     it 'creates 2 rooks for white team' do
-      expect(board.pieces[Chess::WHITE_TEAM].find_pieces_of(:R).size).to be(2)
+      expect(board.pieces.white.rooks.size).to be(2)
     end
 
     it 'creates 2 rooks for black team' do
-      expect(board.pieces[Chess::BLACK_TEAM].find_pieces_of(:R).size).to be(2)
+      expect(board.pieces.black.rooks.size).to be(2)
     end
 
-    it 'creates 8 rooks for white team' do
-      expect(board.pieces[Chess::WHITE_TEAM].find_pieces_of(:P).size).to be(8)
+    it 'creates 8 pawns for white team' do
+      expect(board.pieces.white.pawns.size).to be(8)
     end
 
-    it 'creates 8 rooks for black team' do
-      expect(board.pieces[Chess::BLACK_TEAM].find_pieces_of(:P).size).to be(8)
+    it 'creates 8 pawns for black team' do
+      expect(board.pieces.black.pawns.size).to be(8)
     end
   end
 

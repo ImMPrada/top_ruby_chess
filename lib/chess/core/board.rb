@@ -47,10 +47,10 @@ module Chess
       def generate_cells
         cell_color = BLACK_TEAM
 
-        (MIN_INDEX..MAX_INDEX).to_a.each do |row_index|
+        (MIN_INDEX..MAX_INDEX).each do |row_index|
           @cells << []
 
-          (MIN_INDEX..MAX_INDEX).to_a.each do |column_index|
+          (MIN_INDEX..MAX_INDEX).each do |column_index|
             @cells[row_index] << Cell.new(
               "#{COLUMNS[column_index]}#{row_index + 1}",
               cell_color
@@ -111,7 +111,7 @@ module Chess
       end
 
       def create_pawns(team, pawns_index)
-        (0..7).to_a.map do |column_index|
+        (0..7).map do |column_index|
           Core::Pieces::Pawn.create_and_occupy(team, @cells[pawns_index][column_index])
         end
       end

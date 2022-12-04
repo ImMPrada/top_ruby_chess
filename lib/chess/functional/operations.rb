@@ -9,6 +9,23 @@ module Chess
 
         result
       end
+
+      def directive_of(array1, array2)
+        return unless array1.size == array2.size && array1.size == 2
+
+        result = [
+          array2[0] - array1[0],
+          array2[1] - array1[1]
+        ]
+
+        result.map do |local_result|
+          if local_result.zero?
+            0
+          else
+            local_result.positive? ? 1 : -1
+          end
+        end
+      end
     end
   end
 end

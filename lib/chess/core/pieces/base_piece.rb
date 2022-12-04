@@ -62,12 +62,12 @@ module Chess
           @captured
         end
 
-        private
-
         def enemies_team
           return WHITE_TEAM if @team == BLACK_TEAM
           return BLACK_TEAM if @team == WHITE_TEAM
         end
+
+        private
 
         def evaluate_with_one_move(target_cell, cells, deltas)
           deltas.any? do |delta|

@@ -27,6 +27,16 @@ RSpec.describe Chess::Core::Pieces::King do
     end
   end
 
+  describe '#neighbors' do
+    it 'returns an array' do
+      expect(king.neighbors(cells)).to be_an(Array)
+    end
+
+    it 'returns an array of cells' do
+      expect(king.neighbors(cells).all? { |neighbor| neighbor.instance_of?(Chess::Core::Cell) }).to be(true)
+    end
+  end
+
   # rubocop:disable RSpec/MultipleMemoizedHelpers
   describe '#can_move_to?' do
     let(:cell_d1) { cells[0][3] }

@@ -12,9 +12,9 @@ module Chess
       end
 
       # rubocop:disable Metrics/MethodLength
-      def checkmate?(check_pice, king_in_check, all_pieces, cells)
+      def checkmate?(check_piece, king_in_check, all_pieces, cells)
         return false if can_any_piece_move_to?(
-          check_pice.current_cell,
+          check_piece.current_cell,
           cells,
           all_pieces[king_in_check.team].all
         )
@@ -24,7 +24,7 @@ module Chess
           all_pieces[king_in_check.enemies_team].all
         )
         return false if can_any_friend_intersect_path?(
-          check_pice, king_in_check,
+          check_piece, king_in_check,
           all_pieces[king_in_check.team].all,
           cells
         )
@@ -42,14 +42,14 @@ module Chess
       end
 
       # rubocop:disable Metrics/AbcSize
-      def can_any_friend_intersect_path?(check_pice, king_in_check, all_friend_pieces, cells)
+      def can_any_friend_intersect_path?(check_piece, king_in_check, all_friend_pieces, cells)
         response = false
         delta = directive_of(
-          check_pice.current_cell.cartesian.to_a,
+          check_piece.current_cell.cartesian.to_a,
           king_in_check.current_cell.cartesian.to_a
         )
 
-        current_cell = cells.dig(*sum_arrays(check_pice.current_cell.cartesian.to_a, delta))
+        current_cell = cells.dig(*sum_arrays(check_piece.current_cell.cartesian.to_a, delta))
 
         until current_cell == king_in_check.current_cell
           response = can_any_piece_move_to?(current_cell, cells, all_friend_pieces)

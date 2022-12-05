@@ -1,9 +1,11 @@
-require_relative '../core/chess'
+require_relative '../core/constants'
 
 module Chess
   module CLI
     class Prompt
       attr_reader :input_string, :case, :parameters
+
+      include Chess::Constants
 
       PIECE_MOVE_REGEX = /^[k, q, b, n, r, p]([a-h][1-8]){2}$/
       COMMANDS = {

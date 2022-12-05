@@ -1,11 +1,13 @@
 require 'colorize'
 require 'colorized_string'
 
-require_relative '../core/chess'
+require_relative '../core/constants'
 
 module Chess
   module CLI
     class Render
+      include Chess::Constants
+
       def initialize
         @records_history = nil
       end

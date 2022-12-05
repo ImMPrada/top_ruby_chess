@@ -1,9 +1,11 @@
-require_relative '../chess'
+require_relative '../constants'
 
 module Chess
   module Core
     module Move
       module RollbackServices
+        include Chess::Constants
+
         def roll_back(target_cell, piece_captured)
           piece_moved = target_cell.occupant
           piece_moved.roll_back_cell

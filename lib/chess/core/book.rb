@@ -1,4 +1,4 @@
-require_relative 'chess'
+require_relative 'constants'
 require_relative 'record'
 require_relative 'board'
 require_relative './move/main'
@@ -7,6 +7,8 @@ module Chess
   module Core
     class Book
       attr_reader :record
+
+      include Chess::Constants
 
       def initialize(board)
         @board = board

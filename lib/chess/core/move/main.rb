@@ -1,4 +1,4 @@
-require_relative '../chess'
+require_relative '../constants'
 require_relative 'commit_services'
 require_relative 'rollback_services'
 require_relative '../../functional/cell_notation'
@@ -11,6 +11,7 @@ module Chess
         include Chess::Core::Move::CommitServices
         include Chess::Core::Move::RollbackServices
         include Chess::Functional::CellNotation
+        include Chess::Constants
 
         attr_reader :king_position_string, :enemies_team, :piece_captured, :intention, :team_filter
 

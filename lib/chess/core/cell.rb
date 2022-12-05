@@ -1,7 +1,7 @@
 require 'colorize'
 require 'colorized_string'
 
-require_relative './chess'
+require_relative './constants'
 require_relative '../functional/cell_notation'
 
 module Chess
@@ -10,6 +10,7 @@ module Chess
       attr_reader :occupant, :name
 
       include Chess::Functional::CellNotation
+      include Chess::Constants
 
       def initialize(name, fill_color)
         @occupant = nil

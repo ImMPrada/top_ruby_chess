@@ -1,4 +1,4 @@
-require_relative '../chess'
+require_relative '../constants'
 require_relative '../../functional/operations'
 
 module Chess
@@ -6,6 +6,7 @@ module Chess
     module Pieces
       class BasePiece
         include Functional::Operations
+        include Chess::Constants
 
         attr_reader :symbol, :team, :current_cell
 

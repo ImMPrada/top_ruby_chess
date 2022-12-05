@@ -1,4 +1,4 @@
-require_relative 'chess'
+require_relative 'constants'
 require_relative './board/board'
 require_relative 'prompt'
 require_relative 'render'
@@ -7,6 +7,8 @@ require 'byebug'
 
 module Chess
   class Game
+    include Chess::Constants
+
     def start
       instanciate_comonentes
       @state = RUNNING

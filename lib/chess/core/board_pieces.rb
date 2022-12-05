@@ -1,4 +1,4 @@
-require_relative 'chess'
+require_relative 'constants'
 require_relative 'cell'
 require_relative './pieces/king'
 require_relative './pieces/queen'
@@ -12,6 +12,8 @@ module Chess
   module Core
     class BoardPieces
       attr_reader :king, :queens, :bishops, :knights, :rooks, :pawns
+
+      include Chess::Constants
 
       def initialize
         @cells = nil

@@ -81,7 +81,7 @@ RSpec.describe Chess::Core::Board do
         expect(board.can_any_piece_move_to?(
                  cells.sample.sample,
                  cells,
-                 board.pieces
+                 board.pieces[Chess::WHITE_TEAM].all
                )).to be_nil
       end
     end

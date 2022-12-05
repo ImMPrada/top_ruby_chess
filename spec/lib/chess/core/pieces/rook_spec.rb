@@ -4,7 +4,7 @@ require 'chess/core/cell'
 require 'chess/core/board'
 
 RSpec.describe Chess::Core::Pieces::Rook do
-  subject(:rook) { described_class.create_and_occupy(Chess::WHITE_TEAM, cell_a1) }
+  subject(:rook) { described_class.create_and_occupy(Chess::Constants::WHITE_TEAM, cell_a1) }
 
   let(:board) { Chess::Core::Board.new }
   let(:cells) do
@@ -28,8 +28,8 @@ RSpec.describe Chess::Core::Pieces::Rook do
     let(:cell_h1) { cells[0][7] }
 
     before do
-      described_class.create_and_occupy(Chess::BLACK_TEAM, cell_a8)
-      described_class.create_and_occupy(Chess::WHITE_TEAM, cell_d1)
+      described_class.create_and_occupy(Chess::Constants::BLACK_TEAM, cell_a8)
+      described_class.create_and_occupy(Chess::Constants::WHITE_TEAM, cell_d1)
     end
 
     describe '#can_move_to?' do
@@ -83,7 +83,7 @@ RSpec.describe Chess::Core::Pieces::Rook do
 
       describe 'when path is not free' do
         before do
-          described_class.create_and_occupy(Chess::WHITE_TEAM, cells[0][2])
+          described_class.create_and_occupy(Chess::Constants::WHITE_TEAM, cells[0][2])
         end
 
         it 'returns false' do
@@ -105,7 +105,7 @@ RSpec.describe Chess::Core::Pieces::Rook do
     end
 
     describe 'kingside rook' do
-      subject(:rook_kingside) { described_class.create_and_occupy(Chess::WHITE_TEAM, cell_h8) }
+      subject(:rook_kingside) { described_class.create_and_occupy(Chess::Constants::WHITE_TEAM, cell_h8) }
 
       let(:cell_h8) { cells[7][7] }
 
@@ -133,7 +133,7 @@ RSpec.describe Chess::Core::Pieces::Rook do
 
       describe 'when path is not free' do
         before do
-          described_class.create_and_occupy(Chess::WHITE_TEAM, cells[7][5])
+          described_class.create_and_occupy(Chess::Constants::WHITE_TEAM, cells[7][5])
         end
 
         it 'returns false' do
@@ -146,7 +146,7 @@ RSpec.describe Chess::Core::Pieces::Rook do
       before { rook.castle(cells) }
 
       describe 'queenside' do
-        let(:rook) { described_class.create_and_occupy(Chess::WHITE_TEAM, cell_a1) }
+        let(:rook) { described_class.create_and_occupy(Chess::Constants::WHITE_TEAM, cell_a1) }
         let(:cell_a1) { cells[0][0] }
         let(:target_cell) { cells[0][3] }
 
@@ -156,7 +156,7 @@ RSpec.describe Chess::Core::Pieces::Rook do
       end
 
       describe 'kingside' do
-        let(:rook) { described_class.create_and_occupy(Chess::WHITE_TEAM, cell_h8) }
+        let(:rook) { described_class.create_and_occupy(Chess::Constants::WHITE_TEAM, cell_h8) }
         let(:cell_h8) { cells[7][7] }
         let(:target_cell) { cells[7][5] }
 

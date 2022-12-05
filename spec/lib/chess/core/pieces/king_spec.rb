@@ -5,7 +5,7 @@ require 'chess/core/cell'
 require 'chess/core/board'
 
 RSpec.describe Chess::Core::Pieces::King do
-  subject(:king) { described_class.create_and_occupy(Chess::WHITE_TEAM, cell_e1) }
+  subject(:king) { described_class.create_and_occupy(Chess::Constants::WHITE_TEAM, cell_e1) }
 
   let(:board) { Chess::Core::Board.new }
   let(:cells) do
@@ -93,7 +93,7 @@ RSpec.describe Chess::Core::Pieces::King do
 
   describe '#castle_with' do
     describe 'queenside' do
-      let(:rook) { Chess::Core::Pieces::Rook.create_and_occupy(Chess::WHITE_TEAM, cell_a1) }
+      let(:rook) { Chess::Core::Pieces::Rook.create_and_occupy(Chess::Constants::WHITE_TEAM, cell_a1) }
       let(:cell_a1) { cells[0][0] }
       let(:cell_c1) { cells[0][2] }
       let(:cell_f1) { cells[0][5] }
@@ -111,7 +111,7 @@ RSpec.describe Chess::Core::Pieces::King do
       end
 
       it 'returns nil if there is a piece between king and rook' do
-        Chess::Core::Pieces::Rook.create_and_occupy(Chess::WHITE_TEAM, cell_c1)
+        Chess::Core::Pieces::Rook.create_and_occupy(Chess::Constants::WHITE_TEAM, cell_c1)
 
         expect(king.castle_with(rook, cells)).to be_nil
       end
@@ -128,7 +128,7 @@ RSpec.describe Chess::Core::Pieces::King do
     end
 
     describe 'kingside' do
-      let(:rook) { Chess::Core::Pieces::Rook.create_and_occupy(Chess::WHITE_TEAM, cell_h1) }
+      let(:rook) { Chess::Core::Pieces::Rook.create_and_occupy(Chess::Constants::WHITE_TEAM, cell_h1) }
       let(:cell_f1) { cells[0][5] }
       let(:cell_h1) { cells[0][7] }
       let(:cell_g1) { cells[0][6] }
@@ -146,7 +146,7 @@ RSpec.describe Chess::Core::Pieces::King do
       end
 
       it 'returns nil if there is a piece between king and rook' do
-        Chess::Core::Pieces::Rook.create_and_occupy(Chess::WHITE_TEAM, cell_g1)
+        Chess::Core::Pieces::Rook.create_and_occupy(Chess::Constants::WHITE_TEAM, cell_g1)
 
         expect(king.castle_with(rook, cells)).to be_nil
       end

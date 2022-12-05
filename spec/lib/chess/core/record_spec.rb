@@ -24,45 +24,45 @@ RSpec.describe Chess::Core::Record do
 
       it 'returns a Chess::Core::Record::CommitRecord' do
         expect(
-          record.add(accomplished_intention, Chess::WHITE_TEAM, nil)
+          record.add(accomplished_intention, Chess::Constants::WHITE_TEAM, nil)
         ).to be_a(Chess::Core::Record::CommitRecord)
       end
 
       it 'returns a Chess::Core::Record::CommitRecord with piece symbol' do
         expect(
-          record.add(accomplished_intention, Chess::WHITE_TEAM, nil).piece
+          record.add(accomplished_intention, Chess::Constants::WHITE_TEAM, nil).piece
         ).to be(board.cells[1][4].occupant.symbol)
       end
 
       it 'returns a Chess::Core::Record::CommitRecord with origin cell name' do
         expect(
-          record.add(accomplished_intention, Chess::WHITE_TEAM, nil).origin
+          record.add(accomplished_intention, Chess::Constants::WHITE_TEAM, nil).origin
         ).to be(board.cells[0][4].name)
       end
 
       it 'returns a Chess::Core::Record::CommitRecord with target cell name' do
         expect(
-          record.add(accomplished_intention, Chess::WHITE_TEAM, nil).target
+          record.add(accomplished_intention, Chess::Constants::WHITE_TEAM, nil).target
         ).to be(board.cells[1][4].name)
       end
 
       it 'returns a Chess::Core::Record::CommitRecord with capture true' do
         expect(
-          record.add(accomplished_intention, Chess::WHITE_TEAM, nil).capture
+          record.add(accomplished_intention, Chess::Constants::WHITE_TEAM, nil).capture
         ).to be_nil
       end
 
       it 'updates history' do
-        before_add = record.history.first[Chess::WHITE_TEAM].nil?
-        record.add(accomplished_intention, Chess::WHITE_TEAM, nil)
+        before_add = record.history.first[Chess::Constants::WHITE_TEAM].nil?
+        record.add(accomplished_intention, Chess::Constants::WHITE_TEAM, nil)
         expect(
-          before_add == record.history.first[Chess::WHITE_TEAM].nil?
+          before_add == record.history.first[Chess::Constants::WHITE_TEAM].nil?
         ).to be(false)
       end
 
       it 'updates history with a Chess::Core::Record::CommitRecord' do
-        record.add(accomplished_intention, Chess::WHITE_TEAM, nil)
-        expect(record.history.first[Chess::WHITE_TEAM]).to be_a(Chess::Core::Record::CommitRecord)
+        record.add(accomplished_intention, Chess::Constants::WHITE_TEAM, nil)
+        expect(record.history.first[Chess::Constants::WHITE_TEAM]).to be_a(Chess::Core::Record::CommitRecord)
       end
     end
 
@@ -71,86 +71,86 @@ RSpec.describe Chess::Core::Record do
 
       it 'returns a Chess::Core::Record::CommitRecord' do
         expect(
-          record.add(accomplished_intention, Chess::WHITE_TEAM, true)
+          record.add(accomplished_intention, Chess::Constants::WHITE_TEAM, true)
         ).to be_a(Chess::Core::Record::CommitRecord)
       end
 
       it 'returns a Chess::Core::Record::CommitRecord with piece symbol' do
         expect(
-          record.add(accomplished_intention, Chess::WHITE_TEAM, true).piece
+          record.add(accomplished_intention, Chess::Constants::WHITE_TEAM, true).piece
         ).to be(board.cells[1][4].occupant.symbol)
       end
 
       it 'returns a Chess::Core::Record::CommitRecord with origin cell name' do
         expect(
-          record.add(accomplished_intention, Chess::WHITE_TEAM, true).origin
+          record.add(accomplished_intention, Chess::Constants::WHITE_TEAM, true).origin
         ).to be(board.cells[0][4].name)
       end
 
       it 'returns a Chess::Core::Record::CommitRecord with target cell name' do
         expect(
-          record.add(accomplished_intention, Chess::WHITE_TEAM, true).target
+          record.add(accomplished_intention, Chess::Constants::WHITE_TEAM, true).target
         ).to be(board.cells[1][4].name)
       end
 
       it 'returns a Chess::Core::Record::CommitRecord with capture true' do
         expect(
-          record.add(accomplished_intention, Chess::WHITE_TEAM, true).capture
+          record.add(accomplished_intention, Chess::Constants::WHITE_TEAM, true).capture
         ).to be(true)
       end
 
       it 'updates history' do
-        before_add = record.history.first[Chess::WHITE_TEAM].nil?
-        record.add(accomplished_intention, Chess::WHITE_TEAM, true)
+        before_add = record.history.first[Chess::Constants::WHITE_TEAM].nil?
+        record.add(accomplished_intention, Chess::Constants::WHITE_TEAM, true)
         expect(
-          before_add == record.history.first[Chess::WHITE_TEAM].nil?
+          before_add == record.history.first[Chess::Constants::WHITE_TEAM].nil?
         ).to be(false)
       end
 
       it 'updates history with a Chess::Core::Record::CommitRecord' do
-        record.add(accomplished_intention, Chess::WHITE_TEAM, true)
-        expect(record.history.first[Chess::WHITE_TEAM]).to be_a(Chess::Core::Record::CommitRecord)
+        record.add(accomplished_intention, Chess::Constants::WHITE_TEAM, true)
+        expect(record.history.first[Chess::Constants::WHITE_TEAM]).to be_a(Chess::Core::Record::CommitRecord)
       end
     end
 
     describe 'when intention is type castling' do
-      let(:accomplished_intention) { Intention.new(Chess::INTENTION_IS_KING_CASTLING, nil, nil) }
+      let(:accomplished_intention) { Intention.new(Chess::Constants::INTENTION_IS_KING_CASTLING, nil, nil) }
 
       it 'returns nil at piece symbol' do
         expect(
-          record.add(accomplished_intention, Chess::WHITE_TEAM, nil).piece
+          record.add(accomplished_intention, Chess::Constants::WHITE_TEAM, nil).piece
         ).to be_nil
       end
 
       it 'returns nil at piece origin' do
         expect(
-          record.add(accomplished_intention, Chess::WHITE_TEAM, nil).origin
+          record.add(accomplished_intention, Chess::Constants::WHITE_TEAM, nil).origin
         ).to be_nil
       end
 
       it 'returns nil at piece target' do
         expect(
-          record.add(accomplished_intention, Chess::WHITE_TEAM, nil).target
+          record.add(accomplished_intention, Chess::Constants::WHITE_TEAM, nil).target
         ).to be_nil
       end
 
       it 'returns castling type at castling' do
         expect(
-          record.add(accomplished_intention, Chess::WHITE_TEAM, nil).castling
-        ).to be(Chess::INTENTION_IS_KING_CASTLING)
+          record.add(accomplished_intention, Chess::Constants::WHITE_TEAM, nil).castling
+        ).to be(Chess::Constants::INTENTION_IS_KING_CASTLING)
       end
 
       it 'updates history' do
-        before_add = record.history.first[Chess::WHITE_TEAM].nil?
-        record.add(accomplished_intention, Chess::WHITE_TEAM, nil)
+        before_add = record.history.first[Chess::Constants::WHITE_TEAM].nil?
+        record.add(accomplished_intention, Chess::Constants::WHITE_TEAM, nil)
         expect(
-          before_add == record.history.first[Chess::WHITE_TEAM].nil?
+          before_add == record.history.first[Chess::Constants::WHITE_TEAM].nil?
         ).to be(false)
       end
 
       it 'updates history with a Chess::Core::Record::CommitRecord' do
-        record.add(accomplished_intention, Chess::WHITE_TEAM, nil)
-        expect(record.history.first[Chess::WHITE_TEAM]).to be_a(Chess::Core::Record::CommitRecord)
+        record.add(accomplished_intention, Chess::Constants::WHITE_TEAM, nil)
+        expect(record.history.first[Chess::Constants::WHITE_TEAM]).to be_a(Chess::Core::Record::CommitRecord)
       end
     end
   end

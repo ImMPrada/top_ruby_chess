@@ -62,7 +62,7 @@ RSpec.describe Chess::Core::Move::Main do
           it 'updates enemy board pieces list' do
             piece_captured = board.cells[7][4].occupant
             move.run
-            expect(board.pieces.black.captured).to eq([piece_captured])
+            expect(board.pieces[Chess::BLACK_TEAM].captured).to eq([piece_captured])
           end
         end
       end
@@ -109,9 +109,159 @@ RSpec.describe Chess::Core::Move::Main do
         end
 
         it 'rolls back board pieces list of captured' do
-          initial_list_state = board.pieces.black.captured
+          initial_list_state = board.pieces[Chess::BLACK_TEAM].captured
           move.run
-          expect(board.pieces.black.captured).to eq(initial_list_state)
+          expect(board.pieces[Chess::BLACK_TEAM].captured).to eq(initial_list_state)
+        end
+      end
+    end
+
+    describe 'when intention is type :castling_queen_side' do
+      let(:intention) { Intention.new(:castling_queen_side, nil, nil) }
+
+      before { hardcode_pieces_case4(board) }
+
+      describe "when castling can't be done" do
+        it 'returns an error resposne' do
+          rook = board.pieces[Chess::WHITE_TEAM].queen_side_rook
+          rook.move_to(board.cells.dig(0, 3), board.cells)
+          expect(move.run).to be(Chess::ERR_CANT_CASTLING)
+        end
+      end
+
+      describe 'when castling is succesfull' do
+        it 'returns succesful response' do
+          expect(move.run).to be(Chess::COMMIT_SUCCESS)
+        end
+
+        it 'releases initial cell of king' do
+          origin_cell = board.pieces[Chess::WHITE_TEAM].king.current_cell
+          move.run
+          expect(origin_cell.occupant).to be_nil
+        end
+
+        it 'releases initial cell of rook' do
+          origin_cell = board.pieces[Chess::WHITE_TEAM].queen_side_rook.current_cell
+          move.run
+          expect(origin_cell.occupant).to be_nil
+        end
+
+        it 'occupies target castling cell by king' do
+          move.run
+          expect(board.cells[0][2].occupant).to be(board.pieces[Chess::WHITE_TEAM].king)
+        end
+
+        it 'occupies target castling cell by rook' do
+          rook = board.pieces[Chess::WHITE_TEAM].queen_side_rook
+          move.run
+          expect(board.cells[0][3].occupant).to be(rook)
+        end
+      end
+    end
+
+    describe 'when intention is type :castling_king_side' do
+      let(:intention) { Intention.new(:castling_king_side, nil, nil) }
+
+      before { hardcode_pieces_case4(board) }
+
+      describe "when castling can't be done" do
+        it 'returns an error resposne' do
+          rook = board.pieces[Chess::WHITE_TEAM].king_side_rook
+          rook.move_to(board.cells.dig(0, 5), board.cells)
+          expect(move.run).to be(Chess::ERR_CANT_CASTLING)
+        end
+      end
+
+      describe 'when castling is succesfull' do
+        it 'returns succesful response' do
+          expect(move.run).to be(Chess::COMMIT_SUCCESS)
+        end
+
+        it 'releases initial cell of king' do
+          origin_cell = board.pieces[Chess::WHITE_TEAM].king.current_cell
+          move.run
+          expect(origin_cell.occupant).to be_nil
+        end
+
+        it 'releases initial cell of rook' do
+          origin_cell = board.pieces[Chess::WHITE_TEAM].king_side_rook.current_cell
+          move.run
+          expect(origin_cell.occupant).to be_nil
+        end
+
+        it 'occupies target castling cell by king' do
+          move.run
+          expect(board.cells[0][6].occupant).to be(board.pieces[Chess::WHITE_TEAM].king)
+        end
+
+        it 'occupies target castling cell by rook' do
+          rook = board.pieces[Chess::WHITE_TEAM].king_side_rook
+          move.run
+          expect(board.cells[0][5].occupant).to be(rook)
+        end
+      end
+    end
+
+    describe 'when rollback is needed' do
+      before { hardcode_pieces_case5(board) }
+
+      describe 'when intention is type :castling_queen_side' do
+        let(:intention) { Intention.new(:castling_queen_side, nil, nil) }
+
+        it 'returns succesful response' do
+          expect(move.run).to be(Chess::ROLLBACK_SUCCES)
+        end
+
+        it 'keeps free target cell of king castling' do
+          move.run
+          expect(board.cells[0][2].occupant).to be_nil
+        end
+
+        it 'keeps free target cell of rook castling' do
+          move.run
+          expect(board.cells[0][3].occupant).to be_nil
+        end
+
+        it "rolls back the king to it's origin target" do
+          origin_cell = board.pieces[Chess::WHITE_TEAM].king.current_cell
+          move.run
+          expect(origin_cell.occupant).to be(board.pieces[Chess::WHITE_TEAM].king)
+        end
+
+        it "rolls back the rook to it's origin target" do
+          origin_cell = board.pieces[Chess::WHITE_TEAM].queen_side_rook.current_cell
+          move.run
+          expect(origin_cell.occupant).to be(board.pieces[Chess::WHITE_TEAM].queen_side_rook)
+        end
+      end
+
+      describe 'when intention is type :castling_king_side' do
+        let(:intention) { Intention.new(:castling_king_side, nil, nil) }
+
+        it 'returns succesful response' do
+          expect(move.run).to be(Chess::ROLLBACK_SUCCES)
+        end
+
+        it 'keeps free target cell of king castling' do
+          move.run
+          expect(board.cells[0][6].occupant).to be_nil
+        end
+
+        it 'keeps free target cell of rook castling' do
+          move.run
+          expect(board.cells[0][5].occupant).to be_nil
+        end
+
+        it "rolls back the king to it's origin target" do
+          origin_cell = board.pieces[Chess::WHITE_TEAM].king.current_cell
+          move.run
+          expect(origin_cell.occupant).to be(board.pieces[Chess::WHITE_TEAM].king)
+        end
+
+        it "rolls back the rook to it's origin target" do
+          origin_cell = board.pieces[Chess::WHITE_TEAM].king_side_rook.current_cell
+          move.run
+          expect(origin_cell.occupant).to be(board.pieces[Chess::WHITE_TEAM].king_side_rook)
         end
       end
     end

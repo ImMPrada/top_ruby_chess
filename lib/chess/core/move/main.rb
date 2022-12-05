@@ -1,5 +1,4 @@
 require_relative '../chess'
-require_relative 'submit_services'
 require_relative 'commit_services'
 require_relative 'rollback_services'
 require_relative '../../functional/cell_notation'
@@ -9,7 +8,6 @@ module Chess
   module Core
     module Move
       class Main
-        include Chess::Core::Move::SubmitServices
         include Chess::Core::Move::CommitServices
         include Chess::Core::Move::RollbackServices
         include Chess::Functional::CellNotation
@@ -20,8 +18,8 @@ module Chess
           @intention = intention
           @team_playing = team_playing
           @board = board
-          @cells = board.cells
-          @pieces = board.pieces
+          @cells = @board.cells
+          @pieces = @board.pieces
         end
 
         def run
@@ -54,11 +52,11 @@ module Chess
         end
 
         def king_under_risk?
-          king_cell = @board.pieces[@team_playing].king.current_cell
+          king_cell = @pieces[@team_playing].king.current_cell
           @board.can_any_piece_move_to?(
             king_cell,
             @cells,
-            @pieces[@board.pieces[@team_playing].king.enemies_team].all
+            @pieces[@pieces[@team_playing].king.enemies_team].all
           )
         end
 

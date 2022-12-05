@@ -33,6 +33,8 @@ module Chess
 
   CASTLING_FAILS = :cant_castling
 
+  INTENTION_IS_MOVE = :move
+
   KING_SIDE_CASTLING_CODE = 'o-o'.freeze
   QUEEN_SIDE_CASTLING_CODE = 'o-o-o'.freeze
   COLUMNS = %w[a b c d e f g h].freeze

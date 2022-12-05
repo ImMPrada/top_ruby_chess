@@ -14,7 +14,10 @@ module Chess
         @current_record_team = nil
       end
 
-      def add(accomplished_intention, playing_team, capture); end
+      def add(accomplished_intention, playing_team, capture)
+        @current_record_team = playing_team
+        return add_move_record(accomplished_intention, capture) if accomplished_intention.type == INTENTION_IS_MOVE
+      end
 
       private
 
@@ -27,6 +30,21 @@ module Chess
 
       def last_record_available?
         @history.last[@current_record_team].nil?
+      end
+
+      def add_move_record(accomplished_intention, capture)
+        piece = accomplished_intention.target_cell.occupant.symbol
+
+        current_record[@current_record_team] = CommitRecord.new(
+          piece,
+          accomplished_intention.origin_cell.name,
+          accomplished_intention.target_cell.name,
+          capture,
+          nil,
+          nil,
+          nil,
+          nil
+        )
       end
     end
   end

@@ -28,6 +28,10 @@ module Chess
           case @intention.type
           when :move
             run_move
+          when :castling_king_side
+            run_castling(KING_SIDE)
+          when :castling_queen_side
+            run_castling(QUEEN_SIDE)
           end
         end
 
@@ -50,12 +54,27 @@ module Chess
         end
 
         def king_under_risk?
-          king_cell = @board.pieces[@intention.target_cell.occupant.team].king.current_cell
+          king_cell = @board.pieces[@team_playing].king.current_cell
           @board.can_any_piece_move_to?(
             king_cell,
             @cells,
-            @pieces[@intention.target_cell.occupant.enemies_team].all
+            @pieces[@board.pieces[@team_playing].king.enemies_team].all
           )
+        end
+
+        def run_castling(side)
+          rook = @pieces[@team_playing].queen_side_rook if side == QUEEN_SIDE
+          rook = @pieces[@team_playing].king_side_rook if side == KING_SIDE
+
+          commitment = commit_castling(
+            @pieces[@team_playing].king,
+            rook,
+            @cells
+          )
+          return commitment unless commitment == COMMIT_SUCCESS
+          return roll_back_castling(@pieces[@team_playing].king, rook) if king_under_risk?
+
+          commitment
         end
       end
     end

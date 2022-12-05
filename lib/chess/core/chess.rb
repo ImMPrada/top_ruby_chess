@@ -31,6 +31,8 @@ module Chess
   EXIT_COMMAD = :exit_game
   COMMAND_SUCCES = :ok
 
+  CASTLING_FAILS = :cant_castling
+
   KING_SIDE_CASTLING_CODE = 'o-o'.freeze
   QUEEN_SIDE_CASTLING_CODE = 'o-o-o'.freeze
   COLUMNS = %w[a b c d e f g h].freeze

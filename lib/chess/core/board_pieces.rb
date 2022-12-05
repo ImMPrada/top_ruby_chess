@@ -52,6 +52,14 @@ module Chess
         ].select(&:captured?)
       end
 
+      def king_side_rook
+        @rooks.find { |rook| !rook.captured? && rook.king_side? }
+      end
+
+      def queen_side_rook
+        @rooks.find { |rook| !rook.captured? && rook.queen_side? }
+      end
+
       private
 
       def generate_pieces(team)

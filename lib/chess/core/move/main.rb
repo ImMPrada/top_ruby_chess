@@ -24,11 +24,11 @@ module Chess
 
         def run
           case @intention.type
-          when :move
+          when INTENTION_IS_MOVE
             run_move
-          when :castling_king_side
+          when INTENTION_IS_KING_CASTLING
             run_castling(KING_SIDE)
-          when :castling_queen_side
+          when INTENTION_IS_QUEEN_CASTLING
             run_castling(QUEEN_SIDE)
           end
         end

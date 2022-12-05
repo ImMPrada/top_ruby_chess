@@ -16,7 +16,10 @@ module Chess
 
       def add(accomplished_intention, playing_team, capture)
         @current_record_team = playing_team
-        return add_move_record(accomplished_intention, capture) if accomplished_intention.type == INTENTION_IS_MOVE
+        type = accomplished_intention.type
+
+        return add_move_record(accomplished_intention, capture) if type == INTENTION_IS_MOVE
+        return add_castling_record(type) if [INTENTION_IS_KING_CASTLING, INTENTION_IS_QUEEN_CASTLING].include?(type)
       end
 
       private
@@ -44,6 +47,19 @@ module Chess
           nil,
           nil,
           nil
+        )
+      end
+
+      def add_castling_record(castling_type)
+        current_record[@current_record_team] = CommitRecord.new(
+          nil,
+          nil,
+          nil,
+          nil,
+          nil,
+          nil,
+          nil,
+          castling_type
         )
       end
     end

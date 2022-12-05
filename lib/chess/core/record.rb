@@ -5,7 +5,7 @@ module Chess
     class Record
       attr_reader :history
 
-      CommitRecord = Struct.new(:piece, :origin, :target, :piece_captured, :check, :checkmate, :draw, :castling)
+      CommitRecord = Struct.new(:piece, :origin, :target, :capture, :check, :checkmate, :draw, :castling)
 
       RoundRecord = Struct.new(:white, :black, :draw)
 

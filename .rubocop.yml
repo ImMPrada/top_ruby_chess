@@ -19,5 +19,9 @@ Metrics/MethodLength:
 RSpec/BlockLength:
   Enabled: false
 
+RSpec/MultipleMemoizedHelpers:
+  Enabled: false
+
 RSpec/NestedGroups:
   Enabled: false
+

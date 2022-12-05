@@ -2,22 +2,15 @@ require 'spec_helper'
 require 'chess/core/pieces/king'
 require 'chess/core/pieces/rook'
 require 'chess/core/cell'
+require 'chess/core/board'
 
 RSpec.describe Chess::Core::Pieces::King do
   subject(:king) { described_class.create_and_occupy(Chess::WHITE_TEAM, cell_e1) }
 
+  let(:board) { Chess::Core::Board.new }
   let(:cells) do
-    cells = []
-
-    8.times do |row_index|
-      cells << []
-      8.times do |column_index|
-        name = "#{%w[a b c d e f g h][column_index]}#{row_index + 1}"
-        cells[row_index] << Chess::Core::Cell.new(name, Chess::WHITE_TEAM)
-      end
-    end
-
-    cells
+    board.generate_cells
+    board.cells
   end
   let(:cell_e1) { cells[0][4] }
 
@@ -37,7 +30,6 @@ RSpec.describe Chess::Core::Pieces::King do
     end
   end
 
-  # rubocop:disable RSpec/MultipleMemoizedHelpers
   describe '#can_move_to?' do
     let(:cell_d1) { cells[0][3] }
     let(:cell_d2) { cells[1][3] }
@@ -85,7 +77,6 @@ RSpec.describe Chess::Core::Pieces::King do
       expect(king.can_move_to?(cell_h1, cells)).to be(false)
     end
   end
-  # rubocop:enable RSpec/MultipleMemoizedHelpers
 
   describe '#move_to' do
     let(:cell_d1) { cells[0][3] }
@@ -100,7 +91,6 @@ RSpec.describe Chess::Core::Pieces::King do
     end
   end
 
-  # rubocop:disable RSpec/MultipleMemoizedHelpers
   describe '#castle_with' do
     describe 'queenside' do
       let(:rook) { Chess::Core::Pieces::Rook.create_and_occupy(Chess::WHITE_TEAM, cell_a1) }
@@ -172,5 +162,4 @@ RSpec.describe Chess::Core::Pieces::King do
       end
     end
   end
-  # rubocop:enable RSpec/MultipleMemoizedHelpers
 end

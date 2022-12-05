@@ -1,22 +1,15 @@
 require 'spec_helper'
 require 'chess/core/pieces/queen'
 require 'chess/core/cell'
+require 'chess/core/board'
 
 RSpec.describe Chess::Core::Pieces::Queen do
   subject(:queen) { described_class.create_and_occupy(Chess::WHITE_TEAM, cell_e5) }
 
+  let(:board) { Chess::Core::Board.new }
   let(:cells) do
-    cells = []
-
-    8.times do |row_index|
-      cells << []
-      8.times do |column_index|
-        name = "#{%w[a b c d e f g h][column_index]}#{row_index + 1}"
-        cells[row_index] << Chess::Core::Cell.new(name, Chess::WHITE_TEAM)
-      end
-    end
-
-    cells
+    board.generate_cells
+    board.cells
   end
   let(:cell_e5) { cells[4][4] }
 
@@ -26,7 +19,6 @@ RSpec.describe Chess::Core::Pieces::Queen do
     end
   end
 
-  # rubocop:disable RSpec/MultipleMemoizedHelpers
   describe 'whit other pieces occupyng cells, and starting at e5' do
     let(:cell_c3) { cells[2][2] }
     let(:cell_d5) { cells[4][3] }
@@ -96,5 +88,4 @@ RSpec.describe Chess::Core::Pieces::Queen do
       end
     end
   end
-  # rubocop:enable RSpec/MultipleMemoizedHelpers
 end

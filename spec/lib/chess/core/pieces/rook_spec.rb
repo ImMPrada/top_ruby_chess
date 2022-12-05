@@ -1,22 +1,15 @@
 require 'spec_helper'
 require 'chess/core/pieces/rook'
 require 'chess/core/cell'
+require 'chess/core/board'
 
 RSpec.describe Chess::Core::Pieces::Rook do
   subject(:rook) { described_class.create_and_occupy(Chess::WHITE_TEAM, cell_a1) }
 
+  let(:board) { Chess::Core::Board.new }
   let(:cells) do
-    cells = []
-
-    8.times do |row_index|
-      cells << []
-      8.times do |column_index|
-        name = "#{%w[a b c d e f g h][column_index]}#{row_index + 1}"
-        cells[row_index] << Chess::Core::Cell.new(name, Chess::WHITE_TEAM)
-      end
-    end
-
-    cells
+    board.generate_cells
+    board.cells
   end
   let(:cell_a1) { cells[0][0] }
 
@@ -26,7 +19,6 @@ RSpec.describe Chess::Core::Pieces::Rook do
     end
   end
 
-  # rubocop:disable RSpec/MultipleMemoizedHelpers
   describe 'whit other pieces occupyng cells, and starting at a1' do
     let(:cell_c3) { cells[2][2] }
     let(:cell_a4) { cells[3][0] }
@@ -76,9 +68,7 @@ RSpec.describe Chess::Core::Pieces::Rook do
       end
     end
   end
-  # rubocop:enable RSpec/MultipleMemoizedHelpers
 
-  # rubocop:disable RSpec/NestedGroups
   describe '#can_castle?' do
     describe 'queenside rook' do
       it 'returns false if the rook has moved' do
@@ -113,9 +103,7 @@ RSpec.describe Chess::Core::Pieces::Rook do
         end
       end
     end
-    # rubocop:enable RSpec/NestedGroups
 
-    # rubocop:disable RSpec/NestedGroups
     describe 'kingside rook' do
       subject(:rook_kingside) { described_class.create_and_occupy(Chess::WHITE_TEAM, cell_h8) }
 
@@ -153,9 +141,7 @@ RSpec.describe Chess::Core::Pieces::Rook do
         end
       end
     end
-    # rubocop:enable RSpec/NestedGroups
 
-    # rubocop:disable RSpec/NestedGroups
     describe '#castle' do
       before { rook.castle(cells) }
 
@@ -179,6 +165,5 @@ RSpec.describe Chess::Core::Pieces::Rook do
         end
       end
     end
-    # rubocop:enable RSpec/NestedGroups
   end
 end

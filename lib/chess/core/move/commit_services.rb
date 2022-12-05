@@ -11,7 +11,7 @@ module Chess
           COMMIT_SUCCESS
         end
 
-        def commit(origin_cell, team_playing)
+        def commit(origin_cell, target_cell, cells, team_playing)
           errors = check_for_commiting_errors(origin_cell, team_playing)
           return errors if errors
 

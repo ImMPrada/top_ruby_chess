@@ -1,6 +1,7 @@
 require 'spec_helper'
 require 'chess/core/pieces/base_piece'
 require 'chess/core/cell'
+require 'chess/core/board'
 
 RSpec.describe Chess::Core::Pieces::BasePiece do
   subject(:piece) do
@@ -11,18 +12,10 @@ RSpec.describe Chess::Core::Pieces::BasePiece do
     )
   end
 
+  let(:board) { Chess::Core::Board.new }
   let(:cells) do
-    cells = []
-
-    8.times do |row_index|
-      cells << []
-      8.times do |column_index|
-        name = "#{%w[a b c d e f g h][column_index]}#{row_index + 1}"
-        cells[row_index] << Chess::Core::Cell.new(name, Chess::WHITE_TEAM)
-      end
-    end
-
-    cells
+    board.generate_cells
+    board.cells
   end
   let(:cell) { cells.sample.sample }
 

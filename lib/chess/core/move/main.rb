@@ -1,7 +1,7 @@
 require_relative '../chess'
-# require_relative 'submit_services'
-# require_relative 'commit_services'
-# require_relative 'rollback_services'
+require_relative 'submit_services'
+require_relative 'commit_services'
+require_relative 'rollback_services'
 require_relative '../../functional/cell_notation'
 require 'byebug'
 
@@ -9,9 +9,9 @@ module Chess
   module Core
     module Move
       class Main
-        include SubmitServices
-        include CommitServices
-        include RollbackServices
+        include Chess::Core::Move::SubmitServices
+        include Chess::Core::Move::CommitServices
+        include Chess::Core::Move::RollbackServices
         include Chess::Functional::CellNotation
 
         attr_reader :king_position_string, :enemies_team, :piece_captured, :intention, :team_filter
@@ -37,7 +37,9 @@ module Chess
           piece_captured = @intention.target_cell.occupant
           commitment = commit(
             @intention.origin_cell,
-            team_playing
+            @intention.target_cell,
+            @cells,
+            @team_playing
           )
           return commitment unless commitment == COMMIT_SUCCESS
 
@@ -52,7 +54,7 @@ module Chess
           @board.can_any_piece_move_to?(
             king_cell,
             @cells,
-            @pieces[@intention.target_cell.occupant.enemies_team]
+            @pieces[@intention.target_cell.occupant.enemies_team].all
           )
         end
       end

@@ -7,7 +7,7 @@ module Chess
         def roll_back(target_cell, piece_captured)
           piece_moved = target_cell.occupant
           piece_moved.roll_back_cell
-          piece_captured.back_to_board
+          piece_captured&.back_to_board
 
           ROLLBACK_SUCCES
         end

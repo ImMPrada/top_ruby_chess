@@ -1,9 +1,11 @@
 require 'spec_helper'
 require 'chess/core/board'
 require 'chess/core/cell'
-require_relative '../../../helper/board_pieces'
+require_relative '../../../helpers/board_pieces'
 
 RSpec.describe Chess::Core::Board do
+  include Helpers::BoardPieces
+
   describe '. create_and_occupy' do
     subject(:board) { described_class.create_and_occupy }
 

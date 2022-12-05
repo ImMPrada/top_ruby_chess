@@ -1,10 +1,7 @@
 require 'simplecov'
 require 'simplecov-lcov'
-require_relative 'helper/board_pieces'
-
-core_root = './lib/chess/core/'
 require 'byebug'
-require "#{core_root}chess"
+require 'chess/core/chess'
 
 SimpleCov::Formatter::LcovFormatter.config.report_with_single_file = true
 SimpleCov::Formatter::LcovFormatter.config do |c|

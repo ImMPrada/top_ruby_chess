@@ -60,7 +60,7 @@ module Chess
 
         def back_to_board
           @captured = false
-          @current_cell.occup_with(self)
+          @current_cell.occupy_with(self)
         end
 
         def captured?

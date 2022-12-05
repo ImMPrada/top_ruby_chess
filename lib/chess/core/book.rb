@@ -16,9 +16,18 @@ module Chess
         @move = Chess::Core::Move::Main
       end
 
-      def move_intention; end
+      def move(intention, team_playing)
+        capture = intention.target_cell&.occupied?
+        move = @move.new(
+          intention,
+          @board,
+          team_playing
+        )
+        move_result = move.run
+        return move_result unless move_result == COMMIT_SUCCESS
 
-      def castle_intention_on; end
+        @record.add_move(intention, team_playing, capture)
+      end
     end
   end
 end

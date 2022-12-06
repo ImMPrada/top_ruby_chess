@@ -58,10 +58,9 @@ module Chess
           )
         end
 
-        # rubocop:disable Metrics/AbcSize
         def run_castling(side)
-          rook = @board.pieces[@team_playing].queen_side_rook if side == QUEEN_SIDE
-          rook = @board.pieces[@team_playing].king_side_rook if side == KING_SIDE
+          team_pieces = @board.pieces[@team_playing]
+          rook = side == QUEEN_SIDE ? team_pieces.queen_side_rook : team_pieces.king_side_rook
 
           commitment = commit_castling(
             @board.pieces[@team_playing].king,
@@ -73,7 +72,6 @@ module Chess
 
           commitment
         end
-        # rubocop:enable Metrics/AbcSize
       end
     end
   end

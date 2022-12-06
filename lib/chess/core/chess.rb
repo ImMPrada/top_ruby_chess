@@ -11,7 +11,7 @@ module Chess
   ERR_WRONG_PIECE_AT_CELL = :wrong_piece
   ERR_CANT_REACH_TARGET_CELL = :null_move
   ERR_CELL_OCCUPED_BY_ENEMY = :cell_of_enemy
-  ERR_CANT_CASTLING = :cant_castling
+  ERR_CANT_CASTLING = :cant_castle
   ERR_INTENTION_PARAMETERS = :error_intention_params
 
   COMMIT_SUCCESS = :commit_success
@@ -31,7 +31,7 @@ module Chess
   EXIT_COMMAD = :exit_game
   COMMAND_SUCCES = :ok
 
-  CASTLING_FAILS = :cant_castling
+  CASTLING_FAILS = :cant_castle
 
   KING_SIDE_CASTLING_CODE = 'o-o'.freeze
   QUEEN_SIDE_CASTLING_CODE = 'o-o-o'.freeze

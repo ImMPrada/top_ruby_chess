@@ -1,6 +1,5 @@
 require 'simplecov'
 require 'simplecov-lcov'
-require 'byebug'
 require 'chess/core/chess'
 
 SimpleCov::Formatter::LcovFormatter.config.report_with_single_file = true

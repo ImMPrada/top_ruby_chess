@@ -67,7 +67,7 @@ module Chess
           @captured
         end
 
-        def takken
+        def become_captured
           @captured = true
         end
 

@@ -3,7 +3,6 @@ require_relative './board/board'
 require_relative 'prompt'
 require_relative 'render'
 require_relative 'book'
-require 'byebug'
 
 module Chess
   class Game

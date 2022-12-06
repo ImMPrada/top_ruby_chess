@@ -8,8 +8,8 @@ module Chess
           "#{column}#{row}"
         end
 
-        def to_cartesian_a
-          [row - 1, COLUMNS.index(column)]
+        def to_cartesian
+          Cartesian.new(COLUMNS.index(column), row - 1)
         end
       end
 
@@ -22,7 +22,7 @@ module Chess
       def algebraic_to_cartesian_a(name)
         splitted_name = name.split('')
 
-        Algebraic.new(splitted_name[0], splitted_name[1].to_i).to_cartesian_a
+        Algebraic.new(splitted_name[0], splitted_name[1].to_i)
       end
     end
   end

@@ -23,7 +23,7 @@ RSpec.describe Chess::Core::Move::Main do
 
           before { hardcode_pieces_case1(board) }
 
-          it 'return succesful response' do
+          it 'returns succesful response' do
             expect(move.run).to be(Chess::COMMIT_SUCCESS)
           end
 
@@ -44,7 +44,7 @@ RSpec.describe Chess::Core::Move::Main do
 
           before { hardcode_pieces_case2(board) }
 
-          it 'return succesful response' do
+          it 'returns a succesful response' do
             expect(move.run).to be(Chess::COMMIT_SUCCESS)
           end
 
@@ -73,7 +73,7 @@ RSpec.describe Chess::Core::Move::Main do
         describe 'when intention origin cell is empty' do
           let(:intention) { Intention.new(:move, board.cells[1][0], board.cells[3][0]) }
 
-          it 'return error response' do
+          it 'returns error response' do
             expect(move.run).to be(Chess::ERR_EMPTY_ORIGIN_CELL)
           end
         end
@@ -81,7 +81,7 @@ RSpec.describe Chess::Core::Move::Main do
         describe 'when intention origin cell is occuped by enemy' do
           let(:intention) { Intention.new(:move, board.cells[7][4], board.cells[3][4]) }
 
-          it 'return error response' do
+          it 'returns error response' do
             expect(move.run).to be(Chess::ERR_CELL_OCCUPED_BY_ENEMY)
           end
         end

@@ -11,7 +11,7 @@ module Chess
   ERR_WRONG_PIECE_AT_CELL = :wrong_piece
   ERR_CANT_REACH_TARGET_CELL = :null_move
   ERR_CELL_OCCUPED_BY_ENEMY = :cell_of_enemy
-  ERR_CANT_CASTLING = :cant_castling
+  CASTLING_FAILS = :cant_castle
   ERR_INTENTION_PARAMETERS = :error_intention_params
 
   COMMIT_SUCCESS = :commit_success

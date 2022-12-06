@@ -6,7 +6,7 @@ module Chess
       module RollbackServices
         include Chess::Constants
 
-        def roll_back(target_cell, piece_captured)
+        def roll_back(target_cell, piece_captured = nil)
           piece_moved = target_cell.occupant
           piece_moved.roll_back_cell
           piece_captured&.back_to_board

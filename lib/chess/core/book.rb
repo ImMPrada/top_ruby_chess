@@ -12,14 +12,12 @@ module Chess
 
       def initialize(board)
         @board = board
-        @cells = @board.cells
-        @pieces = @board.pieces
         @record = Chess::Core::Record.new
         @move = Chess::Core::Move::Main
       end
 
       def move(intention, team_playing)
-        capture = intention.target_cell&.occupied?
+        capture = intention.target_cell.occupied? if intention.type == INTENTION_IS_MOVE
         move = @move.new(
           intention,
           @board,

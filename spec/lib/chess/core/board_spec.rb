@@ -1,9 +1,11 @@
 require 'spec_helper'
 require 'chess/core/board'
 require 'chess/core/cell'
-require_relative '../../../helper/board_pieces'
+require_relative '../../../helpers/board_pieces'
 
 RSpec.describe Chess::Core::Board do
+  include Helpers::BoardPieces
+
   describe '. create_and_occupy' do
     subject(:board) { described_class.create_and_occupy }
 
@@ -20,56 +22,52 @@ RSpec.describe Chess::Core::Board do
       expect(check).to be(true)
     end
 
-    it 'creates a hash at @pieces' do
-      expect(board.pieces).to be_a(Hash)
-    end
-
     it 'creates a king for white team' do
-      expect(board.pieces[Chess::WHITE_TEAM].find_pieces_of(:K).size).to be(1)
+      expect(board.pieces[Chess::WHITE_TEAM].king).to be_a(Chess::Core::Pieces::King)
     end
 
     it 'creates a king for black team' do
-      expect(board.pieces[Chess::BLACK_TEAM].find_pieces_of(:K).size).to be(1)
+      expect(board.pieces[Chess::BLACK_TEAM].king).to be_a(Chess::Core::Pieces::King)
     end
 
     it 'creates a queen for white team' do
-      expect(board.pieces[Chess::WHITE_TEAM].find_pieces_of(:Q).size).to be(1)
+      expect(board.pieces[Chess::WHITE_TEAM].queens.first).to be_a((Chess::Core::Pieces::Queen))
     end
 
     it 'creates a queen for black team' do
-      expect(board.pieces[Chess::BLACK_TEAM].find_pieces_of(:Q).size).to be(1)
+      expect(board.pieces[Chess::BLACK_TEAM].queens.first).to be_a((Chess::Core::Pieces::Queen))
     end
 
     it 'creates 2 bishops for white team' do
-      expect(board.pieces[Chess::WHITE_TEAM].find_pieces_of(:B).size).to be(2)
+      expect(board.pieces[Chess::WHITE_TEAM].bishops.size).to be(2)
     end
 
     it 'creates 2 bishops for black team' do
-      expect(board.pieces[Chess::BLACK_TEAM].find_pieces_of(:B).size).to be(2)
+      expect(board.pieces[Chess::BLACK_TEAM].bishops.size).to be(2)
     end
 
     it 'creates 2 knights for white team' do
-      expect(board.pieces[Chess::WHITE_TEAM].find_pieces_of(:N).size).to be(2)
+      expect(board.pieces[Chess::WHITE_TEAM].knights.size).to be(2)
     end
 
     it 'creates 2 knights for black team' do
-      expect(board.pieces[Chess::BLACK_TEAM].find_pieces_of(:N).size).to be(2)
+      expect(board.pieces[Chess::BLACK_TEAM].knights.size).to be(2)
     end
 
     it 'creates 2 rooks for white team' do
-      expect(board.pieces[Chess::WHITE_TEAM].find_pieces_of(:R).size).to be(2)
+      expect(board.pieces[Chess::WHITE_TEAM].rooks.size).to be(2)
     end
 
     it 'creates 2 rooks for black team' do
-      expect(board.pieces[Chess::BLACK_TEAM].find_pieces_of(:R).size).to be(2)
+      expect(board.pieces[Chess::BLACK_TEAM].rooks.size).to be(2)
     end
 
-    it 'creates 8 rooks for white team' do
-      expect(board.pieces[Chess::WHITE_TEAM].find_pieces_of(:P).size).to be(8)
+    it 'creates 8 pawns for white team' do
+      expect(board.pieces[Chess::WHITE_TEAM].pawns.size).to be(8)
     end
 
-    it 'creates 8 rooks for black team' do
-      expect(board.pieces[Chess::BLACK_TEAM].find_pieces_of(:P).size).to be(8)
+    it 'creates 8 pawns for black team' do
+      expect(board.pieces[Chess::BLACK_TEAM].pawns.size).to be(8)
     end
   end
 
@@ -85,7 +83,7 @@ RSpec.describe Chess::Core::Board do
         expect(board.can_any_piece_move_to?(
                  cells.sample.sample,
                  cells,
-                 board.pieces
+                 board.pieces[Chess::WHITE_TEAM].all
                )).to be_nil
       end
     end

@@ -2,23 +2,14 @@ require 'colorize'
 require 'colorized_string'
 
 require_relative './chess'
+require_relative '../functional/cell_notation'
 
 module Chess
   module Core
     class Cell
       attr_reader :occupant, :name
 
-      Algebraic = Struct.new(:column, :row) do
-        def to_s
-          "#{column}#{row}"
-        end
-      end
-
-      Cartesian = Struct.new(:column, :row) do
-        def to_a
-          [row, column]
-        end
-      end
+      include Chess::Functional::CellNotation
 
       def initialize(name, fill_color)
         @occupant = nil

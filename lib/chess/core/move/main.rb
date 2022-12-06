@@ -1,51 +1,76 @@
 require_relative '../chess'
-require_relative 'submit_services'
 require_relative 'commit_services'
 require_relative 'rollback_services'
+require_relative '../../functional/cell_notation'
 
 module Chess
   module Core
     module Move
       class Main
-        include SubmitServices
-        include CommitServices
-        include RollbackServices
+        include Chess::Core::Move::CommitServices
+        include Chess::Core::Move::RollbackServices
+        include Chess::Functional::CellNotation
 
         attr_reader :king_position_string, :enemies_team, :piece_captured, :intention, :team_filter
 
-        def initialize(intention, cells, occuped_cells_coordinates_by_teams, pieces, team_filter)
-          @cells = cells
+        def initialize(intention, board, team_playing)
           @intention = intention
-          @symbol_filter = @intention[:symbol_filter].to_sym
-          @pieces = pieces
-          @occuped_cells_coordinates_by_teams = occuped_cells_coordinates_by_teams
-          @team_filter = team_filter
-          @piece_moved = nil
-          @piece_captured = nil
-          @piece_at_origin_cell = nil
-          set_origin_target_and_teams
+          @team_playing = team_playing
+          @board = board
         end
 
-        def update_occuped_cells(occuped_cells_coordinates_by_teams)
-          @occuped_cells_coordinates_by_teams = occuped_cells_coordinates_by_teams
+        def run
+          case @intention.type
+          when :move
+            run_move
+          when :castling_king_side
+            run_castling(KING_SIDE)
+          when :castling_queen_side
+            run_castling(QUEEN_SIDE)
+          end
         end
 
         private
 
-        def set_origin_target_and_teams
-          @origin_cell = assign_cell(:origin_cell)
-          @target_cell = assign_cell(:target_cell)
-          @friends_team = @team_filter
-          @enemies_team = ([WHITE_TEAM, BLACK_TEAM] - [@friends_team]).first
+        def run_move
+          piece_captured = @intention.target_cell.occupant
+          commitment = commit(
+            @intention.origin_cell,
+            @intention.target_cell,
+            @board.cells,
+            @team_playing
+          )
+          return commitment unless commitment == COMMIT_SUCCESS
+
+          piece_captured&.become_captured
+          return roll_back(@intention.target_cell, piece_captured) if king_under_risk?
+
+          commitment
         end
 
-        def assign_cell(cell_type)
-          splitted_cell_string = @intention[cell_type].split('')
-          @cells[splitted_cell_string[0].to_sym][splitted_cell_string[1].to_i - 1]
+        def king_under_risk?
+          king = @board.pieces[@team_playing].king
+          king_cell = king.current_cell
+          @board.can_any_piece_move_to?(
+            king_cell,
+            @board.cells,
+            @board.pieces[king.enemies_team].all
+          )
         end
 
-        def find_cell(algebraic)
-          @cells[algebraic.column.to_sym][algebraic.row - 1]
+        def run_castling(side)
+          team_pieces = @board.pieces[@team_playing]
+          rook = side == QUEEN_SIDE ? team_pieces.queen_side_rook : team_pieces.king_side_rook
+
+          commitment = commit_castling(
+            @board.pieces[@team_playing].king,
+            rook,
+            @board.cells
+          )
+          return commitment unless commitment == COMMIT_SUCCESS
+          return roll_back_castling(@board.pieces[@team_playing].king, rook) if king_under_risk?
+
+          commitment
         end
       end
     end

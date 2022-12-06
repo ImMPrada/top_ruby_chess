@@ -58,8 +58,17 @@ module Chess
           @current_cell = back_cell
         end
 
+        def back_to_board
+          @captured = false
+          @current_cell.occupy_with(self)
+        end
+
         def captured?
           @captured
+        end
+
+        def become_captured
+          @captured = true
         end
 
         def enemies_team

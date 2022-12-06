@@ -5,7 +5,7 @@ module Chess
     module Move
       module CommitServices
 
-        include Chess::Constants
+        include Chess::Core::Constants
 
         def commit_castling(king, rook, cells)
           response = king.castle_with(rook, cells)

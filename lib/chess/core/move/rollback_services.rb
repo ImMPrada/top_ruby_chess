@@ -4,7 +4,7 @@ module Chess
   module Core
     module Move
       module RollbackServices
-        include Chess::Constants
+        include Chess::Core::Constants
 
         def roll_back(target_cell, piece_captured = nil)
           piece_moved = target_cell.occupant

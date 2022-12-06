@@ -10,7 +10,7 @@ module Chess
         include Chess::Core::Move::CommitServices
         include Chess::Core::Move::RollbackServices
         include Chess::Functional::CellNotation
-        include Chess::Constants
+        include Chess::Core::Constants
 
         attr_reader :king_position_string, :enemies_team, :piece_captured, :intention, :team_filter
 
@@ -22,11 +22,11 @@ module Chess
 
         def run
           case @intention.type
-          when INTENTION_IS_MOVE
+          when MOVE_INTENTION
             run_move
-          when INTENTION_IS_KING_CASTLING
+          when KING_CASTLING_INTENTION
             run_castling(KING_SIDE)
-          when INTENTION_IS_QUEEN_CASTLING
+          when QUEEN_CASTLING_INTENTION
             run_castling(QUEEN_SIDE)
           end
         end

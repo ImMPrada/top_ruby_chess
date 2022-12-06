@@ -10,7 +10,7 @@ module Chess
       attr_reader :occupant, :name
 
       include Chess::Functional::CellNotation
-      include Chess::Constants
+      include Chess::Core::Constants
 
       def initialize(name, fill_color)
         @occupant = nil

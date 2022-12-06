@@ -4,7 +4,7 @@ require 'chess/core/cell'
 require 'chess/core/board'
 
 RSpec.describe Chess::Core::Pieces::Queen do
-  subject(:queen) { described_class.create_and_occupy(Chess::Constants::WHITE_TEAM, cell_e5) }
+  subject(:queen) { described_class.create_and_occupy(Chess::Core::Constants::WHITE_TEAM, cell_e5) }
 
   let(:board) { Chess::Core::Board.new }
   let(:cells) do
@@ -32,8 +32,8 @@ RSpec.describe Chess::Core::Pieces::Queen do
     let(:cell_b5) { cells[4][1] }
 
     before do
-      described_class.create_and_occupy(Chess::Constants::BLACK_TEAM, cell_c3)
-      described_class.create_and_occupy(Chess::Constants::WHITE_TEAM, cell_b5)
+      described_class.create_and_occupy(Chess::Core::Constants::BLACK_TEAM, cell_c3)
+      described_class.create_and_occupy(Chess::Core::Constants::WHITE_TEAM, cell_b5)
     end
 
     describe '#can_move_to?' do

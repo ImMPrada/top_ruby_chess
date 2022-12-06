@@ -6,7 +6,7 @@ require_relative 'book'
 
 module Chess
   class Game
-    include Chess::Constants
+    include Chess::Core::Constants
 
     def start
       instanciate_comonentes

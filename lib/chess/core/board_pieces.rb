@@ -13,7 +13,7 @@ module Chess
     class BoardPieces
       attr_reader :king, :queens, :bishops, :knights, :rooks, :pawns
 
-      include Chess::Constants
+      include Chess::Core::Constants
 
       def initialize
         @cells = nil

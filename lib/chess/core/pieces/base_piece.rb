@@ -6,7 +6,7 @@ module Chess
     module Pieces
       class BasePiece
         include Functional::Operations
-        include Chess::Constants
+        include Chess::Core::Constants
 
         attr_reader :symbol, :team, :current_cell
 

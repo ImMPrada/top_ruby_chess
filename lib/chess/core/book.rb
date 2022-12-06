@@ -8,7 +8,7 @@ module Chess
     class Book
       attr_reader :record
 
-      include Chess::Constants
+      include Chess::Core::Constants
 
       def initialize(board)
         @board = board
@@ -17,7 +17,7 @@ module Chess
       end
 
       def move(intention, team_playing)
-        capture = intention.target_cell.occupied? if intention.type == INTENTION_IS_MOVE
+        capture = intention.target_cell.occupied? if intention.type == MOVE_INTENTION
         move = @move.new(
           intention,
           @board,

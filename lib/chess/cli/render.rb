@@ -6,7 +6,7 @@ require_relative '../core/constants'
 module Chess
   module CLI
     class Render
-      include Chess::Constants
+      include Chess::Core::Constants
 
       def initialize
         @records_history = nil

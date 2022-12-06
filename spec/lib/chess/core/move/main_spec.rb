@@ -9,7 +9,7 @@ Intention = Struct.new(:type, :origin_cell, :target_cell)
 RSpec.describe Chess::Core::Move::Main do
   include Helpers::MoveMainPieces
 
-  subject(:move) { described_class.new(intention, board, Chess::Constants::WHITE_TEAM) }
+  subject(:move) { described_class.new(intention, board, Chess::Core::Constants::WHITE_TEAM) }
 
   let(:board) { Chess::Core::Board.new }
 
@@ -24,7 +24,7 @@ RSpec.describe Chess::Core::Move::Main do
           before { hardcode_pieces_case1(board) }
 
           it 'return succesful response' do
-            expect(move.run).to be(Chess::Constants::COMMIT_SUCCESS)
+            expect(move.run).to be(Chess::Core::Constants::COMMIT_SUCCESS)
           end
 
           it 'releases origin cell' do
@@ -45,7 +45,7 @@ RSpec.describe Chess::Core::Move::Main do
           before { hardcode_pieces_case2(board) }
 
           it 'return succesful response' do
-            expect(move.run).to be(Chess::Constants::COMMIT_SUCCESS)
+            expect(move.run).to be(Chess::Core::Constants::COMMIT_SUCCESS)
           end
 
           it 'releases origin cell' do
@@ -62,7 +62,7 @@ RSpec.describe Chess::Core::Move::Main do
           it 'updates enemy board pieces list' do
             piece_captured = board.cells[7][4].occupant
             move.run
-            expect(board.pieces[Chess::Constants::BLACK_TEAM].captured).to eq([piece_captured])
+            expect(board.pieces[Chess::Core::Constants::BLACK_TEAM].captured).to eq([piece_captured])
           end
         end
       end
@@ -74,7 +74,7 @@ RSpec.describe Chess::Core::Move::Main do
           let(:intention) { Intention.new(:move, board.cells[1][0], board.cells[3][0]) }
 
           it 'return error response' do
-            expect(move.run).to be(Chess::Constants::ERR_EMPTY_ORIGIN_CELL)
+            expect(move.run).to be(Chess::Core::Constants::ERR_EMPTY_ORIGIN_CELL)
           end
         end
 
@@ -82,7 +82,7 @@ RSpec.describe Chess::Core::Move::Main do
           let(:intention) { Intention.new(:move, board.cells[7][4], board.cells[3][4]) }
 
           it 'return error response' do
-            expect(move.run).to be(Chess::Constants::ERR_CELL_OCCUPED_BY_ENEMY)
+            expect(move.run).to be(Chess::Core::Constants::ERR_CELL_OCCUPED_BY_ENEMY)
           end
         end
       end
@@ -93,7 +93,7 @@ RSpec.describe Chess::Core::Move::Main do
         before { hardcode_pieces_case3(board) }
 
         it 'returns rollback response' do
-          expect(move.run).to be(Chess::Constants::ROLLBACK_SUCCES)
+          expect(move.run).to be(Chess::Core::Constants::ROLLBACK_SUCCES)
         end
 
         it 'rolls back target cell occupancy' do
@@ -109,9 +109,9 @@ RSpec.describe Chess::Core::Move::Main do
         end
 
         it 'rolls back board pieces list of captured' do
-          initial_list_state = board.pieces[Chess::Constants::BLACK_TEAM].captured
+          initial_list_state = board.pieces[Chess::Core::Constants::BLACK_TEAM].captured
           move.run
-          expect(board.pieces[Chess::Constants::BLACK_TEAM].captured).to eq(initial_list_state)
+          expect(board.pieces[Chess::Core::Constants::BLACK_TEAM].captured).to eq(initial_list_state)
         end
       end
     end
@@ -123,36 +123,36 @@ RSpec.describe Chess::Core::Move::Main do
 
       describe "when castling can't be done" do
         it 'returns an error resposne' do
-          rook = board.pieces[Chess::Constants::WHITE_TEAM].queen_side_rook
+          rook = board.pieces[Chess::Core::Constants::WHITE_TEAM].queen_side_rook
           rook.move_to(board.cells.dig(0, 3), board.cells)
-          expect(move.run).to be(Chess::Constants::ERR_CANT_CASTLING)
+          expect(move.run).to be(Chess::Core::Constants::ERR_CANT_CASTLING)
         end
       end
 
       describe 'when castling is succesfull' do
         it 'returns succesful response' do
-          expect(move.run).to be(Chess::Constants::COMMIT_SUCCESS)
+          expect(move.run).to be(Chess::Core::Constants::COMMIT_SUCCESS)
         end
 
         it 'releases initial cell of king' do
-          origin_cell = board.pieces[Chess::Constants::WHITE_TEAM].king.current_cell
+          origin_cell = board.pieces[Chess::Core::Constants::WHITE_TEAM].king.current_cell
           move.run
           expect(origin_cell.occupant).to be_nil
         end
 
         it 'releases initial cell of rook' do
-          origin_cell = board.pieces[Chess::Constants::WHITE_TEAM].queen_side_rook.current_cell
+          origin_cell = board.pieces[Chess::Core::Constants::WHITE_TEAM].queen_side_rook.current_cell
           move.run
           expect(origin_cell.occupant).to be_nil
         end
 
         it 'occupies target castling cell by king' do
           move.run
-          expect(board.cells[0][2].occupant).to be(board.pieces[Chess::Constants::WHITE_TEAM].king)
+          expect(board.cells[0][2].occupant).to be(board.pieces[Chess::Core::Constants::WHITE_TEAM].king)
         end
 
         it 'occupies target castling cell by rook' do
-          rook = board.pieces[Chess::Constants::WHITE_TEAM].queen_side_rook
+          rook = board.pieces[Chess::Core::Constants::WHITE_TEAM].queen_side_rook
           move.run
           expect(board.cells[0][3].occupant).to be(rook)
         end
@@ -166,36 +166,36 @@ RSpec.describe Chess::Core::Move::Main do
 
       describe "when castling can't be done" do
         it 'returns an error resposne' do
-          rook = board.pieces[Chess::Constants::WHITE_TEAM].king_side_rook
+          rook = board.pieces[Chess::Core::Constants::WHITE_TEAM].king_side_rook
           rook.move_to(board.cells.dig(0, 5), board.cells)
-          expect(move.run).to be(Chess::Constants::ERR_CANT_CASTLING)
+          expect(move.run).to be(Chess::Core::Constants::ERR_CANT_CASTLING)
         end
       end
 
       describe 'when castling is succesfull' do
         it 'returns succesful response' do
-          expect(move.run).to be(Chess::Constants::COMMIT_SUCCESS)
+          expect(move.run).to be(Chess::Core::Constants::COMMIT_SUCCESS)
         end
 
         it 'releases initial cell of king' do
-          origin_cell = board.pieces[Chess::Constants::WHITE_TEAM].king.current_cell
+          origin_cell = board.pieces[Chess::Core::Constants::WHITE_TEAM].king.current_cell
           move.run
           expect(origin_cell.occupant).to be_nil
         end
 
         it 'releases initial cell of rook' do
-          origin_cell = board.pieces[Chess::Constants::WHITE_TEAM].king_side_rook.current_cell
+          origin_cell = board.pieces[Chess::Core::Constants::WHITE_TEAM].king_side_rook.current_cell
           move.run
           expect(origin_cell.occupant).to be_nil
         end
 
         it 'occupies target castling cell by king' do
           move.run
-          expect(board.cells[0][6].occupant).to be(board.pieces[Chess::Constants::WHITE_TEAM].king)
+          expect(board.cells[0][6].occupant).to be(board.pieces[Chess::Core::Constants::WHITE_TEAM].king)
         end
 
         it 'occupies target castling cell by rook' do
-          rook = board.pieces[Chess::Constants::WHITE_TEAM].king_side_rook
+          rook = board.pieces[Chess::Core::Constants::WHITE_TEAM].king_side_rook
           move.run
           expect(board.cells[0][5].occupant).to be(rook)
         end
@@ -209,7 +209,7 @@ RSpec.describe Chess::Core::Move::Main do
         let(:intention) { Intention.new(:castling_queen_side, nil, nil) }
 
         it 'returns succesful response' do
-          expect(move.run).to be(Chess::Constants::ROLLBACK_SUCCES)
+          expect(move.run).to be(Chess::Core::Constants::ROLLBACK_SUCCES)
         end
 
         it 'keeps free target cell of king castling' do
@@ -223,15 +223,15 @@ RSpec.describe Chess::Core::Move::Main do
         end
 
         it "rolls back the king to it's origin target" do
-          origin_cell = board.pieces[Chess::Constants::WHITE_TEAM].king.current_cell
+          origin_cell = board.pieces[Chess::Core::Constants::WHITE_TEAM].king.current_cell
           move.run
-          expect(origin_cell.occupant).to be(board.pieces[Chess::Constants::WHITE_TEAM].king)
+          expect(origin_cell.occupant).to be(board.pieces[Chess::Core::Constants::WHITE_TEAM].king)
         end
 
         it "rolls back the rook to it's origin target" do
-          origin_cell = board.pieces[Chess::Constants::WHITE_TEAM].queen_side_rook.current_cell
+          origin_cell = board.pieces[Chess::Core::Constants::WHITE_TEAM].queen_side_rook.current_cell
           move.run
-          expect(origin_cell.occupant).to be(board.pieces[Chess::Constants::WHITE_TEAM].queen_side_rook)
+          expect(origin_cell.occupant).to be(board.pieces[Chess::Core::Constants::WHITE_TEAM].queen_side_rook)
         end
       end
 
@@ -239,7 +239,7 @@ RSpec.describe Chess::Core::Move::Main do
         let(:intention) { Intention.new(:castling_king_side, nil, nil) }
 
         it 'returns succesful response' do
-          expect(move.run).to be(Chess::Constants::ROLLBACK_SUCCES)
+          expect(move.run).to be(Chess::Core::Constants::ROLLBACK_SUCCES)
         end
 
         it 'keeps free target cell of king castling' do
@@ -253,15 +253,15 @@ RSpec.describe Chess::Core::Move::Main do
         end
 
         it "rolls back the king to it's origin target" do
-          origin_cell = board.pieces[Chess::Constants::WHITE_TEAM].king.current_cell
+          origin_cell = board.pieces[Chess::Core::Constants::WHITE_TEAM].king.current_cell
           move.run
-          expect(origin_cell.occupant).to be(board.pieces[Chess::Constants::WHITE_TEAM].king)
+          expect(origin_cell.occupant).to be(board.pieces[Chess::Core::Constants::WHITE_TEAM].king)
         end
 
         it "rolls back the rook to it's origin target" do
-          origin_cell = board.pieces[Chess::Constants::WHITE_TEAM].king_side_rook.current_cell
+          origin_cell = board.pieces[Chess::Core::Constants::WHITE_TEAM].king_side_rook.current_cell
           move.run
-          expect(origin_cell.occupant).to be(board.pieces[Chess::Constants::WHITE_TEAM].king_side_rook)
+          expect(origin_cell.occupant).to be(board.pieces[Chess::Core::Constants::WHITE_TEAM].king_side_rook)
         end
       end
     end

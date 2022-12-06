@@ -7,7 +7,7 @@ RSpec.describe Chess::Core::Cell do
   let(:piece) do
     Chess::Core::Pieces::BasePiece.new(
       %i[R N B Q K P].sample,
-      [Chess::Constants::WHITE_TEAM, Chess::Constants::BLACK_TEAM].sample,
+      [Chess::Core::Constants::WHITE_TEAM, Chess::Core::Constants::BLACK_TEAM].sample,
       cell
     )
   end

@@ -23,51 +23,51 @@ RSpec.describe Chess::Core::Board do
     end
 
     it 'creates a king for white team' do
-      expect(board.pieces[Chess::Constants::WHITE_TEAM].king).to be_a(Chess::Core::Pieces::King)
+      expect(board.pieces[Chess::Core::Constants::WHITE_TEAM].king).to be_a(Chess::Core::Pieces::King)
     end
 
     it 'creates a king for black team' do
-      expect(board.pieces[Chess::Constants::BLACK_TEAM].king).to be_a(Chess::Core::Pieces::King)
+      expect(board.pieces[Chess::Core::Constants::BLACK_TEAM].king).to be_a(Chess::Core::Pieces::King)
     end
 
     it 'creates a queen for white team' do
-      expect(board.pieces[Chess::Constants::WHITE_TEAM].queens.first).to be_a((Chess::Core::Pieces::Queen))
+      expect(board.pieces[Chess::Core::Constants::WHITE_TEAM].queens.first).to be_a((Chess::Core::Pieces::Queen))
     end
 
     it 'creates a queen for black team' do
-      expect(board.pieces[Chess::Constants::BLACK_TEAM].queens.first).to be_a((Chess::Core::Pieces::Queen))
+      expect(board.pieces[Chess::Core::Constants::BLACK_TEAM].queens.first).to be_a((Chess::Core::Pieces::Queen))
     end
 
     it 'creates 2 bishops for white team' do
-      expect(board.pieces[Chess::Constants::WHITE_TEAM].bishops.size).to be(2)
+      expect(board.pieces[Chess::Core::Constants::WHITE_TEAM].bishops.size).to be(2)
     end
 
     it 'creates 2 bishops for black team' do
-      expect(board.pieces[Chess::Constants::BLACK_TEAM].bishops.size).to be(2)
+      expect(board.pieces[Chess::Core::Constants::BLACK_TEAM].bishops.size).to be(2)
     end
 
     it 'creates 2 knights for white team' do
-      expect(board.pieces[Chess::Constants::WHITE_TEAM].knights.size).to be(2)
+      expect(board.pieces[Chess::Core::Constants::WHITE_TEAM].knights.size).to be(2)
     end
 
     it 'creates 2 knights for black team' do
-      expect(board.pieces[Chess::Constants::BLACK_TEAM].knights.size).to be(2)
+      expect(board.pieces[Chess::Core::Constants::BLACK_TEAM].knights.size).to be(2)
     end
 
     it 'creates 2 rooks for white team' do
-      expect(board.pieces[Chess::Constants::WHITE_TEAM].rooks.size).to be(2)
+      expect(board.pieces[Chess::Core::Constants::WHITE_TEAM].rooks.size).to be(2)
     end
 
     it 'creates 2 rooks for black team' do
-      expect(board.pieces[Chess::Constants::BLACK_TEAM].rooks.size).to be(2)
+      expect(board.pieces[Chess::Core::Constants::BLACK_TEAM].rooks.size).to be(2)
     end
 
     it 'creates 8 pawns for white team' do
-      expect(board.pieces[Chess::Constants::WHITE_TEAM].pawns.size).to be(8)
+      expect(board.pieces[Chess::Core::Constants::WHITE_TEAM].pawns.size).to be(8)
     end
 
     it 'creates 8 pawns for black team' do
-      expect(board.pieces[Chess::Constants::BLACK_TEAM].pawns.size).to be(8)
+      expect(board.pieces[Chess::Core::Constants::BLACK_TEAM].pawns.size).to be(8)
     end
   end
 
@@ -83,13 +83,13 @@ RSpec.describe Chess::Core::Board do
         expect(board.can_any_piece_move_to?(
                  cells.sample.sample,
                  cells,
-                 board.pieces[Chess::Constants::WHITE_TEAM].all
+                 board.pieces[Chess::Core::Constants::WHITE_TEAM].all
                )).to be_nil
       end
     end
 
     describe 'with a bishop at a1' do
-      let(:bishop) { Chess::Core::Pieces::Bishop.create_and_occupy(Chess::Constants::WHITE_TEAM, cells[0][0]) }
+      let(:bishop) { Chess::Core::Pieces::Bishop.create_and_occupy(Chess::Core::Constants::WHITE_TEAM, cells[0][0]) }
 
       it 'returns true when a cell is at c3' do
         expect(board.can_any_piece_move_to?(
@@ -108,7 +108,7 @@ RSpec.describe Chess::Core::Board do
       end
 
       describe 'with also a rook at h4' do
-        let(:rook) { Chess::Core::Pieces::Rook.create_and_occupy(Chess::Constants::WHITE_TEAM, cells[3][7]) }
+        let(:rook) { Chess::Core::Pieces::Rook.create_and_occupy(Chess::Core::Constants::WHITE_TEAM, cells[3][7]) }
 
         it 'returns false when a cell is at c4' do
           expect(board.can_any_piece_move_to?(
@@ -124,8 +124,8 @@ RSpec.describe Chess::Core::Board do
   describe '#checkmate?' do
     subject(:board) { described_class.new }
 
-    let(:check_piece) { board.pieces[Chess::Constants::BLACK_TEAM].rooks.first }
-    let(:king_in_check) { board.pieces[Chess::Constants::WHITE_TEAM].king }
+    let(:check_piece) { board.pieces[Chess::Core::Constants::BLACK_TEAM].rooks.first }
+    let(:king_in_check) { board.pieces[Chess::Core::Constants::WHITE_TEAM].king }
 
     before { board.generate_cells }
 

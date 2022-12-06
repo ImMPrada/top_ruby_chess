@@ -3,7 +3,7 @@ require_relative '../core/constants'
 module Chess
   module Functional
     module CellNotation
-      include Chess::Constants
+      include Chess::Core::Constants
 
       Algebraic = Struct.new(:column, :row) do
         def to_s

@@ -9,7 +9,7 @@ module Chess
       attr_reader :cells, :pieces
 
       include Chess::Functional::TargetCellMoves
-      include Chess::Constants
+      include Chess::Core::Constants
 
       Teams = Struct.new(:white, :black) do
         def empty?

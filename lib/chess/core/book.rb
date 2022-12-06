@@ -1,7 +1,7 @@
 require_relative 'constants'
 require_relative 'record'
 require_relative 'board'
-require_relative './move/main'
+require_relative 'move/main'
 
 module Chess
   module Core
@@ -13,12 +13,11 @@ module Chess
       def initialize(board)
         @board = board
         @record = Chess::Core::Record.new
-        @move = Chess::Core::Move::Main
       end
 
       def move(intention, team_playing)
         capture = intention.target_cell.occupied? if intention.type == MOVE_INTENTION
-        move = @move.new(
+        move = Chess::Core::Move::Main.new(
           intention,
           @board,
           team_playing

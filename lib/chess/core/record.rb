@@ -5,12 +5,22 @@ module Chess
     class Record
       attr_reader :history
 
-      CommitRecord = Struct.new(:piece, :origin, :target, :capture, :check, :checkmate, :draw, :castling)
+      CommitRecord = Struct.new(
+        :piece,
+        :origin,
+        :target,
+        :capture,
+        :check,
+        :checkmate,
+        :draw,
+        :castling,
+        keyword_init: true
+      )
 
-      RoundRecord = Struct.new(:white, :black, :draw)
+      RoundRecord = Struct.new(:white, :black, :draw, keyword_init: true)
 
       def initialize
-        @history = [RoundRecord.new(nil, nil, nil)]
+        @history = [RoundRecord.new]
         @current_record_team = nil
       end
 
@@ -18,8 +28,8 @@ module Chess
         @current_record_team = playing_team
         type = accomplished_intention.type
 
-        return add_move_record(accomplished_intention, capture) if type == INTENTION_IS_MOVE
-        return add_castling_record(type) if [INTENTION_IS_KING_CASTLING, INTENTION_IS_QUEEN_CASTLING].include?(type)
+        return add_move_record(accomplished_intention, capture) if type == MOVE_INTENTION
+        return add_castling_record(type) if [KING_CASTLING_INTENTION, QUEEN_CASTLING_INTENTION].include?(type)
       end
 
       private
@@ -27,7 +37,7 @@ module Chess
       def current_record
         return @history.last if last_record_available?
 
-        @history << RoundRecord.new(nil, nil, nil)
+        @history << RoundRecord.new
         @history.last
       end
 
@@ -36,30 +46,19 @@ module Chess
       end
 
       def add_move_record(accomplished_intention, capture)
-        piece = accomplished_intention.target_cell.occupant.symbol
+        occupant_symbol = accomplished_intention.target_cell.occupant.symbol
 
         current_record[@current_record_team] = CommitRecord.new(
-          piece,
-          accomplished_intention.origin_cell.name,
-          accomplished_intention.target_cell.name,
-          capture,
-          nil,
-          nil,
-          nil,
-          nil
+          piece: occupant_symbol,
+          origin: accomplished_intention.origin_cell.name,
+          target: accomplished_intention.target_cell.name,
+          capture:
         )
       end
 
       def add_castling_record(castling_type)
         current_record[@current_record_team] = CommitRecord.new(
-          nil,
-          nil,
-          nil,
-          nil,
-          nil,
-          nil,
-          nil,
-          castling_type
+          castling: castling_type
         )
       end
     end

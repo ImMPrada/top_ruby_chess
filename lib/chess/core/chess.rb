@@ -33,9 +33,9 @@ module Chess
 
   CASTLING_FAILS = :cant_castling
 
-  INTENTION_IS_MOVE = :move
-  INTENTION_IS_KING_CASTLING = :castling_king_side
-  INTENTION_IS_QUEEN_CASTLING = :castling_queen_side
+  MOVE_INTENTION = :move
+  KING_CASTLING_INTENTION = :castling_king_side
+  QUEEN_CASTLING_INTENTION = :castling_queen_side
 
   KING_SIDE_CASTLING_CODE = 'o-o'.freeze
   QUEEN_SIDE_CASTLING_CODE = 'o-o-o'.freeze

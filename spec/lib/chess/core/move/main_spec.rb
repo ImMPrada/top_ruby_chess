@@ -125,7 +125,7 @@ RSpec.describe Chess::Core::Move::Main do
         it 'returns an error resposne' do
           rook = board.pieces[Chess::WHITE_TEAM].queen_side_rook
           rook.move_to(board.cells.dig(0, 3), board.cells)
-          expect(move.run).to be(Chess::ERR_CANT_CASTLING)
+          expect(move.run).to be(Chess::CASTLING_FAILS)
         end
       end
 
@@ -168,7 +168,7 @@ RSpec.describe Chess::Core::Move::Main do
         it 'returns an error resposne' do
           rook = board.pieces[Chess::WHITE_TEAM].king_side_rook
           rook.move_to(board.cells.dig(0, 5), board.cells)
-          expect(move.run).to be(Chess::ERR_CANT_CASTLING)
+          expect(move.run).to be(Chess::CASTLING_FAILS)
         end
       end
 

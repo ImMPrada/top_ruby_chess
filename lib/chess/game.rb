@@ -83,7 +83,7 @@ module Chess
     def run_move
       piece_symbol, origin_cell, target_cell = @prompt.parameters
 
-      @book.move_intention(piece_symbol.upcase, origin_cell, target_cell, @current_player)
+      @book.INTENTION_IS_MOVE(piece_symbol.upcase, origin_cell, target_cell, @current_player)
     end
 
     def run_castle

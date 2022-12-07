@@ -15,11 +15,19 @@ module Chess
       COMMIT_SUCCESS = :commit_success
       ROLLBACK_SUCCES = :rollback_succes
 
-      MOVE_INTENTION = :move
-      KING_CASTLING_INTENTION = :castling_king_side
-      QUEEN_CASTLING_INTENTION = :castling_queen_side
+      INTENTION_IS_MOVE = :move
+      INTENTION_IS_KING_CASTLING = :castling_king_side
+      INTENTION_IS_QUEEN_CASTLING = :castling_queen_side
 
       COLUMNS = %w[a b c d e f g h].freeze
+      PIECE_STRING = {
+        P: "\u265f",
+        R: "\u265c",
+        N: "\u265e",
+        B: "\u265d",
+        Q: "\u265b",
+        K: "\u265a"
+      }.freeze
     end
   end
 end

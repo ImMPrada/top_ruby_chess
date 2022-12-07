@@ -4,7 +4,6 @@ module Chess
   module Core
     module Move
       module CommitServices
-
         include Chess::Core::Constants
 
         def commit_castling(king, rook, cells)

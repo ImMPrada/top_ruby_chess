@@ -37,6 +37,7 @@ module Chess
         cell_color = BLACK_TEAM
 
         (MIN_INDEX..MAX_INDEX).each do |row_index|
+          cell_color = cell_color == WHITE_TEAM ? BLACK_TEAM : WHITE_TEAM
           @cells << []
 
           (MIN_INDEX..MAX_INDEX).each do |column_index|

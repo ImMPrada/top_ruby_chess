@@ -5,7 +5,6 @@ module Chess
     module Pieces
       class Pawn < BasePiece
         SYMBOL = :P
-        TEXT = "\u265f".freeze
 
         def self.create_and_occupy(team, current_cell)
           super(SYMBOL, team, current_cell)

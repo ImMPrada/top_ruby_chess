@@ -7,7 +7,7 @@ require_relative '../functional/cell_notation'
 module Chess
   module Core
     class Cell
-      attr_reader :occupant, :name
+      attr_reader :occupant, :name, :fill_color
 
       include Chess::Functional::CellNotation
       include Chess::Core::Constants

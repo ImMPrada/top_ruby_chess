@@ -59,10 +59,10 @@ module Chess
           build_move_response
         when QUEEN_SIDE_CASTLING_CODE
           @parameters = INTENTION_IS_QUEEN_CASTLING
-          @case = INTENTION_IS_QUEEN_CASTLING
+          @case = CASE_CASTLE
         when KING_SIDE_CASTLING_CODE
           @parameters = INTENTION_IS_KING_CASTLING
-          @case = INTENTION_IS_KING_CASTLING
+          @case = CASE_CASTLE
         end
       end
 
@@ -82,7 +82,7 @@ module Chess
           string_name_to_algebraic(splitted_input_string[1..2].join),
           string_name_to_algebraic(splitted_input_string[3..].join)
         )
-        @case = INTENTION_IS_MOVE
+        @case = CASE_MOVE
       end
     end
   end

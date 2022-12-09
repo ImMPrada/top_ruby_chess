@@ -4,11 +4,11 @@ require_relative 'core/book'
 require_relative 'cli/prompt'
 require_relative 'cli/render'
 
-require 'byebug'
-
 module Chess
   class Game
     include Chess::Core::Constants
+
+    Intention = Struct.new(:type, :origin_cell, :target_cell)
 
     def start
       instantiate_components
@@ -20,7 +20,7 @@ module Chess
     def game_loop
       while @state == GAME_RUNNING
         @render.update_records_history(@book.record.history)
-        @render.header(@board)
+        @render.board_state(@board)
         puts @current_player
 
         response = decision_prompt
@@ -43,7 +43,7 @@ module Chess
       @current_enemy = BLACK_TEAM
       @state = nil
 
-      @board = Chess::Core::Board.new
+      @board = Chess::Core::Board.create_and_occupy
       @book = Chess::Core::Book.new(@board)
       @prompt = Chess::CLI::Prompt.new
       @render = Chess::CLI::Render.new
@@ -83,7 +83,18 @@ module Chess
     end
 
     def run_move
-      byebug
+      prompt_parameters = @prompt.parameters
+
+      from_cartesian = prompt_parameters.from.to_cartesian
+      to_cartesian = prompt_parameters.to.to_cartesian
+
+      intention = Intention.new(
+        INTENTION_IS_MOVE,
+        @board.cell_at_cartesian(from_cartesian),
+        @board.cell_at_cartesian(to_cartesian)
+      )
+
+      @book.move(intention, @current_player)
     end
 
     def run_castle

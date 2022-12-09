@@ -25,6 +25,10 @@ module Chess
       SHOW_RECORD_COMMAD = :show_record
 
       GAME_RUNNING = :running
+      ERR_WRONG_INPUT = :wrong_input
+      CASE_CASTLE = :move_is_castle
+      CASE_MOVE = :move
+      COMMAND_SUCCES = :command_succes
 
       COLUMNS = %w[a b c d e f g h].freeze
       PIECE_STRING = {

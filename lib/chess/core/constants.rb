@@ -24,6 +24,8 @@ module Chess
       EXIT_COMMAD = :exit_game
       SHOW_RECORD_COMMAD = :show_record
 
+      GAME_RUNNING = :running
+
       COLUMNS = %w[a b c d e f g h].freeze
       PIECE_STRING = {
         P: "\u265f",

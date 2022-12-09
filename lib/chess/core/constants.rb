@@ -25,6 +25,7 @@ module Chess
       SHOW_RECORD_COMMAD = :show_record
 
       GAME_RUNNING = :running
+      GAME_STOP = :stop
       ERR_WRONG_INPUT = :wrong_input
       CASE_CASTLE = :move_is_castle
       CASE_MOVE = :move

@@ -8,7 +8,7 @@ module Chess
   class Game
     include Chess::Core::Constants
 
-    Intention = Struct.new(:type, :origin_cell, :target_cell)
+    Intention = Struct.new(:type, :origin_cell, :target_cell, keyword_init: true)
 
     def start
       instantiate_components
@@ -21,18 +21,14 @@ module Chess
       while @state == GAME_RUNNING
         @render.update_records_history(@book.record.history)
         @render.board_state(@board)
-        puts @current_player
 
         response = decision_prompt
 
-        puts response
         if response == COMMIT_SUCCESS
           change_roles
           next
         end
         next if response == COMMAND_SUCCES
-
-        puts 'BAD WAY'
       end
     end
 
@@ -48,8 +44,6 @@ module Chess
       @prompt = Chess::CLI::Prompt.new
       @render = Chess::CLI::Render.new
       @render.update_current_player(@current_player)
-
-      @history = []
     end
 
     def change_roles
@@ -66,8 +60,6 @@ module Chess
     end
 
     def execute(intention_case)
-      @history << "#{@current_player}: #{@prompt.input_string}  -- #{@prompt.case} | #{@prompt.parameters}"
-
       case intention_case
       when ERR_WRONG_INPUT
         decision_prompt
@@ -89,18 +81,20 @@ module Chess
       to_cartesian = prompt_parameters.to.to_cartesian
 
       intention = Intention.new(
-        INTENTION_IS_MOVE,
-        @board.cell_at_cartesian(from_cartesian),
-        @board.cell_at_cartesian(to_cartesian)
+        type: INTENTION_IS_MOVE,
+        origin_cell: @board.cell_at_cartesian(from_cartesian),
+        target_cell: @board.cell_at_cartesian(to_cartesian)
       )
 
       @book.move(intention, @current_player)
     end
 
     def run_castle
-      castling_side = @prompt.parameters
+      prompt_parameters = @prompt.parameters
 
-      @book.castle_intention_on(castling_side, @current_player)
+      intention = Intention.new(type: prompt_parameters)
+
+      @book.move(intention, @current_player)
     end
 
     def run_show_record
@@ -110,7 +104,7 @@ module Chess
     end
 
     def run_exit
-      @state = STOP
+      @state = GAME_STOP
       instantiate_components
 
       COMMAND_SUCCES

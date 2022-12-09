@@ -77,24 +77,43 @@ module Chess
         PIECE_STRING[cell.occupant.symbol].to_s.black
       end
 
-      # rubocop:disable all
       def record_to_string(record)
-        return '' unless record
+        response_string = ''
+        return response_string unless record
 
+        response_string += base_move_to_string(record)
+        response_string += check_or_mate_to_string(record)
+        response_string += draw_to_string(record)
+
+        response_string + castle_to_string(record)
+      end
+
+      def base_move_to_string(record)
         piece = record.piece == :P ? '' : record.piece.to_s
-        origin = record.origin ? record.origin : ''
-        target = record.target ? record.target : ''
+        origin = record.origin || ''
+        target = record.target || ''
         capturing = record.capture ? 'x' : ''
+
+        piece + origin + capturing + target
+      end
+
+      def check_or_mate_to_string(record)
         check = record.check ? '+' : ''
         checkmate = record.checkmate ? '#' : ''
-        draw = record.draw ? '1/2-1/2' : ''
-        castling = ''
-        castling = KING_SIDE_CASTLING_CODE if record.castling == INTENTION_IS_KING_CASTLING
-        castling = QUEEN_SIDE_CASTLING_CODE if record.castling == INTENTION_IS_QUEEN_CASTLING
 
-        piece + origin + capturing + target + check + checkmate + draw + castling.upcase
+        check + checkmate
       end
-      # rubocop:enable all
+
+      def castle_to_string(record)
+        return '' unless record.castling
+        return KING_SIDE_CASTLING_CODE.upcase if record.castling == INTENTION_IS_KING_CASTLING
+
+        QUEEN_SIDE_CASTLING_CODE.upcase
+      end
+
+      def draw_to_string(record)
+        record.draw ? '1/2-1/2' : ''
+      end
     end
   end
 end

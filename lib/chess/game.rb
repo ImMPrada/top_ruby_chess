@@ -1,53 +1,49 @@
-require_relative 'constants'
-require_relative './board/board'
-require_relative 'prompt'
-require_relative 'render'
-require_relative 'book'
+require_relative 'core/constants'
+require_relative 'core/board'
+require_relative 'core/book'
+require_relative 'cli/prompt'
+require_relative 'cli/render'
 
 module Chess
   class Game
     include Chess::Core::Constants
 
+    Intention = Struct.new(:type, :origin_cell, :target_cell, keyword_init: true)
+
     def start
-      instanciate_comonentes
-      @state = RUNNING
+      instantiate_components
+      @state = GAME_RUNNING
 
       game_loop
     end
 
     def game_loop
-      while @state == RUNNING
+      while @state == GAME_RUNNING
         @render.update_records_history(@book.record.history)
-        @render.header(@board)
-        puts @current_player
+        @render.board_state(@board)
 
         response = decision_prompt
 
-        puts response
         if response == COMMIT_SUCCESS
           change_roles
           next
         end
         next if response == COMMAND_SUCCES
-
-        puts 'BAD WAY'
       end
     end
 
     private
 
-    def instanciate_comonentes
+    def instantiate_components
       @current_player = WHITE_TEAM
       @current_enemy = BLACK_TEAM
       @state = nil
 
-      @board = Chess::Board.new
-      @prompt = Chess::Prompt.new
-      @render = Chess::Render.new
-      @book = Chess::Book.new(@board)
-      @render.current_player(@current_player)
-
-      @history = []
+      @board = Chess::Core::Board.create_and_occupy
+      @book = Chess::Core::Book.new(@board)
+      @prompt = Chess::CLI::Prompt.new
+      @render = Chess::CLI::Render.new
+      @render.update_current_player(@current_player)
     end
 
     def change_roles
@@ -55,7 +51,7 @@ module Chess
 
       @current_player = @current_enemy
       @current_enemy = current_player
-      @render.current_player(@current_player)
+      @render.update_current_player(@current_player)
     end
 
     def decision_prompt
@@ -64,10 +60,8 @@ module Chess
     end
 
     def execute(intention_case)
-      @history << "#{@current_player}: #{@prompt.input_string}  -- #{@prompt.case} | #{@prompt.parameters}"
-
       case intention_case
-      when ERR_WRONG_INPUT
+      when WRONG_INPUT_ERROR
         decision_prompt
       when CASE_MOVE
         run_move
@@ -81,26 +75,37 @@ module Chess
     end
 
     def run_move
-      piece_symbol, origin_cell, target_cell = @prompt.parameters
+      prompt_parameters = @prompt.parameters
 
-      @book.move_intention(piece_symbol.upcase, origin_cell, target_cell, @current_player)
+      from_cartesian = prompt_parameters.from.to_cartesian
+      to_cartesian = prompt_parameters.to.to_cartesian
+
+      intention = Intention.new(
+        type: MOVE_INTENTION,
+        origin_cell: @board.cell_at_cartesian(from_cartesian),
+        target_cell: @board.cell_at_cartesian(to_cartesian)
+      )
+
+      @book.move(intention, @current_player)
     end
 
     def run_castle
-      castling_side = @prompt.parameters
+      prompt_parameters = @prompt.parameters
 
-      @book.castle_intention_on(castling_side, @current_player)
+      intention = Intention.new(type: prompt_parameters)
+
+      @book.move(intention, @current_player)
     end
 
     def run_show_record
-      @render.show_record
+      @render.print_records_history
 
       COMMAND_SUCCES
     end
 
     def run_exit
-      @state = STOP
-      instanciate_comonentes
+      @state = GAME_STOP
+      instantiate_components
 
       COMMAND_SUCCES
     end

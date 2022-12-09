@@ -74,7 +74,7 @@ RSpec.describe Chess::Core::Move::Main do
           let(:intention) { Intention.new(:move, board.cells[1][0], board.cells[3][0]) }
 
           it 'return error response' do
-            expect(move.run).to be(Chess::Core::Constants::ERR_EMPTY_ORIGIN_CELL)
+            expect(move.run).to be(Chess::Core::Constants::EMPTY_ORIGIN_CELL_ERROR)
           end
         end
 
@@ -82,7 +82,7 @@ RSpec.describe Chess::Core::Move::Main do
           let(:intention) { Intention.new(:move, board.cells[7][4], board.cells[3][4]) }
 
           it 'return error response' do
-            expect(move.run).to be(Chess::Core::Constants::ERR_CELL_OCCUPED_BY_ENEMY)
+            expect(move.run).to be(Chess::Core::Constants::CELL_OCCUPED_BY_ENEMY_ERROR)
           end
         end
       end
@@ -125,7 +125,7 @@ RSpec.describe Chess::Core::Move::Main do
         it 'returns an error resposne' do
           rook = board.pieces[Chess::Core::Constants::WHITE_TEAM].queen_side_rook
           rook.move_to(board.cells.dig(0, 3), board.cells)
-          expect(move.run).to be(Chess::Core::Constants::ERR_CANT_CASTLING)
+          expect(move.run).to be(Chess::Core::Constants::CANT_CASTLING_ERROR)
         end
       end
 
@@ -168,7 +168,7 @@ RSpec.describe Chess::Core::Move::Main do
         it 'returns an error resposne' do
           rook = board.pieces[Chess::Core::Constants::WHITE_TEAM].king_side_rook
           rook.move_to(board.cells.dig(0, 5), board.cells)
-          expect(move.run).to be(Chess::Core::Constants::ERR_CANT_CASTLING)
+          expect(move.run).to be(Chess::Core::Constants::CANT_CASTLING_ERROR)
         end
       end
 

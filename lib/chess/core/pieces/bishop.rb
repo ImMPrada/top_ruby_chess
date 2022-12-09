@@ -5,7 +5,6 @@ module Chess
     module Pieces
       class Bishop < BasePiece
         SYMBOL = :B
-        TEXT = "\u265d".freeze
 
         def self.create_and_occupy(team, current_cell)
           super(SYMBOL, team, current_cell)

@@ -16,7 +16,7 @@ module Chess
       end
 
       def move(intention, team_playing)
-        capture = intention.target_cell.occupied? if intention.type == INTENTION_IS_MOVE
+        capture = intention.target_cell.occupied? if intention.type == MOVE_INTENTION
         move = Chess::Core::Move::Main.new(
           intention,
           @board,

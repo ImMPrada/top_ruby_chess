@@ -106,7 +106,7 @@ module Chess
 
       def castle_to_string(record)
         return '' unless record.castling
-        return KING_SIDE_CASTLING_CODE.upcase if record.castling == INTENTION_IS_KING_CASTLING
+        return KING_SIDE_CASTLING_CODE.upcase if record.castling == KING_CASTLING_INTENTION
 
         QUEEN_SIDE_CASTLING_CODE.upcase
       end

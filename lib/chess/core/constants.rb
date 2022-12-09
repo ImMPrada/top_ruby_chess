@@ -8,16 +8,17 @@ module Chess
       QUEEN_SIDE = :queen
       KING_SIDE = :king
 
-      ERR_EMPTY_ORIGIN_CELL = :empty_cell
-      ERR_CELL_OCCUPED_BY_ENEMY = :cell_of_enemy
-      ERR_CANT_CASTLING = :cant_castling
+      EMPTY_ORIGIN_CELL_ERROR = :empty_cell
+      CELL_OCCUPED_BY_ENEMY_ERROR = :cell_of_enemy
+      CANT_CASTLING_ERROR = :cant_castling
+      WRONG_INPUT_ERROR = :wrong_input
 
       COMMIT_SUCCESS = :commit_success
       ROLLBACK_SUCCES = :rollback_succes
 
-      INTENTION_IS_MOVE = :move
-      INTENTION_IS_KING_CASTLING = :castling_king_side
-      INTENTION_IS_QUEEN_CASTLING = :castling_queen_side
+      MOVE_INTENTION = :move
+      KING_CASTLING_INTENTION = :castling_king_side
+      QUEEN_CASTLING_INTENTION = :castling_queen_side
 
       QUEEN_SIDE_CASTLING_CODE = 'o-o-o'.freeze
       KING_SIDE_CASTLING_CODE = 'o-o'.freeze
@@ -26,7 +27,6 @@ module Chess
 
       GAME_RUNNING = :running
       GAME_STOP = :stop
-      ERR_WRONG_INPUT = :wrong_input
       CASE_CASTLE = :move_is_castle
       CASE_MOVE = :move
       COMMAND_SUCCES = :command_succes

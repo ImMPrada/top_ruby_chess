@@ -116,7 +116,7 @@ RSpec.describe Chess::Core::Record do
     end
 
     describe 'when intention is type castling' do
-      let(:accomplished_intention) { Intention.new(Chess::Core::Constants::INTENTION_IS_KING_CASTLING, nil, nil) }
+      let(:accomplished_intention) { Intention.new(Chess::Core::Constants::KING_CASTLING_INTENTION, nil, nil) }
       let(:record_add) { record.add(accomplished_intention, Chess::Core::Constants::WHITE_TEAM, nil) }
 
       it 'returns nil at piece symbol' do
@@ -140,7 +140,7 @@ RSpec.describe Chess::Core::Record do
       it 'returns castling type at castling' do
         expect(
           record_add.castling
-        ).to be(Chess::Core::Constants::INTENTION_IS_KING_CASTLING)
+        ).to be(Chess::Core::Constants::KING_CASTLING_INTENTION)
       end
 
       it 'updates history' do

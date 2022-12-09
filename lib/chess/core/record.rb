@@ -30,8 +30,8 @@ module Chess
         @current_record_team = playing_team
         type = accomplished_intention.type
 
-        return add_move_record(accomplished_intention, capture) if type == INTENTION_IS_MOVE
-        return add_castling_record(type) if [INTENTION_IS_KING_CASTLING, INTENTION_IS_QUEEN_CASTLING].include?(type)
+        return add_move_record(accomplished_intention, capture) if type == MOVE_INTENTION
+        return add_castling_record(type) if [KING_CASTLING_INTENTION, QUEEN_CASTLING_INTENTION].include?(type)
       end
 
       private

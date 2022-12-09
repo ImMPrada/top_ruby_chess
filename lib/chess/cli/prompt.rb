@@ -31,7 +31,7 @@ module Chess
         return run_move if moving_prompt?
 
         @input_string = nil
-        ERR_WRONG_INPUT
+        WRONG_INPUT_ERROR
       end
 
       def clear
@@ -58,10 +58,10 @@ module Chess
         when PIECE_MOVE_REGEX
           build_move_response
         when QUEEN_SIDE_CASTLING_CODE
-          @parameters = INTENTION_IS_QUEEN_CASTLING
+          @parameters = QUEEN_CASTLING_INTENTION
           @case = CASE_CASTLE
         when KING_SIDE_CASTLING_CODE
-          @parameters = INTENTION_IS_KING_CASTLING
+          @parameters = KING_CASTLING_INTENTION
           @case = CASE_CASTLE
         end
       end

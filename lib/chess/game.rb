@@ -61,7 +61,7 @@ module Chess
 
     def execute(intention_case)
       case intention_case
-      when ERR_WRONG_INPUT
+      when WRONG_INPUT_ERROR
         decision_prompt
       when CASE_MOVE
         run_move
@@ -81,7 +81,7 @@ module Chess
       to_cartesian = prompt_parameters.to.to_cartesian
 
       intention = Intention.new(
-        type: INTENTION_IS_MOVE,
+        type: MOVE_INTENTION,
         origin_cell: @board.cell_at_cartesian(from_cartesian),
         target_cell: @board.cell_at_cartesian(to_cartesian)
       )

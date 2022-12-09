@@ -8,7 +8,7 @@ module Chess
 
         def commit_castling(king, rook, cells)
           response = king.castle_with(rook, cells)
-          return ERR_CANT_CASTLING unless response
+          return CANT_CASTLING_ERROR unless response
 
           COMMIT_SUCCESS
         end
@@ -30,8 +30,8 @@ module Chess
         private
 
         def check_for_commiting_errors(origin_cell, team_playing)
-          return ERR_EMPTY_ORIGIN_CELL unless origin_cell.occupied?
-          return ERR_CELL_OCCUPED_BY_ENEMY unless origin_cell.team == team_playing
+          return EMPTY_ORIGIN_CELL_ERROR unless origin_cell.occupied?
+          return CELL_OCCUPED_BY_ENEMY_ERROR unless origin_cell.team == team_playing
 
           false
         end

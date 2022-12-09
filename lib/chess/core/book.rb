@@ -16,7 +16,7 @@ module Chess
       end
 
       def move(intention, team_playing)
-        capture = intention.target_cell.occupied? if intention.type == MOVE_INTENTION
+        capture = intention.target_cell.occupied? if intention.type == INTENTION_IS_MOVE
         move = Chess::Core::Move::Main.new(
           intention,
           @board,
@@ -25,7 +25,8 @@ module Chess
         move_result = move.run
         return move_result unless move_result == COMMIT_SUCCESS
 
-        @record.add_move(intention, team_playing, capture)
+        @record.add(intention, team_playing, capture)
+        move_result
       end
     end
   end

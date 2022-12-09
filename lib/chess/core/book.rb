@@ -25,7 +25,8 @@ module Chess
         move_result = move.run
         return move_result unless move_result == COMMIT_SUCCESS
 
-        @record.add_move(intention, team_playing, capture)
+        @record.add(intention, team_playing, capture)
+        move_result
       end
     end
   end

@@ -54,6 +54,10 @@ module Chess
         @pieces.white.put_pieces(@cells, WHITE_TEAM)
         @pieces.black.put_pieces(@cells, BLACK_TEAM)
       end
+
+      def cell_at_cartesian(cartesian)
+        @cells.dig(cartesian.row, cartesian.column)
+      end
     end
   end
 end

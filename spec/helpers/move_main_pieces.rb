@@ -37,15 +37,15 @@ module Helpers
         board.pieces.white.instance_variable_set(
           :@pawns,
           [
-            Chess::Core::Pieces::Pawn.create_and_occupy(Chess::WHITE_TEAM, board.cells.dig(1, 3)),
-            Chess::Core::Pieces::Pawn.create_and_occupy(Chess::WHITE_TEAM, board.cells.dig(1, 3)),
-            Chess::Core::Pieces::Pawn.create_and_occupy(Chess::WHITE_TEAM, board.cells.dig(1, 5))
+            Chess::Core::Pieces::Pawn.create_and_occupy(Chess::Core::Constants::WHITE_TEAM, board.cells.dig(1, 3)),
+            Chess::Core::Pieces::Pawn.create_and_occupy(Chess::Core::Constants::WHITE_TEAM, board.cells.dig(1, 3)),
+            Chess::Core::Pieces::Pawn.create_and_occupy(Chess::Core::Constants::WHITE_TEAM, board.cells.dig(1, 5))
           ]
         )
         board.pieces.white.instance_variable_set(
           :@rooks,
           [
-            Chess::Core::Pieces::Rook.create_and_occupy(Chess::WHITE_TEAM, board.cells.dig(1, 4))
+            Chess::Core::Pieces::Rook.create_and_occupy(Chess::Core::Constants::WHITE_TEAM, board.cells.dig(1, 4))
           ]
         )
       when :case3
@@ -53,21 +53,21 @@ module Helpers
         board.pieces.white.instance_variable_set(
           :@pawns,
           [
-            Chess::Core::Pieces::Pawn.create_and_occupy(Chess::WHITE_TEAM, board.cells.dig(1, 3)),
-            Chess::Core::Pieces::Pawn.create_and_occupy(Chess::WHITE_TEAM, board.cells.dig(1, 3)),
-            Chess::Core::Pieces::Pawn.create_and_occupy(Chess::WHITE_TEAM, board.cells.dig(1, 5))
+            Chess::Core::Pieces::Pawn.create_and_occupy(Chess::Core::Constants::WHITE_TEAM, board.cells.dig(1, 3)),
+            Chess::Core::Pieces::Pawn.create_and_occupy(Chess::Core::Constants::WHITE_TEAM, board.cells.dig(1, 3)),
+            Chess::Core::Pieces::Pawn.create_and_occupy(Chess::Core::Constants::WHITE_TEAM, board.cells.dig(1, 5))
           ]
         )
         board.pieces.white.instance_variable_set(
           :@rooks,
           [
-            Chess::Core::Pieces::Rook.create_and_occupy(Chess::WHITE_TEAM, board.cells.dig(2, 4))
+            Chess::Core::Pieces::Rook.create_and_occupy(Chess::Core::Constants::WHITE_TEAM, board.cells.dig(2, 4))
           ]
         )
         board.pieces.black.instance_variable_set(
           :@rooks,
           [
-            Chess::Core::Pieces::Rook.create_and_occupy(Chess::BLACK_TEAM, board.cells.dig(2, 7))
+            Chess::Core::Pieces::Rook.create_and_occupy(Chess::Core::Constants::BLACK_TEAM, board.cells.dig(2, 7))
           ]
         )
       when :case4
@@ -76,8 +76,8 @@ module Helpers
         board.pieces.white.instance_variable_set(
           :@rooks,
           [
-            Chess::Core::Pieces::Rook.create_and_occupy(Chess::BLACK_TEAM, board.cells.dig(0, 0)),
-            Chess::Core::Pieces::Rook.create_and_occupy(Chess::BLACK_TEAM, board.cells.dig(0, 7))
+            Chess::Core::Pieces::Rook.create_and_occupy(Chess::Core::Constants::BLACK_TEAM, board.cells.dig(0, 0)),
+            Chess::Core::Pieces::Rook.create_and_occupy(Chess::Core::Constants::BLACK_TEAM, board.cells.dig(0, 7))
           ]
         )
       when :case5
@@ -85,21 +85,21 @@ module Helpers
         board.pieces.white.instance_variable_set(
           :@pawns,
           [
-            Chess::Core::Pieces::Pawn.create_and_occupy(Chess::WHITE_TEAM, board.cells.dig(1, 4))
+            Chess::Core::Pieces::Pawn.create_and_occupy(Chess::Core::Constants::WHITE_TEAM, board.cells.dig(1, 4))
           ]
         )
         board.pieces.white.instance_variable_set(
           :@rooks,
           [
-            Chess::Core::Pieces::Rook.create_and_occupy(Chess::BLACK_TEAM, board.cells.dig(0, 0)),
-            Chess::Core::Pieces::Rook.create_and_occupy(Chess::BLACK_TEAM, board.cells.dig(0, 7))
+            Chess::Core::Pieces::Rook.create_and_occupy(Chess::Core::Constants::BLACK_TEAM, board.cells.dig(0, 0)),
+            Chess::Core::Pieces::Rook.create_and_occupy(Chess::Core::Constants::BLACK_TEAM, board.cells.dig(0, 7))
           ]
         )
         board.pieces.black.instance_variable_set(
           :@rooks,
           [
-            Chess::Core::Pieces::Rook.create_and_occupy(Chess::BLACK_TEAM, board.cells.dig(7, 2)),
-            Chess::Core::Pieces::Rook.create_and_occupy(Chess::BLACK_TEAM, board.cells.dig(7, 6))
+            Chess::Core::Pieces::Rook.create_and_occupy(Chess::Core::Constants::BLACK_TEAM, board.cells.dig(7, 2)),
+            Chess::Core::Pieces::Rook.create_and_occupy(Chess::Core::Constants::BLACK_TEAM, board.cells.dig(7, 6))
           ]
         )
       end
@@ -108,7 +108,7 @@ module Helpers
     def basic_white_king(board)
       board.pieces.white.instance_variable_set(
         :@king,
-        Chess::Core::Pieces::King.create_and_occupy(Chess::WHITE_TEAM, board.cells.dig(0, 4))
+        Chess::Core::Pieces::King.create_and_occupy(Chess::Core::Constants::WHITE_TEAM, board.cells.dig(0, 4))
       )
     end
 
@@ -116,10 +116,10 @@ module Helpers
       board.pieces.white.instance_variable_set(
         :@pawns,
         [
-          Chess::Core::Pieces::Pawn.create_and_occupy(Chess::WHITE_TEAM, board.cells.dig(1, 3)),
-          Chess::Core::Pieces::Pawn.create_and_occupy(Chess::WHITE_TEAM, board.cells.dig(1, 3)),
-          Chess::Core::Pieces::Pawn.create_and_occupy(Chess::WHITE_TEAM, board.cells.dig(1, 4)),
-          Chess::Core::Pieces::Pawn.create_and_occupy(Chess::WHITE_TEAM, board.cells.dig(1, 5))
+          Chess::Core::Pieces::Pawn.create_and_occupy(Chess::Core::Constants::WHITE_TEAM, board.cells.dig(1, 3)),
+          Chess::Core::Pieces::Pawn.create_and_occupy(Chess::Core::Constants::WHITE_TEAM, board.cells.dig(1, 3)),
+          Chess::Core::Pieces::Pawn.create_and_occupy(Chess::Core::Constants::WHITE_TEAM, board.cells.dig(1, 4)),
+          Chess::Core::Pieces::Pawn.create_and_occupy(Chess::Core::Constants::WHITE_TEAM, board.cells.dig(1, 5))
         ]
       )
     end
@@ -127,7 +127,7 @@ module Helpers
     def black_pieces(board)
       board.pieces.black.instance_variable_set(
         :@rooks,
-        [Chess::Core::Pieces::Rook.create_and_occupy(Chess::BLACK_TEAM, board.cells.dig(7, 4))]
+        [Chess::Core::Pieces::Rook.create_and_occupy(Chess::Core::Constants::BLACK_TEAM, board.cells.dig(7, 4))]
       )
     end
   end

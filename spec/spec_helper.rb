@@ -1,6 +1,6 @@
 require 'simplecov'
 require 'simplecov-lcov'
-require 'chess/core/chess'
+require 'chess/core/constants'
 
 SimpleCov::Formatter::LcovFormatter.config.report_with_single_file = true
 SimpleCov::Formatter::LcovFormatter.config do |c|

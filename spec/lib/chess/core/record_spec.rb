@@ -21,7 +21,7 @@ RSpec.describe Chess::Core::Record do
   describe '#add' do
     describe 'when intention is type :move and no capture' do
       let(:accomplished_intention) { Intention.new(:move, board.cells[0][4], board.cells[1][4]) }
-      let(:record_add) { record.add(accomplished_intention, Chess::WHITE_TEAM, nil) }
+      let(:record_add) { record.add(accomplished_intention, Chess::Core::Constants::WHITE_TEAM, nil) }
 
       it 'returns a Chess::Core::Record::CommitRecord' do
         expect(
@@ -54,22 +54,22 @@ RSpec.describe Chess::Core::Record do
       end
 
       it 'updates history' do
-        before_add = record.history.first[Chess::WHITE_TEAM].nil?
-        record.add(accomplished_intention, Chess::WHITE_TEAM, nil)
+        before_add = record.history.first[Chess::Core::Constants::WHITE_TEAM].nil?
+        record.add(accomplished_intention, Chess::Core::Constants::WHITE_TEAM, nil)
         expect(
-          before_add == record.history.first[Chess::WHITE_TEAM].nil?
+          before_add == record.history.first[Chess::Core::Constants::WHITE_TEAM].nil?
         ).to be(false)
       end
 
       it 'updates history with a Chess::Core::Record::CommitRecord' do
-        record.add(accomplished_intention, Chess::WHITE_TEAM, nil)
-        expect(record.history.first[Chess::WHITE_TEAM]).to be_a(Chess::Core::Record::CommitRecord)
+        record.add(accomplished_intention, Chess::Core::Constants::WHITE_TEAM, nil)
+        expect(record.history.first[Chess::Core::Constants::WHITE_TEAM]).to be_a(Chess::Core::Record::CommitRecord)
       end
     end
 
     describe 'when intention is type :move and capture' do
       let(:accomplished_intention) { Intention.new(:move, board.cells[0][4], board.cells[1][4]) }
-      let(:record_add) { record.add(accomplished_intention, Chess::WHITE_TEAM, true) }
+      let(:record_add) { record.add(accomplished_intention, Chess::Core::Constants::WHITE_TEAM, true) }
 
       it 'returns a Chess::Core::Record::CommitRecord' do
         expect(
@@ -102,22 +102,22 @@ RSpec.describe Chess::Core::Record do
       end
 
       it 'updates history' do
-        before_add = record.history.first[Chess::WHITE_TEAM].nil?
+        before_add = record.history.first[Chess::Core::Constants::WHITE_TEAM].nil?
         record_add
         expect(
-          before_add == record.history.first[Chess::WHITE_TEAM].nil?
+          before_add == record.history.first[Chess::Core::Constants::WHITE_TEAM].nil?
         ).to be(false)
       end
 
       it 'updates history with a Chess::Core::Record::CommitRecord' do
         record_add
-        expect(record.history.first[Chess::WHITE_TEAM]).to be_a(Chess::Core::Record::CommitRecord)
+        expect(record.history.first[Chess::Core::Constants::WHITE_TEAM]).to be_a(Chess::Core::Record::CommitRecord)
       end
     end
 
     describe 'when intention is type castling' do
-      let(:accomplished_intention) { Intention.new(Chess::KING_CASTLING_INTENTION, nil, nil) }
-      let(:record_add) { record.add(accomplished_intention, Chess::WHITE_TEAM, nil) }
+      let(:accomplished_intention) { Intention.new(Chess::Core::Constants::KING_CASTLING_INTENTION, nil, nil) }
+      let(:record_add) { record.add(accomplished_intention, Chess::Core::Constants::WHITE_TEAM, nil) }
 
       it 'returns nil at piece symbol' do
         expect(
@@ -140,20 +140,20 @@ RSpec.describe Chess::Core::Record do
       it 'returns castling type at castling' do
         expect(
           record_add.castling
-        ).to be(Chess::KING_CASTLING_INTENTION)
+        ).to be(Chess::Core::Constants::KING_CASTLING_INTENTION)
       end
 
       it 'updates history' do
-        before_add = record.history.first[Chess::WHITE_TEAM].nil?
+        before_add = record.history.first[Chess::Core::Constants::WHITE_TEAM].nil?
         record_add
         expect(
-          before_add == record.history.first[Chess::WHITE_TEAM].nil?
+          before_add == record.history.first[Chess::Core::Constants::WHITE_TEAM].nil?
         ).to be(false)
       end
 
       it 'updates history with a Chess::Core::Record::CommitRecord' do
         record_add
-        expect(record.history.first[Chess::WHITE_TEAM]).to be_a(Chess::Core::Record::CommitRecord)
+        expect(record.history.first[Chess::Core::Constants::WHITE_TEAM]).to be_a(Chess::Core::Record::CommitRecord)
       end
     end
   end

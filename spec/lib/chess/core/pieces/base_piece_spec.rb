@@ -7,7 +7,7 @@ RSpec.describe Chess::Core::Pieces::BasePiece do
   subject(:piece) do
     described_class.create_and_occupy(
       %i[R N B Q K P].sample,
-      [Chess::WHITE_TEAM, Chess::BLACK_TEAM].sample,
+      [Chess::Core::Constants::WHITE_TEAM, Chess::Core::Constants::BLACK_TEAM].sample,
       cell
     )
   end

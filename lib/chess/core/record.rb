@@ -1,9 +1,11 @@
-require_relative 'chess'
+require_relative 'constants'
 
 module Chess
   module Core
     class Record
       attr_reader :history
+
+      include Chess::Core::Constants
 
       CommitRecord = Struct.new(
         :piece,

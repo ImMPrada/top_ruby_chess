@@ -1,12 +1,14 @@
-require_relative '../chess'
+require_relative '../constants'
 
 module Chess
   module Core
     module Move
       module CommitServices
+        include Chess::Core::Constants
+
         def commit_castling(king, rook, cells)
           response = king.castle_with(rook, cells)
-          return CASTLING_FAILS unless response
+          return ERR_CANT_CASTLING unless response
 
           COMMIT_SUCCESS
         end

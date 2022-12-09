@@ -1,12 +1,13 @@
 require 'spec_helper'
 require 'chess/core/cell'
+require 'chess/core/pieces/base_piece'
 
 RSpec.describe Chess::Core::Cell do
   let(:cell) { described_class.new('a1', :white) }
   let(:piece) do
     Chess::Core::Pieces::BasePiece.new(
       %i[R N B Q K P].sample,
-      [Chess::WHITE_TEAM, Chess::BLACK_TEAM].sample,
+      [Chess::Core::Constants::WHITE_TEAM, Chess::Core::Constants::BLACK_TEAM].sample,
       cell
     )
   end

@@ -1,4 +1,4 @@
-require_relative 'chess'
+require_relative 'constants'
 require_relative 'cell'
 require_relative 'board_pieces'
 require_relative '../functional/target_cell_moves'
@@ -9,6 +9,7 @@ module Chess
       attr_reader :cells, :pieces
 
       include Chess::Functional::TargetCellMoves
+      include Chess::Core::Constants
 
       Teams = Struct.new(:white, :black) do
         def empty?

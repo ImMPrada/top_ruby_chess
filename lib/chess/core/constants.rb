@@ -19,6 +19,11 @@ module Chess
       INTENTION_IS_KING_CASTLING = :castling_king_side
       INTENTION_IS_QUEEN_CASTLING = :castling_queen_side
 
+      QUEEN_SIDE_CASTLING_CODE = 'o-o-o'.freeze
+      KING_SIDE_CASTLING_CODE = 'o-o'.freeze
+      EXIT_COMMAD = :exit_game
+      SHOW_RECORD_COMMAD = :show_record
+
       COLUMNS = %w[a b c d e f g h].freeze
       PIECE_STRING = {
         P: "\u265f",

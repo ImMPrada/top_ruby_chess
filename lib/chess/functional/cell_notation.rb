@@ -21,7 +21,7 @@ module Chess
         end
       end
 
-      def algebraic_to_cartesian_a(name)
+      def string_name_to_algebraic(name)
         splitted_name = name.split('')
 
         Algebraic.new(splitted_name[0], splitted_name[1].to_i)

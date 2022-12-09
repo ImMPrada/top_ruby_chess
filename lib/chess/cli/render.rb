@@ -10,13 +10,14 @@ module Chess
 
       def initialize
         @current_player = nil
+        @records_history = []
       end
 
       def ask_for_prompt
         puts 'make your move:'
       end
 
-      def header(board)
+      def board_state(board)
         puts "\n"
         puts "\n"
         puts board_to_string(board)
@@ -27,6 +28,10 @@ module Chess
 
       def update_current_player(player)
         @current_player = player
+      end
+
+      def update_records_history(records_history)
+        @records_history = records_history
       end
 
       private

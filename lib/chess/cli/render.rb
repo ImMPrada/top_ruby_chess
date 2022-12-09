@@ -26,6 +26,17 @@ module Chess
         puts "  \u00bb #{@current_player} \u00ab  ".light_white.on_light_red if @current_player == WHITE_TEAM
       end
 
+      def print_records_history
+        history = ''
+        row = 1
+        @records_history.each do |record|
+          history += "#{row}. #{record_to_string(record.white)}   #{record_to_string(record.black)}\n"
+          row += 1
+        end
+
+        puts history
+      end
+
       def update_current_player(player)
         @current_player = player
       end
@@ -65,6 +76,25 @@ module Chess
 
         PIECE_STRING[cell.occupant.symbol].to_s.black
       end
+
+      # rubocop:disable all
+      def record_to_string(record)
+        return '' unless record
+
+        piece = record.piece == :P ? '' : record.piece.to_s
+        origin = record.origin ? record.origin : ''
+        target = record.target ? record.target : ''
+        capturing = record.capture ? 'x' : ''
+        check = record.check ? '+' : ''
+        checkmate = record.checkmate ? '#' : ''
+        draw = record.draw ? '1/2-1/2' : ''
+        castling = ''
+        castling = KING_SIDE_CASTLING_CODE if record.castling == INTENTION_IS_KING_CASTLING
+        castling = QUEEN_SIDE_CASTLING_CODE if record.castling == INTENTION_IS_QUEEN_CASTLING
+
+        piece + origin + capturing + target + check + checkmate + draw + castling.upcase
+      end
+      # rubocop:enable all
     end
   end
 end

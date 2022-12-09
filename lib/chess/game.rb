@@ -98,7 +98,7 @@ module Chess
     end
 
     def run_show_record
-      @render.show_record
+      @render.print_records_history
 
       COMMAND_SUCCES
     end

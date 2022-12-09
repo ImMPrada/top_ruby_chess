@@ -13,7 +13,7 @@ module Chess
 
       PIECE_MOVE_REGEX = /^[k, q, b, n, r, p]([a-h][1-8]){2}$/
       COMMANDS = {
-        show_record: '--show-record',
+        show_record: '--show-history',
         exit: '--exit'
       }.freeze
 
